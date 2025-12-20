@@ -16,6 +16,7 @@ return {
         { '<Leader>g', group = 'Git' },
         { '<Leader>q', group = 'Quit' },
         { '<Leader>w', group = 'Windows' },
+        { '<Leader><Tab>', group = 'Tabs' },
       },
     },
   },
