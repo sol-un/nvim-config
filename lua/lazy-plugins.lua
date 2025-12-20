@@ -1,4 +1,5 @@
-require('lazy').setup({ 'NMAC427/guess-indent.nvim', { import = 'plugins' } }, {
+require('lazy').setup(
+{ 'NMAC427/guess-indent.nvim', { import = 'plugins' }, { import = 'plugins.lang' }, { import = 'plugins.git' } }, {
   checker = {
     enabled = true,
     notify = true,
