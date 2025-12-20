@@ -15,18 +15,33 @@ set('n', '<leader>x', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]ui
 -- or just use <C-\><C-n> to exit terminal mode
 set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
+-- Save
+set({ 'n', 'i', 'v', 's' }, '<C-s>', '<Cmd>w<CR><Esc>')
+
+-- Quit
+set('n', '<Leader>qq', '<Cmd>confirm qall<CR>', { desc = 'Quit' })
+
+-- Tabs
 set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left window' })
 set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
--- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
--- set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
--- set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
--- set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
--- set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
+set('n', '<Leader><Tab>o', '<cmd>tabonly<cr>', { desc = 'Close Other Tabs' })
+set('n', '<Leader><Tab><Tab>', '<cmd>tabnew<cr>', { desc = 'New Tab' })
+set('n', '<Leader><Tab>d', '<cmd>tabclose<cr>', { desc = 'Close Tab' })
+set('n', 'gt', '<cmd>tabnext<cr>', { desc = 'Next Tab' })
+set('n', 'gT', '<cmd>tabprevious<cr>', { desc = 'Previous Tab' })
 
-set('n', '<Leader>qq', '<Cmd>confirm qall<CR>', { desc = 'Quit' })
+-- Windows
+set('n', '<Leader>wv', '<cmd>vsplit<cr>', { desc = 'Vertical split' })
+set('n', '<Leader>wd', '<C-W>c', { desc = 'Close current window' })
+set('n', '<Leader>wh', '<cmd>split<cr>', { desc = 'Horizontal split' })
+set('n', '<Leader>wo', '<cmd>only<cr>', { desc = 'Close all other windows' })
+set('n', '<Leader>wJ', '<C-W>J', { desc = 'Move window to far bottom' })
+set('n', '<Leader>wK', '<C-W>K', { desc = 'Move window to far top' })
+set('n', '<Leader>wH', '<C-W>H', { desc = 'Move window to far left' })
+set('n', '<Leader>wL', '<C-W>L', { desc = 'Move window to far right' })
 
 -- Highlight when yanking (copying) text
 vim.api.nvim_create_autocmd('TextYankPost', {
