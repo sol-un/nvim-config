@@ -1,4 +1,5 @@
 local set = require('snacks').keymap.set
+local picker = require('snacks').picker
 
 -- Clear highlights on search when pressing <Esc> in normal mode
 --  See `:help hlsearch`
@@ -42,6 +43,44 @@ set('n', '<Leader>wJ', '<C-W>J', { desc = 'Move window to far bottom' })
 set('n', '<Leader>wK', '<C-W>K', { desc = 'Move window to far top' })
 set('n', '<Leader>wH', '<C-W>H', { desc = 'Move window to far left' })
 set('n', '<Leader>wL', '<C-W>L', { desc = 'Move window to far right' })
+
+-- Pickers
+set('n', '<Leader>f<CR>', picker.resume, { desc = 'Resume previous search' })
+set('n', '<Leader>fl', picker.lines, { desc = 'Find lines' })
+set('n', '<Leader>,', picker.buffers, { desc = 'Find buffers' })
+set('n', '<Leader>fc', picker.grep_word, { desc = 'Find word under cursor' })
+set('n', '<Leader>fC', picker.commands, { desc = 'Find commands' })
+set('n', '<Leader>fF', function()
+  picker.files { hidden = true, ignored = true }
+end, { desc = 'Find all files' })
+set('n', '<Leader>fh', picker.help, { desc = 'Find help' })
+set('n', '<Leader>fk', picker.keymaps, { desc = 'Find keymaps' })
+set('n', '<Leader>fm', picker.man, { desc = 'Find man' })
+set('n', '<Leader>fn', picker.notifications, { desc = 'Find notifications' })
+set('n', '<Leader>fo', picker.recent, { desc = 'Find old files' })
+set('n', '<Leader>fO', function()
+  picker.recent { filter = { cwd = true } }
+end, {
+  desc = 'Find old files (cwd)',
+})
+set('n', '<Leader>fp', picker.projects, { desc = 'Find projects' })
+set('n', '<Leader>fr', picker.registers, { desc = 'Find registers' })
+set('n', '<Leader>fs', picker.smart, { desc = 'Find buffers/recent/files' })
+
+set('n', '<Leader>ff', function()
+  require('snacks').picker.files {
+    hidden = vim.tbl_get((vim.uv or vim.loop).fs_stat '.git' or {}, 'type') == 'directory',
+  }
+end, { desc = 'Find files' })
+
+if vim.fn.executable 'rg' == 1 then
+  set('n', '<Leader>fw', picker.grep, { desc = 'Find words' })
+  set('n', '<Leader>fW', function()
+    picker.grep { hidden = true, ignored = true }
+  end, { desc = 'Find words in all files' })
+end
+
+set('n', '<Leader>fu', picker.undo, { desc = 'Find undo history' })
 
 -- Highlight when yanking (copying) text
 vim.api.nvim_create_autocmd('TextYankPost', {
