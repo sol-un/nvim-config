@@ -56,19 +56,30 @@ wk.add {
     end,
     desc = 'Focus last buffer',
   },
-  -- These can't be implemented w/ cokeline, commenting out for now
-  -- vim.keymap.set('n', '<Leader>bh', function()
-  --   cokeline.pick(function(buf)
-  --     vim.cmd.split()
-  --     vim.api.nvim_win_set_buf(0, buf.index)
-  --   end)
-  -- end, { desc = 'Horizontal split buffer from tabline' })
-  -- vim.keymap.set('n', '<Leader>bv', function()
-  --   cokeline.pick(function(buf)
-  --     vim.cmd.vsplit()
-  --     vim.api.nvim_win_set_buf(0, buf.index)
-  --   end)
-  -- end, { desc = 'Vertical split buffer from tabline' })
+  {
+    '<Leader>bh',
+    function()
+      vim.g.cokeline_is_picking = true
+      cokeline.pick(function(buf)
+        vim.cmd.split()
+        cokeline.by_index('focus', buf.index)
+        vim.g.cokeline_is_picking = false
+      end)
+    end,
+    desc = 'Horizontal split buffer from tabline',
+  },
+  {
+    '<Leader>bv',
+    function()
+      vim.g.cokeline_is_picking = true
+      cokeline.pick(function(buf)
+        vim.cmd.vsplit()
+        cokeline.by_index('focus', buf.index)
+        vim.g.cokeline_is_picking = false
+      end)
+    end,
+    desc = 'Vertical split buffer from tabline',
+  },
 
   { '<Leader>f', group = 'Find' },
   { '<Leader>,', picker.buffers, desc = 'Find buffers' },

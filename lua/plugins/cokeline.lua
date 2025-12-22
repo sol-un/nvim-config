@@ -47,7 +47,7 @@ return {
         {
           text = function(buffer)
             local cokeline = require 'cokeline.mappings'
-            local is_picking = cokeline.is_picking_close() or cokeline.is_picking_focus()
+            local is_picking = cokeline.is_picking_close() or cokeline.is_picking_focus() or vim.g.cokeline_is_picking
 
             return is_picking and ' ' .. buffer.pick_letter or ''
           end,
