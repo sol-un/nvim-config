@@ -3,6 +3,9 @@ return {
   event = 'VeryLazy',
   ---@type snacks.Config
   opts = {
+    notifier = {},
+    indent = {},
+    scroll = {},
     picker = {
       sources = {
         explorer = {
