@@ -60,12 +60,4 @@ return {
       },
     },
   },
-  {
-    'folke/which-key.nvim',
-    opts = {
-      spec = {
-        { '<Leader>gl', group = 'Gitlab' },
-      },
-    },
-  },
 }

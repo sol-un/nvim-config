@@ -57,7 +57,5 @@ return {
       kind = 'vsplit',
     },
   },
-  keys = function()
-    vim.keymap.set('n', '<Leader>gg', '<cmd>Neogit<cr>', { desc = 'Neogit' })
-  end,
+  keys = { { '<Leader>gg', '<cmd>Neogit<cr>', desc = 'Neogit' } },
 }

@@ -11,10 +11,9 @@ return {
       },
     },
   },
-  keys = function()
-    local set = vim.keymap.set
-    set('n', '<Leader>gd', '<cmd>DiffviewOpen<cr>', { desc = 'Diffview Open' })
-    set('n', '<Leader>gf', '<cmd>DiffviewFileHistory %<cr>', { desc = 'Git commit history (file)' })
-    set('n', '<Leader>gF', '<cmd>DiffviewFileHistory<cr>', { desc = 'Git commit history (repository)' })
-  end,
+  keys = {
+    { '<Leader>gd', '<cmd>DiffviewOpen<cr>', desc = 'Diffview Open' },
+    { '<Leader>gf', '<cmd>DiffviewFileHistory %<cr>', desc = 'Git commit history (file)' },
+    { '<Leader>gF', '<cmd>DiffviewFileHistory<cr>', desc = 'Git commit history (repository)' },
+  },
 }
