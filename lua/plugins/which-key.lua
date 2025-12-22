@@ -8,12 +8,5 @@ return {
     icons = {
       mappings = vim.g.have_nerd_font,
     },
-    spec = {
-      { '<leader>t', group = 'Toggle' },
-      { '<Leader>g', group = 'Git' },
-      { '<Leader>q', group = 'Quit' },
-      { '<Leader>w', group = 'Windows' },
-      { '<Leader><Tab>', group = 'Tabs' },
-    },
   },
 }

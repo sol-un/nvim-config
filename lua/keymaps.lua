@@ -3,10 +3,6 @@ local bufdelete = require('snacks').bufdelete
 local picker = require('snacks').picker
 local cokeline = require 'cokeline.mappings'
 
--- set('n', \(.*\), \(.*\), { desc = \(.*\) })
--- {\1, \2, desc = \3 }
--- set('n', '<Leader><Tab>o', '<cmd>tabonly<cr>', { desc = 'Close Other Tabs' })
-
 wk.add {
   { '<Esc>', '<cmd>nohlsearch<CR>' }, -- Clear highlights on search when pressing <Esc> in normal mode
   { '<leader>x', vim.diagnostic.setloclist, desc = 'Open diagnostic quickfix list' },
@@ -14,6 +10,10 @@ wk.add {
   { '<C-s>', '<Cmd>w<CR><Esc>', mode = { 'n', 'i', 'v', 's' } }, -- Save
   { '<Leader>q', group = 'Quit' },
   { '<Leader>qq', '<Cmd>confirm qall<CR>', desc = 'Quit' },
+
+  { '<Leader>p', group = 'Packages', icon = '' },
+  { '<Leader>pi', '<cmd>Lazy home<cr>', desc = 'Plugins' },
+  { '<Leader>pm', '<cmd>Mason<cr>', desc = 'Mason' },
 
   { '<Leader><Tab>', group = 'Tabs' },
   { '<Leader><Tab>o', '<cmd>tabonly<cr>', desc = 'Close Other Tabs' },
@@ -133,5 +133,40 @@ wk.add {
 
   { '<Leader>S', group = 'Session' },
 }
+
+-- Delete default LSP keymaps to be replaced with Snacks.picker
+for _, lhs in ipairs { 'gra', 'grt', 'grn', 'grr', 'gri', 'gO' } do
+  pcall(vim.keymap.del, { 'n', 'x' }, lhs)
+end
+
+-- These keymaps are available only with an LSP attached
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(event)
+    local client = vim.lsp.get_client_by_id(event.data.client_id)
+    local is_inlay_hint_suported = client and client:supports_method(client, 'textDocument_inlayHint', event.buf)
+
+    wk.add {
+      { 'gl', group = 'Language tools' },
+      { 'gd', picker.lsp_definitions, desc = 'LSP: Goto definition' },
+      { 'gr', picker.lsp_references, desc = 'LSP: References' },
+      { 'gI', picker.lsp_references, desc = 'LSP: Goto implementation' },
+      { 'gy', picker.lsp_references, desc = 'LSP: Goto type definition' },
+      { 'gD', vim.lsp.buf.declaration, desc = 'LSP: Goto declaration' },
+      { 'gla', vim.lsp.buf.code_action, desc = 'Code actions', mode = { 'n', 'x' } },
+      { 'gld', vim.diagnostic.open_float, desc = 'Show diagnostics' },
+      { 'gls', picker.lsp_symbols, desc = 'Search document symbols' },
+      { 'glS', picker.lsp_workspace_symbols, desc = 'Search workspace symbols' },
+      { 'glr', vim.lsp.buf.rename, desc = 'Rename' },
+      {
+        '<leader>th',
+        function()
+          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
+        end,
+        desc = 'Toggle inlay hints',
+        cond = is_inlay_hint_suported,
+      },
+    }
+  end,
+})
 
 -- vim: ts=2 sts=2 sw=2 et
