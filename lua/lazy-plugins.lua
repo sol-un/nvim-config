@@ -3,7 +3,7 @@ require('lazy').setup({
   { import = 'plugins' },
   { import = 'plugins.lang' },
   { import = 'plugins.git' },
-  { import = 'plugins.mini' },
+  { import = 'plugins.ui' },
 }, {
   checker = {
     enabled = true,
