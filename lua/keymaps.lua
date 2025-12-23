@@ -11,7 +11,34 @@ wk.add {
   { '<Leader>q', group = 'Quit' },
   { '<Leader>qq', '<Cmd>confirm qall<CR>', desc = 'Quit' },
   { '<Leader>qr', '<Cmd>restart<CR>', desc = 'Restart' },
-
+  {
+    '[e',
+    function()
+      vim.diagnostic.jump { count = -vim.v.count1, severity = 1 }
+    end,
+    desc = 'Previous error',
+  },
+  {
+    ']e',
+    function()
+      vim.diagnostic.jump { count = vim.v.count1, severity = 1 }
+    end,
+    desc = 'Next error',
+  },
+  {
+    '[w',
+    function()
+      vim.diagnostic.jump { count = -vim.v.count1, severity = 2 }
+    end,
+    desc = 'Previous warning',
+  },
+  {
+    ']w',
+    function()
+      vim.diagnostic.jump { count = vim.v.count1, severity = 2 }
+    end,
+    desc = 'Next warning',
+  },
   { '<Leader>p', group = 'Packages', icon = '' },
   { '<Leader>pi', '<cmd>Lazy home<cr>', desc = 'Plugins' },
   { '<Leader>pm', '<cmd>Mason<cr>', desc = 'Mason' },
