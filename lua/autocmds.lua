@@ -1,10 +1,13 @@
--- vim.api.nvim_create_autocmd('VimEnter', {
---   desc = 'Open last session on start',
---   callback = function()
---     local last_session = require('mini.sessions').get_latest()
---     require('mini.sessions').read(last_session)
---   end,
--- })
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'VeryLazy',
+  desc = 'Open last session on start',
+  callback = function()
+    vim.defer_fn(function()
+      local last_session = require('mini.sessions').get_latest()
+      require('mini.sessions').read(last_session)
+    end, 100)
+  end,
+})
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
