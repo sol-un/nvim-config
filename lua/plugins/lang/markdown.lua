@@ -15,19 +15,19 @@ return {
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed or {}, { 'marksman', 'markdownlint', 'mdformat', 'mdslw', 'mdsf' })
+      vim.list_extend(opts.ensure_installed or {}, { 'marksman', 'markdownlint-cli2' })
     end,
   },
   {
     'mfussenegger/nvim-lint', -- Linters
     event = { 'BufReadPre', 'BufNewFile' },
-    opts = { linters_by_ft = { markdown = { 'markdownlint' } }, linters = {} },
+    opts = { linters_by_ft = { markdown = { 'markdownlint-cli2' } }, linters = {} },
   },
   {
     'stevearc/conform.nvim',
     opts = {
       formatters_by_ft = {
-        markdown = { 'mdformat', 'mdslw', 'mdsf', 'prettier' },
+        markdown = { 'prettier', 'markdownlint-cli2' },
       },
     },
   },
