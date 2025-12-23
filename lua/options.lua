@@ -1,55 +1,79 @@
-vim.o.number = true
-vim.o.relativenumber = true
+local opt = vim.opt
 
--- Enable mouse mode
-vim.o.mouse = 'a'
+opt.number = true
+opt.relativenumber = true
+opt.foldenable = true
 
--- Don't show the mode, since it's already in the status line
-vim.o.showmode = false
+opt.mouse = 'a' -- Enable mouse mode
+
+opt.showmode = false -- Don't show the mode, since it's already in the status line
 
 -- Sync clipboard between OS and Neovim.
 vim.schedule(function()
-  vim.o.clipboard = 'unnamedplus'
+  opt.clipboard = 'unnamedplus'
 end)
 
--- Enable break indent
-vim.o.breakindent = true
+opt.breakindent = true -- Enable break indent
 
 -- Save undo history
-vim.o.undofile = true
+opt.undofile = true
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
-vim.o.ignorecase = true
-vim.o.smartcase = true
+opt.ignorecase = true
+opt.smartcase = true
 
--- Keep signcolumn on by default
-vim.o.signcolumn = 'yes'
+opt.signcolumn = 'yes' -- Keep signcolumn on by default
 
--- Decrease update time
-vim.o.updatetime = 250
+opt.updatetime = 250 -- Decrease update time
 
--- Decrease mapped sequence wait time
-vim.o.timeoutlen = 300
+opt.timeoutlen = 300 -- Decrease mapped sequence wait time
 
 -- Configure how new splits should be opened
-vim.o.splitright = true
-vim.o.splitbelow = true
+opt.splitright = true
+opt.splitbelow = true
 
 -- Sets how neovim will display certain whitespace characters in the editor.
-vim.o.list = true
+opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
--- Preview substitutions live, as you type
-vim.o.inccommand = 'split'
+opt.inccommand = 'split' -- Preview substitutions live, as you type
 
--- Show which line your cursor is on
-vim.o.cursorline = true
+opt.cursorline = true -- Show which line your cursor is on
 
--- Minimal number of screen lines to keep above and below the cursor.
-vim.o.scrolloff = 22
+opt.scrolloff = 22 -- Minimal number of screen lines to keep above and below the cursor.
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
-vim.o.confirm = true
+opt.confirm = true
 
+opt.backup = false -- Don't create backup files
+opt.writebackup = false -- Don't create backup before writing
+opt.swapfile = false -- Don't create swap files
+
+vim.diagnostic.config {
+  severity_sort = true,
+  float = { border = 'rounded', source = 'if_many' },
+  underline = { severity = vim.diagnostic.severity.ERROR },
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = '󰅚 ',
+      [vim.diagnostic.severity.WARN] = '󰀪 ',
+      [vim.diagnostic.severity.INFO] = '󰋽 ',
+      [vim.diagnostic.severity.HINT] = '󰌶 ',
+    },
+  },
+  virtual_text = {
+    source = 'if_many',
+    spacing = 2,
+    format = function(diagnostic)
+      local diagnostic_message = {
+        [vim.diagnostic.severity.ERROR] = diagnostic.message,
+        [vim.diagnostic.severity.WARN] = diagnostic.message,
+        [vim.diagnostic.severity.INFO] = diagnostic.message,
+        [vim.diagnostic.severity.HINT] = diagnostic.message,
+      }
+      return diagnostic_message[diagnostic.severity]
+    end,
+  },
+}
 -- vim: ts=2 sts=2 sw=2 et

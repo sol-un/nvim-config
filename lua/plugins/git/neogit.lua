@@ -8,7 +8,7 @@ return {
   cmd = 'Neogit',
   branch = 'master',
   opts = {
-    kind = 'split',
+    kind = 'tab',
     graph_style = 'unicode',
     integrations = {
       diffview = true,
