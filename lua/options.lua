@@ -2,7 +2,14 @@ local opt = vim.opt
 
 opt.number = true
 opt.relativenumber = true
-opt.foldenable = true
+opt.winborder = 'rounded'
+
+opt.sessionoptions = 'buffers,curdir,folds,help,tabpages,winsize'
+
+opt.foldmethod = 'expr'
+opt.foldexpr = 'v:lua.vim.lsp.foldexpr()'
+opt.foldlevel = 99
+opt.foldlevelstart = 99
 
 opt.mouse = 'a' -- Enable mouse mode
 
@@ -53,7 +60,7 @@ opt.swapfile = false -- Don't create swap files
 vim.diagnostic.config {
   severity_sort = true,
   float = { border = 'rounded', source = 'if_many' },
-  underline = { severity = vim.diagnostic.severity.ERROR },
+  underline = true,
   signs = {
     text = {
       [vim.diagnostic.severity.ERROR] = '󰅚 ',
@@ -62,18 +69,7 @@ vim.diagnostic.config {
       [vim.diagnostic.severity.HINT] = '󰌶 ',
     },
   },
-  virtual_text = {
-    source = 'if_many',
-    spacing = 2,
-    format = function(diagnostic)
-      local diagnostic_message = {
-        [vim.diagnostic.severity.ERROR] = diagnostic.message,
-        [vim.diagnostic.severity.WARN] = diagnostic.message,
-        [vim.diagnostic.severity.INFO] = diagnostic.message,
-        [vim.diagnostic.severity.HINT] = diagnostic.message,
-      }
-      return diagnostic_message[diagnostic.severity]
-    end,
-  },
+  virtual_lines = { current_line = true },
+  virtual_text = { current_line = false },
 }
 -- vim: ts=2 sts=2 sw=2 et
