@@ -6,6 +6,8 @@ return {
     notifier = {},
     indent = {},
     scroll = {},
+    statuscolumn = {},
+    bigfile = {},
     picker = {
       sources = {
         explorer = {
