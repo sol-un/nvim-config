@@ -21,9 +21,9 @@ vim.api.nvim_create_autocmd('LspAttach', {
   desc = 'Highlight references of the word under cursor and clear highlights on cursor move',
   callback = function(event)
     local client = vim.lsp.get_client_by_id(event.data.client_id)
-    local is_highlight_suported = client and client:supports_method(client, 'textDocument_documentHighlight', event.buf)
+    local is_highlight_supported = client and client:supports_method('textDocument/documentHighlight', event.buf)
 
-    if is_highlight_suported then
+    if is_highlight_supported then
       local highlight_augroup = vim.api.nvim_create_augroup('kickstart-lsp-highlight', { clear = false })
       vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, {
         buffer = event.buf,
