@@ -55,7 +55,8 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
     local lint = require 'lint'
 
     if vim.bo.modifiable then
-      lint.try_lint()
+      local client = vim.lsp.get_clients({ bufnr = 0 })[1] or {}
+      lint.try_lint(nil, { cwd = client.root_dir })
     end
   end,
 })
