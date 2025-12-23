@@ -15,8 +15,8 @@ return {
       snacks = true,
     },
     signs = {
-      item = { ' ', ' ' },
-      section = { ' ', ' ' },
+      item = { '', '' },
+      section = { '', '' },
     },
     mappings = {
       commit_editor = {

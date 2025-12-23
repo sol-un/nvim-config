@@ -6,7 +6,7 @@ return {
     notifier = {},
     indent = {},
     scroll = {},
-    statuscolumn = {},
+    statuscolumn = { folds = { open = true } },
     bigfile = {},
     picker = {
       sources = {
