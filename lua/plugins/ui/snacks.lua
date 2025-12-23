@@ -1,6 +1,7 @@
 return {
   'folke/snacks.nvim',
   event = 'VeryLazy',
+  ---@module 'snacks'
   ---@type snacks.Config
   opts = {
     notifier = {},
@@ -9,6 +10,7 @@ return {
     statuscolumn = { folds = { open = true } },
     bigfile = {},
     picker = {
+      win = { wo = { wrap = true } },
       sources = {
         explorer = {
           hidden = true,
@@ -27,7 +29,6 @@ return {
         grep = { hidden = true },
         grep_word = { hidden = true },
         recent = { hidden = true, ignored = true },
-        notifications = { win = { wo = { wrap = true } } },
       },
       layout = {
         fullscreen = true,

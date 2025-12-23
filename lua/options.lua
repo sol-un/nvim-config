@@ -3,9 +3,9 @@ local opt = vim.opt
 opt.number = true
 opt.relativenumber = true
 opt.winborder = 'rounded'
+opt.linebreak = true
 
 opt.sessionoptions = 'buffers,curdir,folds,help,tabpages,winsize,globals'
-
 opt.foldmethod = 'expr'
 opt.foldexpr = 'v:lua.vim.lsp.foldexpr()'
 opt.foldlevel = 99
