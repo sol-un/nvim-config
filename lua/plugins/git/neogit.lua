@@ -39,7 +39,7 @@ return {
   cmd = 'Neogit',
   branch = 'master',
   opts = {
-    kind = 'tab',
+    kind = 'vsplit',
     graph_style = 'unicode',
     integrations = {
       diffview = true,
@@ -70,22 +70,25 @@ return {
     status = { recent_commit_count = 30 },
     sections = { recent = { folded = false } },
     commit_editor = {
-      kind = 'vsplit',
+      kind = 'split',
+    },
+    commit_view = {
+      kind = 'split',
     },
     commit_select_view = {
-      kind = 'vsplit',
+      kind = 'split',
     },
     log_view = {
-      kind = 'vsplit',
+      kind = 'split',
     },
     reflog_view = {
-      kind = 'vsplit',
+      kind = 'split',
     },
     stash = {
-      kind = 'vsplit',
+      kind = 'split',
     },
     refs_view = {
-      kind = 'vsplit',
+      kind = 'split',
     },
   },
   keys = { { '<Leader>gg', '<cmd>Neogit<cr>', desc = 'Neogit' } },
