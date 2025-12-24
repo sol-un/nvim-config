@@ -7,7 +7,8 @@ opt.linebreak = true
 
 opt.sessionoptions = 'buffers,curdir,folds,help,tabpages,winsize,globals'
 opt.foldmethod = 'expr'
-opt.foldexpr = 'v:lua.vim.lsp.foldexpr()'
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 opt.foldlevel = 99
 opt.foldlevelstart = 99
 
