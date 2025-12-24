@@ -12,6 +12,23 @@ wk.add {
   { '<Leader>qq', '<Cmd>confirm qall<CR>', desc = 'Quit' },
   { '<Leader>qr', '<Cmd>restart<CR>', desc = 'Restart' },
   {
+    '<C-_>', -- this is the same as Ctrl + /, see https://apple.stackexchange.com/questions/24261/how-do-i-send-c-that-is-control-slash-to-the-terminal
+    function()
+      require('snacks').terminal(nil, { cwd = vim.uv.cwd() })
+    end,
+    desc = 'Toggle terminal',
+  },
+  {
+    '<C-/>',
+    function()
+      require('snacks').terminal(nil, { cwd = vim.uv.cwd() })
+    end,
+    desc = 'Toggle terminal',
+  },
+  { '<C-/>', '<cmd>close<cr>', desc = 'Hide Terminal', mode = 't' },
+  { '<C-_>', '<cmd>close<cr>', desc = 'Hide Terminal', mode = 't' },
+  { '<C-h>', '<Backspace>' },
+  {
     '[e',
     function()
       vim.diagnostic.jump { count = -vim.v.count1, severity = 1 }
