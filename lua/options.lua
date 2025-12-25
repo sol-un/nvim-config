@@ -11,6 +11,7 @@ vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 opt.foldlevel = 99
 opt.foldlevelstart = 99
+vim.wo.wrap = true
 
 opt.mouse = 'a' -- Enable mouse mode
 

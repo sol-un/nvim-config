@@ -5,7 +5,7 @@ vim.api.nvim_create_autocmd('User', {
     vim.defer_fn(function()
       local last_session = require('mini.sessions').get_latest()
       require('mini.sessions').read(last_session)
-    end, 100)
+    end, 0)
   end,
 })
 
