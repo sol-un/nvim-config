@@ -17,11 +17,6 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 return {
-  { 'mason-org/mason.nvim', opts = {} }, -- package manager for LSP servers, DAP servers, linters, and formatters
-  {
-    'WhoIsSethDaniel/mason-tool-installer.nvim', -- automatically installs mason packages
-    opts = { auto_update = true, ensure_installed = { 'prettier' } },
-  },
   {
     'nvim-treesitter/nvim-treesitter', -- language AST parsers
     lazy = false,
@@ -44,13 +39,13 @@ return {
       }
     end,
   },
+  { 'mason-org/mason.nvim', opts = {} }, -- package manager for LSP servers, DAP servers, linters, and formatters
   {
-    'neovim/nvim-lspconfig', -- LSP servers
-    dependencies = {
-      'mason-org/mason-lspconfig.nvim', -- allows mason-tool-installer to use lspconfig names instead of mason names
-    },
-    config = function() end,
+    'WhoIsSethDaniel/mason-tool-installer.nvim', -- automatically installs mason packages
+    opts = { auto_update = true, ensure_installed = { 'prettier' } },
   },
+  'neovim/nvim-lspconfig', -- provides LSP server configs
+  { 'mason-org/mason-lspconfig.nvim', opts = {} }, -- translates between nvim-lspconfig server names and mason package names; automatically enables installed LSPs
   {
     'mfussenegger/nvim-lint', -- Linters
     event = { 'BufReadPre', 'BufNewFile' },

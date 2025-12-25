@@ -25,12 +25,6 @@ return {
     },
   },
   {
-    'neovim/nvim-lspconfig',
-    opts = function()
-      vim.lsp.enable 'lua_ls'
-    end,
-  },
-  {
     'folke/lazydev.nvim', -- used for completion, annotations and signatures of Neovim apis
     ft = 'lua',
     opts = {

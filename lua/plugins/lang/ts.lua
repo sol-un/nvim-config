@@ -35,10 +35,6 @@ return {
     },
   },
   {
-    'neovim/nvim-lspconfig',
-    opts = function()
-      vim.lsp.enable 'ts_ls'
-      vim.lsp.enable 'eslint'
     end,
   },
 }
