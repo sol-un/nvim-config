@@ -7,7 +7,11 @@ return {
     notifier = {},
     indent = {},
     scroll = {},
-    statuscolumn = { folds = { open = true } },
+    statuscolumn = {
+      left = { 'git', 'sign' }, -- priority of signs on the left (high to low)
+      right = { 'fold' }, -- priority of signs on the right (high to low)
+      folds = { open = true },
+    },
     bigfile = {},
     picker = {
       win = { wo = { wrap = true } },
