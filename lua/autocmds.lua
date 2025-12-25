@@ -60,3 +60,15 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
     end
   end,
 })
+
+vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
+  desc = 'Format on save',
+  group = vim.api.nvim_create_augroup('autformat', { clear = true }),
+  callback = function()
+    local conform = require 'conform'
+
+    if vim.bo.modifiable then
+      conform.format { quiet = true }
+    end
+  end,
+})
