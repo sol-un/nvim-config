@@ -27,12 +27,31 @@ return {
   },
   {
     'stevearc/conform.nvim',
-    opts = {
-      formatters_by_ft = {
-        typescript = { 'eslint_d', 'prettier', stop_after_first = true },
-        javascript = { 'eslint_d', 'prettier', stop_after_first = true },
-      },
-    },
+    opts = function(_, opts)
+      -- prettier may interfere with eslint if it's used for formatting
+      local maybe_with_prettier = function()
+        if vim.g.prettier_disabled then
+          return { 'eslint_d' }
+        else
+          return { 'eslint_d', 'prettier' }
+        end
+      end
+
+      opts = vim.tbl_deep_extend('force', opts, {
+        formatters_by_ft = {
+          typescript = maybe_with_prettier,
+          javascript = maybe_with_prettier,
+        },
+      })
+
+      return opts
+    end,
+    keys = { {
+      '<Leader>tf',
+      function()
+        vim.g.prettier_disabled = not vim.g.prettier_disabled
+      end,
+    } },
   },
   {
     end,

@@ -58,6 +58,10 @@ opt.backup = false -- Don't create backup files
 opt.writebackup = false -- Don't create backup before writing
 opt.swapfile = false -- Don't create swap files
 
+-- Global state
+vim.g.prettier_disabled = false
+vim.g.cokeline_is_picking = false
+
 vim.diagnostic.config {
   severity_sort = true,
   float = { border = 'rounded', source = 'if_many' },
