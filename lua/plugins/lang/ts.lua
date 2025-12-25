@@ -1,12 +1,3 @@
--- eslint and eslint_d will create duplicate diagnostics
-vim.api.nvim_create_autocmd('VimEnter', {
-  desc = 'Hide diagnostics from eslint',
-  callback = function()
-    local ns = require('lint').get_namespace 'eslint'
-    vim.diagnostic.config({ virtual_lines = false, virtual_text = false, underline = false }, ns)
-  end,
-})
-
 return {
   {
     'nvim-treesitter/nvim-treesitter',
@@ -20,6 +11,9 @@ return {
       vim.list_extend(opts.ensure_installed or {}, { 'ts_ls', 'eslint', 'eslint_d' })
     end,
   },
+  -- disabling eslint as an LSP, because when used as an LSP and a formatter, the diagnostics will duplicate
+  -- this will disable eslint LSP commands like "Fix all fixable eslint errors", but auto-fixing is handled by eslint_d anyway
+  { 'mason-org/mason-lspconfig.nvim', opts = { automatic_enable = { exclude = { 'eslint' } } } },
   {
     'mfussenegger/nvim-lint', -- Linters
     event = { 'BufReadPre', 'BufNewFile' },
