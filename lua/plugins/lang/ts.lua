@@ -2,7 +2,7 @@ return {
   {
     'nvim-treesitter/nvim-treesitter',
     opts = function()
-      require('nvim-treesitter').install { 'ecma', 'javascript', 'typescript', 'tsx', 'jsdoc' }
+      require('nvim-treesitter').install { 'ecma', 'javascript', 'typescript', 'jsx', 'tsx', 'jsdoc' }
     end,
   },
   {
