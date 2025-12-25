@@ -16,6 +16,11 @@ local function get_formatters()
   return table.concat(formatter_names, ', ')
 end
 
+local function get_macro()
+  local reg = vim.fn.reg_recording()
+  return #reg ~= 0 and '@' .. reg or ''
+end
+
 local function get_cwd()
   return vim.fn.getcwd()
 end
@@ -30,7 +35,7 @@ return {
       globalstatus = true,
     },
     sections = {
-      lualine_c = { { get_cwd, icon = '' } },
+      lualine_c = { { get_cwd, icon = '' }, { get_macro, icon = '' } },
       lualine_x = {},
       lualine_y = {
         { 'lsp_status', icon = '', symbols = { done = '', separator = ', ', spinner = {} } },
