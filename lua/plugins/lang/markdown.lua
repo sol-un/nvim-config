@@ -20,7 +20,6 @@ return {
   },
   {
     'mfussenegger/nvim-lint', -- Linters
-    event = { 'BufReadPre', 'BufNewFile' },
     opts = { linters_by_ft = { markdown = { 'markdownlint-cli2' } } },
   },
   {

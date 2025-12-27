@@ -48,8 +48,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWritePost', 'InsertLeave' }, {
-  desc = 'Lint on save',
+vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWrite', 'InsertLeave', 'TextChanged' }, {
+  desc = 'Automatic linting',
   group = vim.api.nvim_create_augroup('lint', { clear = true }),
   callback = function()
     local lint = require 'lint'

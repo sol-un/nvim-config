@@ -13,7 +13,6 @@ return {
   },
   {
     'mfussenegger/nvim-lint', -- Linters
-    event = { 'BufReadPre', 'BufNewFile' },
     opts = { linters_by_ft = { lua = { 'selene' } } },
   },
   {
