@@ -49,7 +49,7 @@ opt.inccommand = 'split' -- Preview substitutions live, as you type
 
 opt.cursorline = true -- Show which line your cursor is on
 
-opt.scrolloff = 22 -- Minimal number of screen lines to keep above and below the cursor.
+opt.scrolloff = 999 -- Minimal number of screen lines to keep above and below the cursor.
 
 -- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
 -- instead raise a dialog asking if you wish to save the current file(s)
@@ -62,6 +62,7 @@ opt.swapfile = false -- Don't create swap files
 -- Global state
 vim.g.prettier_disabled = false
 vim.g.cokeline_is_picking = false
+vim.g.should_scrolloff = true
 
 vim.diagnostic.config {
   severity_sort = true,

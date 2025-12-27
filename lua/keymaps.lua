@@ -177,7 +177,16 @@ wk.add {
   { '<Leader>gl', group = 'GitLab', icon = { icon = '', color = 'orange' } },
 
   { '<Leader>S', group = 'Session' },
+
   { '<Leader>t', group = 'Toggles' },
+  {
+    '<Leader>tc',
+    function()
+      vim.g.should_scrolloff = not vim.g.should_scrolloff
+      vim.opt.scrolloff = vim.g.should_scrolloff and 999 or 0
+    end,
+    desc = 'Toggle scrolloff',
+  },
 }
 
 -- Delete default LSP keymaps to be replaced with Snacks.picker
