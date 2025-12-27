@@ -88,19 +88,3 @@ vim.api.nvim_create_autocmd('FileType', {
     end
   end,
 })
-
-vim.api.nvim_create_autocmd('LspAttach', {
-  desc = 'Refresh codelens on bufenter',
-  callback = function(event)
-    vim.api.nvim_create_autocmd('BufEnter', {
-      callback = function()
-        local client = vim.lsp.get_client_by_id(event.data.client_id)
-        local is_codelens_supported = client and client:supports_method('textDocument/codeLens', event.buf)
-
-        if is_codelens_supported then
-          vim.lsp.codelens.refresh()
-        end
-      end,
-    })
-  end,
-})

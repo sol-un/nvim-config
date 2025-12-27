@@ -189,6 +189,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(event)
     local client = vim.lsp.get_client_by_id(event.data.client_id)
     local is_inlay_hint_suported = client and client:supports_method('textDocument/inlayHint', event.buf)
+    local is_codelens_supported = client and client:supports_method('textDocument/codeLens', event.buf)
 
     wk.add {
       { 'gl', group = 'Language tools' },
@@ -202,6 +203,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
       { 'gls', picker.lsp_symbols, desc = 'Search document symbols' },
       { 'glS', picker.lsp_workspace_symbols, desc = 'Search workspace symbols' },
       { 'glr', vim.lsp.buf.rename, desc = 'Rename' },
+      {
+        'gll',
+        function()
+          vim.lsp.codelens.refresh { bufnr = 0 }
+        end,
+        desc = 'Refresh & display codelens',
+        cond = is_codelens_supported,
+      },
       {
         '<leader>th',
         function()
