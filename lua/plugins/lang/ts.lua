@@ -1,3 +1,48 @@
+local filetypes = {
+  'javascript',
+  'javascriptreact',
+  'javascript.jsx',
+  'typescript',
+  'typescriptreact',
+  'typescript.tsx',
+}
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = filetypes,
+  callback = function()
+    ---@diagnostic disable: assign-type-mismatch
+    require('which-key').add {
+      {
+        'glu',
+        function()
+          vim.lsp.buf.code_action {
+            apply = true,
+            context = {
+              only = { 'source.removeUnused.ts' },
+              diagnostics = {},
+            },
+          }
+        end,
+        desc = 'Remove unused code',
+      },
+      {
+        'glA',
+        function()
+          vim.lsp.buf.code_action {
+            apply = true,
+            context = {
+              only = { 'source.addMissingImports.ts' },
+              diagnostics = {},
+            },
+          }
+        end,
+        desc = 'Add missing imports',
+      },
+    }
+    ---@diagnostic enable: assign-type-mismatch
+  end,
+})
+
 return {
   {
     'nvim-treesitter/nvim-treesitter',
@@ -15,14 +60,46 @@ return {
   -- this will disable eslint LSP commands like "Fix all fixable eslint errors", but auto-fixing is handled by eslint_d anyway
   { 'mason-org/mason-lspconfig.nvim', opts = { automatic_enable = { exclude = { 'eslint' } } } },
   {
+    'neovim/nvim-lspconfig',
+    opts = {
+      servers = {
+        ts_ls = {
+          settings = {
+            typescript = {
+              inlayHints = {
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayVariableTypeHintsWhenTypeMatchesName = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+                includeInlayEnumMemberValueHints = true,
+              },
+              implementationsCodeLens = { enabled = true },
+              referencesCodeLens = { enabled = true, showOnAllFunctions = true },
+            },
+          },
+        },
+      },
+    },
+  },
+  {
     'mfussenegger/nvim-lint', -- Linters
     event = { 'BufReadPre', 'BufNewFile' },
-    opts = { linters_by_ft = { typescript = { 'eslint' }, javascript = { 'eslint' } } },
+    opts = function(_, opts)
+      for _, filetype in pairs(filetypes) do
+        opts.linters_by_ft[filetype] = { 'eslint' }
+      end
+
+      return opts
+    end,
   },
   {
     'stevearc/conform.nvim',
     opts = function(_, opts)
-      -- prettier may interfere with eslint if it's used for formatting
+      -- prettier may interfere with eslint if the latter is used as a formatter
+      -- providing an option to disable prettier in this case
       local maybe_with_prettier = function()
         if vim.g.prettier_disabled then
           return { 'eslint_d' }
@@ -31,14 +108,9 @@ return {
         end
       end
 
-      opts = vim.tbl_deep_extend('force', opts, {
-        formatters_by_ft = {
-          typescript = maybe_with_prettier,
-          javascript = maybe_with_prettier,
-          typescriptreact = maybe_with_prettier,
-          javascriptreact = maybe_with_prettier,
-        },
-      })
+      for _, filetype in pairs(filetypes) do
+        opts.formatters_by_ft[filetype] = maybe_with_prettier
+      end
 
       return opts
     end,
@@ -65,8 +137,8 @@ return {
         }
       end
 
-      for _, lang in pairs { 'typescript', 'javascript' } do
-        dap.configurations[lang] = {
+      for _, filetype in pairs(filetypes) do
+        dap.configurations[filetype] = {
           {
             type = 'pwa-node',
             request = 'launch',
