@@ -14,7 +14,6 @@ return {
         'fixjson',
         'yamlls',
         'yamllint',
-        'yamlfix',
       })
     end,
   },
@@ -35,8 +34,8 @@ return {
       formatters_by_ft = {
         json = { 'fixjson' },
         jsonc = { 'fixjson' },
-        yaml = { 'yamlfix' },
-        yml = { 'yamlfix' },
+        yaml = { 'prettier' },
+        yml = { 'prettier' },
       },
     },
   },
@@ -45,13 +44,18 @@ return {
     opts = {
       servers = {
         yamlls = {
-
+          before_init = function(_, config)
+            (config.settings or {}).yaml.schemas = require('schemastore').yaml.schemas()
+          end,
           settings = {
             redhat = { telemetry = { enabled = false } },
             yaml = { schemaStore = { enable = false, url = '' }, validate = true },
           },
         },
         jsonls = {
+          before_init = function(_, config)
+            (config.settings or {}).json.schemas = require('schemastore').json.schemas()
+          end,
           settings = {
             json = { validate = { enable = true } },
           },
@@ -59,10 +63,9 @@ return {
       },
     },
   },
-  'vuki656/package-info.nvim', -- display latest dependency versions in package.json
+  { 'vuki656/package-info.nvim', opts = {} },
   {
-    -- TODO: loading schemas does not actually work; should investigate this further
-    'b0o/SchemaStore.nvim', --
+    'b0o/SchemaStore.nvim',
     lazy = true,
     version = false,
   },
