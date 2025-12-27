@@ -29,8 +29,15 @@ return {
     'WhoIsSethDaniel/mason-tool-installer.nvim', -- automatically installs mason packages
     opts = { auto_update = true, ensure_installed = { 'prettier' } },
   },
-  'neovim/nvim-lspconfig', -- provides LSP server configs
-  { 'mason-org/mason-lspconfig.nvim', opts = {} }, -- translates between nvim-lspconfig server names and mason package names; automatically enables installed LSPs
+  {
+    'neovim/nvim-lspconfig', -- provides LSP server configs
+    config = function(_, opts)
+      for server, config in pairs(opts.servers) do
+        vim.lsp.config(server, config)
+        vim.lsp.enable(server)
+      end
+    end,
+  },
   {
     'mfussenegger/nvim-lint', -- Linters
     event = { 'BufReadPre', 'BufNewFile' },
