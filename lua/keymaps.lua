@@ -177,6 +177,7 @@ wk.add {
   { '<Leader>gl', group = 'GitLab', icon = { icon = '', color = 'orange' } },
 
   { '<Leader>S', group = 'Session' },
+  { '<Leader>t', group = 'Toggles' },
 }
 
 -- Delete default LSP keymaps to be replaced with Snacks.picker

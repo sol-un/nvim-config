@@ -114,12 +114,11 @@ return {
 
       return opts
     end,
-    keys = { {
-      '<Leader>tf',
-      function()
+    keys = function()
+      require('snacks').keymap.set('n', '<Leader>Tf', function()
         vim.g.prettier_disabled = not vim.g.prettier_disabled
-      end,
-    } },
+      end, { desc = 'Toggle prettier', ft = filetypes })
+    end,
   },
   {
     'mfussenegger/nvim-dap',
