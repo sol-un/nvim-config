@@ -186,7 +186,14 @@ return {
     'nvim-neotest/neotest',
     dependencies = { 'nvim-neotest/neotest-jest' },
     opts = function(_, opts)
-      table.insert(opts.adapters or {}, require 'neotest-jest' {})
+      table.insert(
+        opts.adapters or {},
+        require 'neotest-jest' {
+          -- this will allow nvim-dap to attach to a Jest process
+          -- see https://jestjs.io/docs/ecmascript-modules and https://jestjs.io/docs/troubleshooting#tests-are-failing-and-you-dont-know-why
+          jestCommand = 'node --inspect --experimental-vm-modules node_modules/.bin/jest --runInBand',
+        }
+      )
     end,
   },
 }
