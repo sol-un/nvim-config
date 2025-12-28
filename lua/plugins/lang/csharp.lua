@@ -48,23 +48,26 @@ return {
       }
     end,
   },
-  {
-    'saghen/blink.cmp',
-    opts = {
-      sources = {
-        default = { 'easy-dotnet' },
-        providers = {
-          ['easy-dotnet'] = {
-            name = 'easy-dotnet',
-            enabled = true,
-            module = 'easy-dotnet.completion.blink',
-            score_offset = 10000,
-            async = true,
-          },
-        },
-      },
-    },
-  },
+  -- TODO: Currently defined in blink-cmp settings. Should merge from here
+  -- {
+  --   'saghen/blink.cmp',
+  --   opts = function(_, opts)
+  --     return vim.tbl_deep_extend('force', opts, {
+  --       sources = {
+  --         default = { 'easy-dotnet' },
+  --         providers = {
+  --           ['easy-dotnet'] = {
+  --             name = 'easy-dotnet',
+  --             enabled = true,
+  --             module = 'easy-dotnet.completion.blink',
+  --             score_offset = 10000,
+  --             async = true,
+  --           },
+  --         },
+  --       },
+  --     })
+  --   end,
+  -- },
   'nsidorenco/neotest-vstest',
   {
     'nvim-neotest/neotest',
