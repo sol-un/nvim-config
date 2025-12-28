@@ -177,9 +177,8 @@ wk.add {
     cond = vim.fn.executable 'rg' == 1,
   },
 
-  -- Keymaps defined per plugin in plugins/git
+  -- Keymaps defined per plugin in plugins/git/keymaps.lua
   { '<Leader>g', group = 'Git' },
-  { '<Leader>gl', group = 'GitLab', icon = { icon = '', color = 'orange' } },
 
   { '<Leader>S', group = 'Session' },
 

@@ -1,6 +1,5 @@
 return {
   'linrongbin16/gitlinker.nvim',
-  event = 'VeryLazy',
   opts = {
     router = {
       current_branch = {

@@ -31,13 +31,10 @@ vim.api.nvim_create_autocmd('User', {
 
 return {
   'NeogitOrg/neogit',
-  event = 'VeryLazy',
   dependencies = {
     'nvim-lua/plenary.nvim',
     'sindrets/diffview.nvim',
   },
-  cmd = 'Neogit',
-  branch = 'master',
   opts = {
     kind = 'vsplit',
     graph_style = 'unicode',
@@ -48,24 +45,6 @@ return {
     signs = {
       item = { '', '' },
       section = { '', '' },
-    },
-    mappings = {
-      commit_editor = {
-        ['<c-s>'] = 'Submit',
-        ['<c-k>'] = 'Abort',
-      },
-      commit_editor_I = {
-        ['<c-s>'] = 'Submit',
-        ['<c-k>'] = 'Abort',
-      },
-      rebase_editor = {
-        ['<c-s>'] = 'Submit',
-        ['<c-k>'] = 'Abort',
-      },
-      rebase_editor_I = {
-        ['<c-s>'] = 'Submit',
-        ['<c-k>'] = 'Abort',
-      },
     },
     status = { recent_commit_count = 30 },
     sections = { recent = { folded = false } },
@@ -89,6 +68,24 @@ return {
     },
     refs_view = {
       kind = 'split',
+    },
+    mappings = {
+      commit_editor = {
+        ['<c-s>'] = 'Submit',
+        ['<c-k>'] = 'Abort',
+      },
+      commit_editor_I = {
+        ['<c-s>'] = 'Submit',
+        ['<c-k>'] = 'Abort',
+      },
+      rebase_editor = {
+        ['<c-s>'] = 'Submit',
+        ['<c-k>'] = 'Abort',
+      },
+      rebase_editor_I = {
+        ['<c-s>'] = 'Submit',
+        ['<c-k>'] = 'Abort',
+      },
     },
   },
   keys = { { '<Leader>gg', '<cmd>Neogit<cr>', desc = 'Neogit' } },

@@ -1,4 +1,4 @@
-local prefix = '<Leader>gl'
+local gitlab_prefix = '<Leader>gl'
 
 return {
   {
@@ -12,52 +12,175 @@ return {
       require('gitlab.server').build(true)
     end,
     opts = {
+      global = {
+        disable_all = true,
+      },
+      popup = {
+        perform_action = '<C-s>',
+        discard_changes = '<C-k>',
+      },
       reviewer_settings = {
         jump_with_no_diagnostics = true,
         diffview = {
           imply_local = true,
         },
       },
-      keymaps = {
-        global = {
-          add_assignee = prefix .. 'aa',
-          delete_assignee = prefix .. 'ad',
-          add_label = prefix .. 'la',
-          delete_label = prefix .. 'ld',
-          add_reviewer = prefix .. 'ra',
-          delete_reviewer = prefix .. 'rd',
-          approve = prefix .. 'A', -- Approve MR
-          revoke = prefix .. 'R', -- Revoke MR approval
-          merge = prefix .. 'M', -- Merge the feature branch to the target branch and close MR
-          create_mr = prefix .. 'C', -- Create a new MR for currently checked-out feature branch
-          choose_merge_request = prefix .. 'c', -- Chose MR for review (if necessary check out the feature branch)
-          start_review = prefix .. 'S', -- Start review for the currently checked-out branch
-          summary = prefix .. 's', -- Show the editable summary of the MR
-          copy_mr_url = prefix .. 'u', -- Copy the URL of the MR to the system clipboard
-          open_in_browser = prefix .. 'o', -- Openthe URL of the MR in the default Internet browser
-          create_note = prefix .. 'n', -- Create a note (comment not linked to a specific line)
-          pipeline = prefix .. 'p', -- Show the pipeline status
-          toggle_discussions = prefix .. 'd', -- Toggle the discussions window
-          toggle_draft_mode = prefix .. 'D', -- Toggle between draft mode (comments posted as drafts) and live mode (comments are posted immediately)
-          publish_all_drafts = prefix .. 'P', -- Publish all draft comments/notes
-        },
-        discussion_tree = {
-          toggle_sort_method = 'gSt',
-          toggle_date_format = 'gDt',
-          add_emoji = 'gEa',
-          delete_emoji = 'gEd',
-        },
-        popup = {
-          perform_action = '<C-s>',
-          discard_changes = '<C-k>',
-        },
-      },
       discussion_tree = {
+        toggle_sort_method = 'gSt',
+        toggle_date_format = 'gDt',
+        add_emoji = 'gEa',
+        delete_emoji = 'gEd',
         position = 'left',
         keep_current_open = true,
         draft_mode = true,
         tree_type = 'by_file_name',
       },
     },
+    keys = { { gitlab_prefix, desc = 'GitLab' } },
+    init = function()
+      require('which-key').add {
+        { gitlab_prefix, group = 'GitLab', icon = { icon = '', color = 'orange' } },
+        {
+          gitlab_prefix .. 'aa',
+          function()
+            require('gitlab').add_assignee()
+          end,
+          desc = 'Add assignee',
+        },
+        {
+          gitlab_prefix .. 'ad',
+          function()
+            require('gitlab').delete_assignee()
+          end,
+          desc = 'Delete assignee',
+        },
+        {
+          gitlab_prefix .. 'la',
+          function()
+            require('gitlab').add_label()
+          end,
+          desc = 'Add label',
+        },
+        {
+          gitlab_prefix .. 'ld',
+          function()
+            require('gitlab').delete_label()
+          end,
+          desc = 'Delete label',
+        },
+        {
+          gitlab_prefix .. 'ra',
+          function()
+            require('gitlab').add_reviewer()
+          end,
+          desc = 'Add reviewer',
+        },
+        {
+          gitlab_prefix .. 'rd',
+          function()
+            require('gitlab').delete_reviewer()
+          end,
+          desc = 'Delete reviewer',
+        },
+        {
+          gitlab_prefix .. 'A',
+          function()
+            require('gitlab').approve()
+          end,
+          desc = 'Approve',
+        },
+        {
+          gitlab_prefix .. 'R',
+          function()
+            require('gitlab').revoke()
+          end,
+          desc = 'Revoke',
+        },
+        {
+          gitlab_prefix .. 'M',
+          function()
+            require('gitlab').merge()
+          end,
+          desc = 'Merge',
+        },
+        {
+          gitlab_prefix .. 'C',
+          function()
+            require('gitlab').create_mr()
+          end,
+          desc = 'Create mr',
+        },
+        {
+          gitlab_prefix .. 'c',
+          function()
+            require('gitlab').choose_merge_request()
+          end,
+          desc = 'Choose merge request',
+        },
+        {
+          gitlab_prefix .. 'S',
+          function()
+            require('gitlab').start_review()
+          end,
+          desc = 'Start review',
+        },
+        {
+          gitlab_prefix .. 's',
+          function()
+            require('gitlab').summary()
+          end,
+          desc = 'Summary',
+        },
+        {
+          gitlab_prefix .. 'u',
+          function()
+            require('gitlab').copy_mr_url()
+          end,
+          desc = 'Copy mr url',
+        },
+        {
+          gitlab_prefix .. 'o',
+          function()
+            require('gitlab').open_in_browser()
+          end,
+          desc = 'Open in browser',
+        },
+        {
+          gitlab_prefix .. 'n',
+          function()
+            require('gitlab').create_note()
+          end,
+          desc = 'Create note',
+        },
+        {
+          gitlab_prefix .. 'p',
+          function()
+            require('gitlab').pipeline()
+          end,
+          desc = 'Pipeline',
+        },
+        {
+          gitlab_prefix .. 'd',
+          function()
+            require('gitlab').toggle_discussions()
+          end,
+          desc = 'Toggle discussions',
+        },
+        {
+          gitlab_prefix .. 'D',
+          function()
+            require('gitlab').toggle_draft_mode()
+          end,
+          desc = 'Toggle draft mode',
+        },
+        {
+          gitlab_prefix .. 'P',
+          function()
+            require('gitlab').publish_all_drafts()
+          end,
+          desc = 'Publish all drafts',
+        },
+      }
+    end,
   },
 }
