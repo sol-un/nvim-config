@@ -107,12 +107,9 @@ return {
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed or {}, { 'ts_ls', 'eslint', 'eslint_d', 'js-debug-adapter' })
+      vim.list_extend(opts.ensure_installed or {}, { 'typescript-language-server', 'eslint-lsp', 'eslint_d', 'js-debug-adapter' })
     end,
   },
-  -- disabling eslint as an LSP, because when used as an LSP *and* a linter, the diagnostics will duplicate
-  -- this will disable eslint LSP commands like "Fix all fixable eslint errors", but auto-fixing is handled by eslint_d anyway
-  { 'mason-org/mason-lspconfig.nvim', opts = { automatic_enable = { exclude = { 'eslint' } } } },
   {
     'neovim/nvim-lspconfig',
     opts = {

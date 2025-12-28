@@ -19,6 +19,10 @@ return {
     end,
   },
   {
+    'neovim/nvim-lspconfig',
+    opts = { servers = { marksman = {} } },
+  },
+  {
     'mfussenegger/nvim-lint', -- Linters
     opts = { linters_by_ft = { markdown = { 'markdownlint-cli2' } } },
   },

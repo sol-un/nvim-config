@@ -8,8 +8,12 @@ return {
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed or {}, { 'lua_ls', 'stylua', 'selene' })
+      vim.list_extend(opts.ensure_installed or {}, { 'lua-language-server', 'stylua', 'selene' })
     end,
+  },
+  {
+    'neovim/nvim-lspconfig',
+    opts = { servers = { lua_ls = {} } },
   },
   {
     'mfussenegger/nvim-lint', -- Linters

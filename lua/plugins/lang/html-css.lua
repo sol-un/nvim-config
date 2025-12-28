@@ -11,12 +11,23 @@ return {
       vim.list_extend(opts.ensure_installed or {}, {
         'html-lsp',
         'htmlhint',
-        'cssls',
+        'css-lsp',
         'css-variables-language-server',
         'cssmodules-language-server',
         'stylelint',
       })
     end,
+  },
+  {
+    'neovim/nvim-lspconfig',
+    opts = {
+      servers = {
+        html = {},
+        cssls = {},
+        cssmodules_ls = {},
+        css_variables = {},
+      },
+    },
   },
   {
     'mfussenegger/nvim-lint', -- Linters
