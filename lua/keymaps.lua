@@ -178,9 +178,9 @@ wk.add {
 
   { '<Leader>S', group = 'Session' },
 
-  { '<Leader>t', group = 'Toggles' },
+  { '<Leader>u', group = 'UI' },
   {
-    '<Leader>tc',
+    '<Leader>uc',
     function()
       vim.g.should_scrolloff = not vim.g.should_scrolloff
       vim.opt.scrolloff = vim.g.should_scrolloff and 999 or 0
@@ -222,7 +222,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         cond = is_codelens_supported,
       },
       {
-        '<leader>th',
+        '<leader>uh',
         function()
           vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
         end,

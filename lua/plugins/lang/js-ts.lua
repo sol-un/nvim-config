@@ -159,4 +159,11 @@ return {
       end
     end,
   },
+  {
+    'nvim-neotest/neotest',
+    dependencies = { 'nvim-neotest/neotest-jest' },
+    opts = function(_, opts)
+      table.insert(opts.adapters or {}, require 'neotest-jest' {})
+    end,
+  },
 }
