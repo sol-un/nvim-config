@@ -5,6 +5,11 @@ local cokeline = require 'cokeline.mappings'
 
 wk.add {
   { '<Esc>', '<cmd>nohlsearch<CR>' }, -- Clear highlights on search when pressing <Esc> in normal mode
+
+  -- Better up/down on wrapped lines
+  { 'j', "v:count == 0 ? 'gj' : 'j'", expr = true, silent = true, mode = { 'n', 'x' } },
+  { 'k', "v:count == 0 ? 'gk' : 'k'", expr = true, silent = true, mode = { 'n', 'x' } },
+
   { '<leader>x', vim.diagnostic.setloclist, desc = 'Open diagnostic quickfix list' },
   { '<Esc><Esc>', '<C-\\><C-n>', desc = 'Exit terminal mode', mode = 't' }, -- This won't work in all terminal emulators/tmux/etc
   { '<C-s>', '<Cmd>w<CR><Esc>', mode = { 'n', 'i', 'v', 's' } }, -- Save
