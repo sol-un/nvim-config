@@ -1,6 +1,5 @@
 return {
   'folke/snacks.nvim',
-  event = 'VeryLazy',
   opts = function(_, opts)
     ---@module 'snacks'
     ---@type snacks.Config
@@ -8,6 +7,7 @@ return {
       notifier = {},
       indent = {},
       scroll = {},
+      dashboard = { preset = { header = '' }, sections = { { section = 'header' } } },
       statuscolumn = {
         left = { 'git', 'sign' }, -- priority of signs on the left (high to low)
         right = { 'fold' }, -- priority of signs on the right (high to low)
