@@ -7,6 +7,48 @@ local filetypes = {
   'typescript.tsx',
 }
 
+local adapters = {
+  {
+    type = 'pwa-node',
+    request = 'launch',
+    name = 'Launch file',
+    program = '${file}',
+    cwd = '${workspaceFolder}',
+    resolveSourceMapLocations = {
+      '${workspaceFolder}/**',
+      '!**/node_modules/**',
+    },
+  },
+  {
+    type = 'pwa-node',
+    request = 'launch',
+    name = 'Launch file with args',
+    program = '${file}',
+    cwd = '${workspaceFolder}',
+    resolveSourceMapLocations = {
+      '${workspaceFolder}/**',
+      '!**/node_modules/**',
+    },
+    args = function()
+      local args_string = vim.fn.input 'Arguments: '
+      if args_string and args_string ~= '' then
+        return vim.split(args_string, ' ')
+      end
+      return nil
+    end,
+  },
+  {
+    type = 'pwa-chrome',
+    name = 'Launch Chrome',
+    request = 'launch',
+    sourceMaps = true,
+    protocol = 'inspector',
+    port = 9222,
+    webRoot = '${workspaceFolder}/src',
+    skipFiles = { '**/node_modules/**/*', '**/src/*' },
+  },
+}
+
 vim.api.nvim_create_autocmd('FileType', {
   pattern = filetypes,
   callback = function()
@@ -53,7 +95,7 @@ return {
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed or {}, { 'ts_ls', 'eslint', 'eslint_d' })
+      vim.list_extend(opts.ensure_installed or {}, { 'ts_ls', 'eslint', 'eslint_d', 'js-debug-adapter' })
     end,
   },
   -- disabling eslint as an LSP, because when used as an LSP *and* a linter, the diagnostics will duplicate
@@ -136,26 +178,7 @@ return {
       end
 
       for _, filetype in pairs(filetypes) do
-        dap.configurations[filetype] = {
-          {
-            type = 'pwa-node',
-            request = 'launch',
-            name = 'Launch file',
-            program = '${file}',
-            cwd = '${workspaceFolder}',
-            protocol = 'inspector',
-          },
-          {
-            type = 'pwa-chrome',
-            name = 'Launch Chrome',
-            request = 'launch',
-            sourceMaps = true,
-            protocol = 'inspector',
-            port = 9222,
-            webRoot = '${workspaceFolder}/src',
-            skipFiles = { '**/node_modules/**/*', '**/src/*' },
-          },
-        }
+        dap.configurations[filetype] = adapters
       end
     end,
   },
