@@ -2,15 +2,15 @@ vim.api.nvim_create_autocmd('FocusLost', {
   desc = 'Fade on blur',
   group = vim.api.nvim_create_augroup('vimade_focus_fading', { clear = false }),
   callback = function()
-    vim.cmd 'VimadeEnable'
+    pcall(vim.cmd, 'VimadeEnable')
   end,
 })
 
-vim.api.nvim_create_autocmd({ 'VimEnter', 'FocusGained' }, {
+vim.api.nvim_create_autocmd('FocusGained', {
   desc = 'Unfade on start/focus',
   group = vim.api.nvim_create_augroup('vimade_focus_fading', { clear = false }),
   callback = function()
-    vim.cmd 'VimadeDisable'
+    pcall(vim.cmd, 'VimadeDisable')
   end,
 })
 
@@ -18,6 +18,7 @@ vim.api.nvim_create_autocmd({ 'VimEnter', 'FocusGained' }, {
 return {
   {
     'TaDaa/vimade',
+    event = 'FocusLost',
     opts = {
       recipe = { 'default', { animate = true } },
       enablefocusfading = true,
