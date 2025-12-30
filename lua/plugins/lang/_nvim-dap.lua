@@ -1,3 +1,5 @@
+local prefix = '<Leader>d'
+
 return {
   {
     'mfussenegger/nvim-dap',
@@ -26,53 +28,6 @@ return {
         },
       },
     },
-    keys = function()
-      local dap = require 'dap'
-      local dapui = require 'dapui'
-
-      require('which-key').add {
-        { '<Leader>d', group = 'Debug', icon = '' },
-      }
-
-      return {
-        { '<leader>db', dap.toggle_breakpoint, desc = 'Toggle breakpoint' },
-        { '<leader>dB', dap.clear_breakpoints, desc = 'Clear breakpoints' },
-        { '<leader>dp', dap.pause, desc = 'Pause' },
-        { '<leader>dR', dap.repl.toggle, desc = 'Toggle REPL' },
-        { '<leader>ds', dap.run_to_cursor, desc = 'Run to cursor' },
-        { '<leader>dq', dap.close, desc = 'Close session' },
-        { '<leader>dh', require('dap.ui.widgets').hover, desc = 'Hover' },
-        {
-          '<leader>dE',
-          function()
-            vim.ui.input({ prompt = 'Expression: ' }, function(expr)
-              if expr then
-                dapui.eval(expr, { enter = true })
-              end
-            end)
-          end,
-          desc = 'Evaluate input',
-        },
-        { '<leader>dr', dap.restart_frame, desc = 'Restart' },
-        { '<leader>do', dap.step_over, desc = 'Step over' },
-        { '<leader>di', dap.step_into, desc = 'Step into' },
-        { '<leader>dO', dap.step_out, desc = 'Step out' },
-        { '<leader>du', dapui.toggle, desc = 'Toggle UI' },
-        { '<leader>dc', dap.continue, desc = 'Continue' },
-        { '<leader>dQ', dap.terminate, desc = 'Terminate session' },
-        {
-          '<leader>dC',
-          function()
-            vim.ui.input({ prompt = 'Condition: ' }, function(condition)
-              if condition then
-                require('dap').set_breakpoint(condition)
-              end
-            end)
-          end,
-          desc = 'Conditional breakpoint',
-        },
-      }
-    end,
     config = function()
       local dap = require 'dap'
       local dapui = require 'dapui'
@@ -87,6 +42,134 @@ return {
       dap.listeners.after.event_initialized['dapui_config'] = dapui.open
       dap.listeners.before.event_terminated['dapui_config'] = dapui.close
       dap.listeners.before.event_exited['dapui_config'] = dapui.close
+    end,
+    keys = prefix,
+    init = function()
+      require('which-key').add {
+        {
+          { '<Leader>d', group = 'Debug', icon = '' },
+          {
+            prefix .. 'b',
+            function()
+              require('dap').toggle_breakpoint()
+            end,
+            desc = 'Toggle breakpoint',
+          },
+          {
+            prefix .. 'B',
+            function()
+              require('dap').clear_breakpoints()
+            end,
+            desc = 'Clear breakpoints',
+          },
+          {
+            prefix .. 'p',
+            function()
+              require('dap').pause()
+            end,
+            desc = 'Pause',
+          },
+          {
+            prefix .. 'R',
+            function()
+              require('dap').repl.toggle()
+            end,
+            desc = 'Toggle REPL',
+          },
+          {
+            prefix .. 's',
+            function()
+              require('dap').run_to_cursor()
+            end,
+            desc = 'Run to cursor',
+          },
+          {
+            prefix .. 'q',
+            function()
+              require('dap').close()
+            end,
+            desc = 'Close session',
+          },
+          {
+            prefix .. 'h',
+            function()
+              require('dap.ui.widgets').hover()
+            end,
+            desc = 'Hover',
+          },
+          {
+            prefix .. 'E',
+            function()
+              vim.ui.input({ prompt = 'Expression: ' }, function(expr)
+                if expr then
+                  require('dapui').eval(expr, { enter = true })
+                end
+              end)
+            end,
+            desc = 'Evaluate input',
+          },
+          {
+            prefix .. 'r',
+            function()
+              require('dap').restart_frame()
+            end,
+            desc = 'Restart',
+          },
+          {
+            prefix .. 'o',
+            function()
+              require('dap').step_over()
+            end,
+            desc = 'Step over',
+          },
+          {
+            prefix .. 'i',
+            function()
+              require('dap').step_into()
+            end,
+            desc = 'Step into',
+          },
+          {
+            prefix .. 'O',
+            function()
+              require('dap').step_out()
+            end,
+            desc = 'Step out',
+          },
+          {
+            prefix .. 'u',
+            function()
+              require('dapui').toggle()
+            end,
+            desc = 'Toggle UI',
+          },
+          {
+            prefix .. 'c',
+            function()
+              require('dap').continue()
+            end,
+            desc = 'Continue',
+          },
+          {
+            prefix .. 'Q',
+            function()
+              require('dap').terminate()
+            end,
+            desc = 'Terminate session',
+          },
+          {
+            prefix .. 'C',
+            function()
+              vim.ui.input({ prompt = 'Condition: ' }, function(condition)
+                if condition then
+                  require('dap').set_breakpoint(condition)
+                end
+              end)
+            end,
+            desc = 'Conditional breakpoint',
+          },
+        },
+      }
     end,
   },
 }
