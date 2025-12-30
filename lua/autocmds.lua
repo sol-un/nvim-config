@@ -11,7 +11,6 @@ vim.api.nvim_create_autocmd('User', {
 
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
     vim.hl.on_yank()
   end,
@@ -48,9 +47,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWrite', 'InsertLeave', 'TextChanged' }, {
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufWrite', 'InsertLeave', 'TextChanged' }, {
   desc = 'Automatic linting',
-  group = vim.api.nvim_create_augroup('lint', { clear = true }),
   callback = function()
     local lint = require 'lint'
 
@@ -63,7 +61,6 @@ vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWrite', 'InsertLeave', 'TextChange
 
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   desc = 'Format on save',
-  group = vim.api.nvim_create_augroup('autformat', { clear = true }),
   callback = function()
     local conform = require 'conform'
 
