@@ -1,6 +1,5 @@
 return {
   'nvim-mini/mini.files',
-  event = 'VeryLazy',
   opts = {
     windows = {
       preview = true,
@@ -9,7 +8,7 @@ return {
       width_preview = math.floor(vim.o.columns * 0.69),
     },
   },
-  keys = function()
+  config = function(_, opts)
     local set = require('snacks').keymap.set
     set('n', '<Leader>e', function()
       if not require('mini.files').close() then
@@ -21,5 +20,8 @@ return {
         require('mini.files').open(vim.uv.cwd())
       end
     end, { desc = 'Explorer (CWD)' })
+
+    require('mini.files').setup(opts)
   end,
+  keys = { { '<Leader>e', desc = 'Explorer' }, { '<Leader>E', desc = 'Explorer (CWD)' } },
 }
