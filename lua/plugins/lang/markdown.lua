@@ -36,7 +36,7 @@ return {
   },
   {
     'OXY2DEV/markview.nvim',
-    lazy = false,
+    ft = 'markdown',
     opts = function()
       return {
         markdown = { horizontal_rules = require('markview.presets').horizontal_rules.thin },
@@ -62,7 +62,7 @@ return {
   },
   {
     'antonk52/markdowny.nvim',
-    event = 'VeryLazy',
+    ft = 'markdown',
     keys = function()
       require('snacks').keymap.set('v', '<Leader>ml', ":lua require('markdowny').link()<cr>", { ft = 'markdown', desc = 'Link' })
     end,
