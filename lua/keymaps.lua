@@ -10,6 +10,18 @@ wk.add {
   { 'j', "v:count == 0 ? 'gj' : 'j'", expr = true, silent = true, mode = { 'n', 'x' } },
   { 'k', "v:count == 0 ? 'gk' : 'k'", expr = true, silent = true, mode = { 'n', 'x' } },
 
+  -- Better indenting (stay in visual mode)
+  { '<', '<gv', mode = 'v' },
+  { '>', '>gv', mode = 'v' },
+
+  -- Auto-close pairs
+  { '`', '``<left>', mode = 'i' },
+  { '"', '""<left>', mode = 'i' },
+  { '(', '()<left>', mode = 'i' },
+  { '[', '[]<left>', mode = 'i' },
+  { '{', '{}<left>', mode = 'i' },
+  { '<', '<><left>', mode = 'i' },
+
   { '<leader>x', vim.diagnostic.setloclist, desc = 'Open diagnostic quickfix list' },
   { '<Esc><Esc>', '<C-\\><C-n>', desc = 'Exit terminal mode', mode = 't' }, -- This won't work in all terminal emulators/tmux/etc
   { '<C-s>', '<Cmd>w<CR><Esc>', mode = { 'n', 'i', 'v', 's' } }, -- Save
@@ -33,6 +45,10 @@ wk.add {
   { '<C-/>', '<cmd>close<cr>', desc = 'Hide Terminal', mode = 't' },
   { '<C-_>', '<cmd>close<cr>', desc = 'Hide Terminal', mode = 't' },
   { '<C-h>', '<Backspace>' },
+  { '<C-j>', '<cmd>wincmd j<cr>', mode = 't' },
+  { '<C-k>', '<cmd>wincmd k<cr>', mode = 't' },
+  { '<C-l>', '<cmd>wincmd l<cr>', mode = 't' },
+
   {
     '[e',
     function()
