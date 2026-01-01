@@ -4,6 +4,7 @@ require('lazy').setup({
   { import = 'plugins.lang' },
   { import = 'plugins.git' },
   { import = 'plugins.ui' },
+  { import = 'plugins.editing' },
 }, {
   checker = {
     enabled = true,
