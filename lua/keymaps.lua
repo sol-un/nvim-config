@@ -181,6 +181,7 @@ wk.add {
   { '<Leader>g', group = 'Git' },
 
   { '<Leader>S', group = 'Session' },
+  { '<Leader>o', group = 'Overseer', icon = '' },
 
   { '<Leader>u', group = 'UI' },
   {
