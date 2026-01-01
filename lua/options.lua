@@ -1,63 +1,132 @@
 local opt = vim.opt
 
-opt.number = true
-opt.relativenumber = true
+opt.number = true -- Line numbers
+opt.relativenumber = true -- Relative line numbers
+opt.cursorline = true -- Highlight current line
+opt.scrolloff = 99 -- Keep cursor in the middle of the screen
+opt.sidescrolloff = 8 -- Keep 8 columns left/right of cursor
+
+-- Indentation
+opt.tabstop = 2 -- Tab width
+opt.shiftwidth = 2 -- Indent width
+opt.softtabstop = 2 -- Soft tab stop
+opt.expandtab = true -- Use spaces instead of tabs
+opt.smartindent = true -- Smart auto-indenting
+opt.autoindent = true -- Copy indent from current line
+opt.shiftround = true -- Round indent
+opt.breakindent = true -- Enable break indent
+
+-- Search settings
+opt.ignorecase = true -- Case insensitive search
+opt.smartcase = true -- Case sensitive if uppercase in search
+opt.hlsearch = false -- Don't highlight search results
+opt.incsearch = true -- Show matches as you type
+
+-- Visual settings
+opt.termguicolors = true -- Enable 24-bit colors
+opt.signcolumn = 'yes' -- Always show sign column
+opt.showmatch = true -- Highlight matching brackets
+opt.matchtime = 2 -- How long to show matching bracket
+opt.cmdheight = 1 -- Command line height
+opt.showmode = false -- Don't show mode in command line
+opt.pumheight = 10 -- Popup menu height
+opt.pumblend = 10 -- Popup menu transparency
+opt.winblend = 0 -- Floating window transparency
+opt.completeopt = 'menu,menuone,noselect'
+opt.conceallevel = 2 -- Hide * markup for bold and italic, but not markers with substitutions
+opt.confirm = true -- Confirm to save changes before exiting modified buffer
+opt.concealcursor = '' -- Don't hide cursor line markup
+opt.synmaxcol = 300 -- Syntax highlighting limit
+opt.ruler = false -- Disable the default ruler
+opt.virtualedit = 'block' -- Allow cursor to move where there is no text in visual block mode
+opt.winminwidth = 5 -- Minimum window width
 opt.winborder = 'rounded'
-opt.linebreak = true
 
+-- File handling
+opt.backup = false -- Don't create backup files
+opt.writebackup = false -- Don't create backup before writing
+opt.swapfile = false -- Don't create swap files
+opt.undofile = true -- Persistent undo
+opt.undolevels = 10000
+
+local undodir = vim.fn.expand '~/.vim/undodir' -- Create undo directory if it doesn't exist
+if vim.fn.isdirectory(undodir) == 0 then
+  vim.fn.mkdir(undodir, 'p')
+end
+opt.undodir = undodir -- Undo directory
+
+opt.updatetime = 300 -- Faster completion
+opt.timeoutlen = vim.g.vscode and 1000 or 300 -- Lower than default (1000) to quickly trigger which-key
+opt.ttimeoutlen = 0 -- Key code timeout
+opt.autoread = true -- Auto reload files changed outside vim
+opt.autowrite = true -- Auto save
+
+-- Behavior settings
+opt.hidden = true -- Allow hidden buffers
+opt.errorbells = false -- No error bells
+opt.backspace = 'indent,eol,start' -- Better backspace behavior
+opt.autochdir = false -- Don't auto change directory
+opt.iskeyword:append '-' -- Treat dash as part of word
+opt.path:append '**' -- include subdirectories in search
+opt.selection = 'exclusive' -- Selection behavior
+opt.mouse = 'a' -- Enable mouse support
+opt.modifiable = true -- Allow buffer modifications
+opt.encoding = 'UTF-8' -- Set encoding
 opt.sessionoptions = 'buffers,curdir,folds,help,tabpages,winsize,globals'
-opt.foldmethod = 'expr'
-vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
-opt.foldlevel = 99
-opt.foldlevelstart = 99
-vim.wo.wrap = true
-
-opt.mouse = 'a' -- Enable mouse mode
-
-opt.showmode = false -- Don't show the mode, since it's already in the status line
-
--- Sync clipboard between OS and Neovim.
 vim.schedule(function()
   opt.clipboard = 'unnamedplus'
 end)
 
-opt.breakindent = true -- Enable break indent
+-- Folding settings
+opt.smoothscroll = true
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+opt.foldlevel = 99 -- Start with all folds open
+opt.foldlevelstart = 99
 
--- Save undo history
-opt.undofile = true
+-- Split behavior
+opt.splitbelow = true -- Horizontal splits go below
+opt.splitright = true -- Vertical splits go right
+opt.splitkeep = 'screen'
 
--- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
-opt.ignorecase = true
-opt.smartcase = true
+-- Command-line completion
+opt.wildmenu = true
+opt.wildmode = 'longest:full,full'
+opt.wildignore:append { '*.o', '*.obj', '*.pyc', '*.class', '*.jar' }
 
-opt.signcolumn = 'yes' -- Keep signcolumn on by default
+-- Better diff options
+opt.diffopt:append 'linematch:60'
 
-opt.updatetime = 250 -- Decrease update time
+-- Performance improvements
+opt.redrawtime = 10000
+opt.maxmempattern = 20000
 
-opt.timeoutlen = 300 -- Decrease mapped sequence wait time
+opt.fillchars = {
+  diff = '╱',
+}
 
--- Configure how new splits should be opened
-opt.splitright = true
-opt.splitbelow = true
+opt.jumpoptions = 'view'
+opt.laststatus = 3 -- global statusline
+opt.wrap = true
+opt.linebreak = true -- Wrap lines at convenient points
+opt.list = true -- Show some invisible characters (tabs...
+opt.shortmess:append { W = true, I = true, c = true, C = true }
 
--- Sets how neovim will display certain whitespace characters in the editor.
-opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+vim.g.markdown_recommended_style = 0
 
-opt.inccommand = 'split' -- Preview substitutions live, as you type
-
-opt.cursorline = true -- Show which line your cursor is on
-
-opt.scrolloff = 999 -- Minimal number of screen lines to keep above and below the cursor.
-
--- if performing an operation that would fail due to unsaved changes in the buffer (like `:q`),
--- instead raise a dialog asking if you wish to save the current file(s)
-opt.confirm = true
-
-opt.backup = false -- Don't create backup files
-opt.writebackup = false -- Don't create backup before writing
-opt.swapfile = false -- Don't create swap files
+vim.filetype.add {
+  extension = {
+    env = 'dotenv',
+  },
+  filename = {
+    ['.env'] = 'dotenv',
+    ['env'] = 'dotenv',
+  },
+  pattern = {
+    ['[jt]sconfig.*.json'] = 'jsonc',
+    ['%.env%.[%w_.-]+'] = 'dotenv',
+  },
+}
 
 -- Global state
 vim.g.prettier_disabled = false
