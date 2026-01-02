@@ -5,6 +5,7 @@ opt.relativenumber = true -- Relative line numbers
 opt.cursorline = true -- Highlight current line
 opt.scrolloff = 99 -- Keep cursor in the middle of the screen
 opt.sidescrolloff = 8 -- Keep 8 columns left/right of cursor
+opt.spelllang = { 'en', 'ru' }
 
 -- Indentation
 opt.tabstop = 2 -- Tab width

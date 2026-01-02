@@ -10,7 +10,7 @@ vim.api.nvim_create_autocmd('User', {
 })
 
 vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
+  desc = 'Highlight when yanking text',
   callback = function()
     vim.hl.on_yank()
   end,
@@ -83,5 +83,14 @@ vim.api.nvim_create_autocmd('FileType', {
         return
       end
     end
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  desc = 'Wrap and check for spell in text filetypes',
+  pattern = { 'text', 'plaintex', 'typst', 'gitcommit', 'markdown' },
+  callback = function()
+    vim.opt_local.wrap = true
+    vim.opt_local.spell = true
   end,
 })
