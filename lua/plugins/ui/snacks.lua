@@ -10,7 +10,7 @@ return {
       dashboard = { preset = { header = '' }, sections = { { section = 'header' } } },
       statuscolumn = {
         left = { 'git', 'sign' }, -- priority of signs on the left (high to low)
-        right = { 'fold' }, -- priority of signs on the right (high to low)
+        right = { 'mark', 'fold' }, -- priority of signs on the right (high to low)
         folds = { open = true },
       },
       bigfile = {},

@@ -157,7 +157,7 @@ wk.add {
   { '<Leader>fk', picker.keymaps, desc = 'Find keymaps' },
   { '<Leader>fn', picker.notifications, desc = 'Find notifications' },
   { '<Leader>fo', picker.recent, desc = 'Find old files' },
-  { '<Leader>fm', picker.man, desc = 'Find man' },
+  { '<Leader>fm', picker.marks, desc = 'Find marks' },
   { '<Leader>fr', picker.registers, desc = 'Find registers' },
   { '<Leader>fp', picker.projects, desc = 'Find projects' },
   { '<Leader>fs', picker.smart, desc = 'Find buffers/recent/files' },
