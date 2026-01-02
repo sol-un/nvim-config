@@ -22,7 +22,7 @@ local function get_macro()
 end
 
 local function get_cwd()
-  return vim.fn.getcwd()
+  return vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
 end
 
 return {
@@ -35,14 +35,22 @@ return {
       globalstatus = true,
     },
     sections = {
+      lualine_b = {
+        { 'branch', icon = '' },
+        'diff',
+        'diagnostics',
+      },
       lualine_c = { { get_cwd, icon = '' }, { get_macro, icon = '' } },
       lualine_x = {},
       lualine_y = {
         { 'lsp_status', icon = '', symbols = { done = '', separator = ', ', spinner = {} } },
-        { get_linters },
-        { get_formatters },
+        get_linters,
+        get_formatters,
       },
-      lualine_z = { 'location', { 'datetime', icon = '', style = '%H:%M' } },
+      lualine_z = {
+        'location',
+        { 'datetime', icon = '', style = '%H:%M' },
+      },
     },
   },
 }
