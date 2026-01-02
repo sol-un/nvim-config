@@ -1,5 +1,12 @@
 return {
   'chrisgrieser/nvim-origami',
   event = 'VeryLazy',
-  opts = {}, -- needed even when using default config
+  opts = {
+    foldtext = {
+      disableOnFt = { 'NeogitStatus' },
+    },
+    autoFold = {
+      enabled = false,
+    },
+  },
 }
