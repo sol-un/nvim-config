@@ -38,7 +38,15 @@ return {
       lualine_b = {
         { 'branch', icon = '' },
         'diff',
-        'diagnostics',
+        {
+          'diagnostics',
+          symbols = {
+            error = ' ',
+            warn = ' ',
+            info = ' ',
+            hint = ' ',
+          },
+        },
       },
       lualine_c = { { get_cwd, icon = '' }, { get_macro, icon = '' } },
       lualine_x = {},
