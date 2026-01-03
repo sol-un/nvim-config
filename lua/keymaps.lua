@@ -1,7 +1,10 @@
 local wk = require 'which-key'
-local bufdelete = require('snacks').bufdelete
-local picker = require('snacks').picker
 local cokeline = require 'cokeline.mappings'
+local snacks = require 'snacks'
+
+local bufdelete = snacks.bufdelete
+local picker = snacks.picker
+local toggle = snacks.toggle
 
 wk.add {
   { '<Esc>', '<cmd>nohlsearch<CR>' }, -- Clear highlights on search when pressing <Esc> in normal mode
@@ -200,16 +203,12 @@ wk.add {
   { '<Leader>S', group = 'Session' },
   { '<Leader>o', group = 'Overseer', icon = '' },
 
-  { '<Leader>u', group = 'UI' },
-  {
-    '<Leader>uc',
-    function()
-      vim.g.should_scrolloff = not vim.g.should_scrolloff
-      vim.opt.scrolloff = vim.g.should_scrolloff and 999 or 0
-    end,
-    desc = 'Toggle scrolloff',
-  },
+  { '<Leader>T', group = 'Toggles' },
 }
+
+toggle.option('wrap', { name = 'Wrap' }):map '<Leader>Tw'
+toggle.option('scrolloff', { name = 'Scrolloff', on = 99, off = 4 }):map '<Leader>Ts'
+toggle.diagnostics():map '<Leader>Td'
 
 -- Delete default LSP keymaps to be replaced with Snacks.picker
 for _, lhs in ipairs { 'gra', 'grt', 'grn', 'grr', 'gri', 'gO' } do
@@ -243,15 +242,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
         desc = 'Refresh & display codelens',
         cond = is_codelens_supported,
       },
-      {
-        '<leader>uh',
-        function()
-          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
-        end,
-        desc = 'Toggle inlay hints',
-        cond = is_inlay_hint_suported,
-      },
     }
+
+    if is_inlay_hint_suported then
+      toggle.inlay_hints():map '<Leader>Th'
+    end
   end,
 })
 
