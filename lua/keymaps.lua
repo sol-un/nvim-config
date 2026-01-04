@@ -1,10 +1,4 @@
 local wk = require 'which-key'
-local cokeline = require 'cokeline.mappings'
-local snacks = require 'snacks'
-
-local bufdelete = snacks.bufdelete
-local picker = snacks.picker
-local toggle = snacks.toggle
 
 ---@param side 'left' | 'right'
 local delete_buffers_to_side = function(side)
@@ -22,7 +16,7 @@ local delete_buffers_to_side = function(side)
       end
     end)
     :each(function(buffer)
-      bufdelete.delete(buffer.number)
+      require('snacks').bufdelete.delete(buffer.number)
     end)
 end
 
@@ -127,9 +121,27 @@ wk.add {
   { '<Leader>b', group = 'Buffers' },
   { 'L', '<Plug>(cokeline-focus-next)', desc = 'Next buffer' },
   { 'H', '<Plug>(cokeline-focus-prev)', desc = 'Previous buffer' },
-  { '<Leader>bd', bufdelete.delete, desc = 'Close current buffer' },
-  { '<Leader>bo', bufdelete.other, desc = 'Close all other buffers' },
-  { '<Leader>bA', bufdelete.all, desc = 'Close all buffers' },
+  {
+    '<Leader>bd',
+    function()
+      require('snacks').bufdelete.delete()
+    end,
+    desc = 'Close current buffer',
+  },
+  {
+    '<Leader>bo',
+    function()
+      require('snacks').bufdelete.other()
+    end,
+    desc = 'Close all other buffers',
+  },
+  {
+    '<Leader>bA',
+    function()
+      require('snacks').bufdelete.all()
+    end,
+    desc = 'Close all buffers',
+  },
   {
     '<Leader>br',
     function()
@@ -151,7 +163,7 @@ wk.add {
     function()
       local last = require('cokeline.history'):last()
       if last ~= nil then
-        cokeline.by_index('focus', last.index)
+        require('cokeline.mappings').by_index('focus', last.index)
       else
         vim.notify('Buffer history is empty', 'info')
       end
@@ -162,9 +174,9 @@ wk.add {
     '<Leader>bh',
     function()
       vim.g.cokeline_is_picking = true
-      cokeline.pick(function(buf)
+      require('cokeline.mappings').pick(function(buf)
         vim.cmd.split()
-        cokeline.by_index('focus', buf.index)
+        require('cokeline.mappings').by_index('focus', buf.index)
         vim.g.cokeline_is_picking = false
       end)
     end,
@@ -174,9 +186,9 @@ wk.add {
     '<Leader>bv',
     function()
       vim.g.cokeline_is_picking = true
-      cokeline.pick(function(buf)
+      require('cokeline.mappings').pick(function(buf)
         vim.cmd.vsplit()
-        cokeline.by_index('focus', buf.index)
+        require('cokeline.mappings').by_index('focus', buf.index)
         vim.g.cokeline_is_picking = false
       end)
     end,
@@ -184,32 +196,122 @@ wk.add {
   },
 
   { '<Leader>f', group = 'Find' },
-  { '<Leader>,', picker.buffers, desc = 'Find buffers' },
-  { '<Leader>f<CR>', picker.resume, desc = 'Resume previous search' },
-  { '<Leader>fl', picker.lines, desc = 'Find lines' },
-  { '<Leader>fc', picker.grep_word, desc = 'Find word under cursor' },
-  { '<Leader>fC', picker.commands, desc = 'Find commands' },
-  { '<Leader>fh', picker.help, desc = 'Find help' },
-  { '<Leader>fk', picker.keymaps, desc = 'Find keymaps' },
-  { '<Leader>fn', picker.notifications, desc = 'Find notifications' },
-  { '<Leader>fo', picker.recent, desc = 'Find old files' },
-  { '<Leader>fm', picker.marks, desc = 'Find marks' },
-  { '<Leader>fr', picker.registers, desc = 'Find registers' },
-  { '<Leader>fp', picker.projects, desc = 'Find projects' },
-  { '<Leader>fs', picker.smart, desc = 'Find buffers/recent/files' },
-  { '<Leader>fu', picker.undo, desc = 'Find undo history' },
-  { '<Leader>fj', picker.undo, desc = 'Find jumps' },
+  {
+    '<Leader>,',
+    function()
+      require('snacks').picker.buffers()
+    end,
+    desc = 'Find buffers',
+  },
+  {
+    '<Leader>f<CR>',
+    function()
+      require('snacks').picker.resume()
+    end,
+    desc = 'Resume previous search',
+  },
+  {
+    '<Leader>fl',
+    function()
+      require('snacks').picker.lines()
+    end,
+    desc = 'Find lines',
+  },
+  {
+    '<Leader>fc',
+    function()
+      require('snacks').picker.grep_word()
+    end,
+    desc = 'Find word under cursor',
+  },
+  {
+    '<Leader>fC',
+    function()
+      require('snacks').picker.commands()
+    end,
+    desc = 'Find commands',
+  },
+  {
+    '<Leader>fh',
+    function()
+      require('snacks').picker.help()
+    end,
+    desc = 'Find help',
+  },
+  {
+    '<Leader>fk',
+    function()
+      require('snacks').picker.keymaps()
+    end,
+    desc = 'Find keymaps',
+  },
+  {
+    '<Leader>fn',
+    function()
+      require('snacks').picker.notifications()
+    end,
+    desc = 'Find notifications',
+  },
+  {
+    '<Leader>fo',
+    function()
+      require('snacks').picker.recent()
+    end,
+    desc = 'Find old files',
+  },
+  {
+    '<Leader>fm',
+    function()
+      require('snacks').picker.marks()
+    end,
+    desc = 'Find marks',
+  },
+  {
+    '<Leader>fr',
+    function()
+      require('snacks').picker.registers()
+    end,
+    desc = 'Find registers',
+  },
+  {
+    '<Leader>fp',
+    function()
+      require('snacks').picker.projects()
+    end,
+    desc = 'Find projects',
+  },
+  {
+    '<Leader>fs',
+    function()
+      require('snacks').picker.smart()
+    end,
+    desc = 'Find buffers/recent/files',
+  },
+  {
+    '<Leader>fu',
+    function()
+      require('snacks').picker.undo()
+    end,
+    desc = 'Find undo history',
+  },
+  {
+    '<Leader>fj',
+    function()
+      require('snacks').picker.undo()
+    end,
+    desc = 'Find jumps',
+  },
   {
     '<Leader>fF',
     function()
-      picker.files { hidden = true, ignored = true }
+      require('snacks').picker.files { hidden = true, ignored = true }
     end,
     desc = 'Find all files',
   },
   {
     '<Leader>fO',
     function()
-      picker.recent { filter = { cwd = true } }
+      require('snacks').picker.recent { filter = { cwd = true } }
     end,
     desc = 'Find old files (cwd)',
   },
@@ -220,11 +322,18 @@ wk.add {
     end,
     desc = 'Find files',
   },
-  { '<Leader>fw', picker.grep, desc = 'Find words', cond = vim.fn.executable 'rg' == 1 },
+  {
+    '<Leader>fw',
+    function()
+      require('snacks').picker.grep()
+    end,
+    desc = 'Find words',
+    cond = vim.fn.executable 'rg' == 1,
+  },
   {
     '<Leader>fW',
     function()
-      picker.grep { hidden = true, ignored = true }
+      require('snacks').picker.grep { hidden = true, ignored = true }
     end,
     desc = 'Find words in all files',
     cond = vim.fn.executable 'rg' == 1,
@@ -238,11 +347,25 @@ wk.add {
   { '<Leader>a', group = 'AI', icon = '' },
   { '<leader>x', group = 'Trouble', icon = { icon = '󰙅', color = 'red' } },
   { '<Leader>T', group = 'Toggles' },
+  {
+    '<Leader>Tw',
+    function()
+      require('snacks').toggle.option('wrap', { name = 'Wrap' })
+    end,
+  },
+  {
+    '<Leader>Ts',
+    function()
+      require('snacks').toggle.option('scrolloff', { name = 'Scrolloff', on = 99, off = 4 })
+    end,
+  },
+  {
+    '<Leader>Td',
+    function()
+      require('snacks').toggle.diagnostics()
+    end,
+  },
 }
-
-toggle.option('wrap', { name = 'Wrap' }):map '<Leader>Tw'
-toggle.option('scrolloff', { name = 'Scrolloff', on = 99, off = 4 }):map '<Leader>Ts'
-toggle.diagnostics():map '<Leader>Td'
 
 -- Delete default LSP keymaps to be replaced with Snacks.picker
 for _, lhs in ipairs { 'gra', 'grt', 'grn', 'grr', 'gri', 'gO' } do
@@ -258,15 +381,51 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     wk.add {
       { 'gl', group = 'Language tools' },
-      { 'gd', picker.lsp_definitions, desc = 'LSP: Goto definition' },
-      { 'gr', picker.lsp_references, desc = 'LSP: References' },
-      { 'gI', picker.lsp_references, desc = 'LSP: Goto implementation' },
-      { 'gy', picker.lsp_references, desc = 'LSP: Goto type definition' },
+      {
+        'gd',
+        function()
+          require('snacks').picker.lsp_definitions()
+        end,
+        desc = 'LSP: Goto definition',
+      },
+      {
+        'gr',
+        function()
+          require('snacks').picker.lsp_references()
+        end,
+        desc = 'LSP: References',
+      },
+      {
+        'gI',
+        function()
+          require('snacks').picker.lsp_references()
+        end,
+        desc = 'LSP: Goto implementation',
+      },
+      {
+        'gy',
+        function()
+          require('snacks').picker.lsp_references()
+        end,
+        desc = 'LSP: Goto type definition',
+      },
       { 'gD', vim.lsp.buf.declaration, desc = 'LSP: Goto declaration' },
       { 'gla', vim.lsp.buf.code_action, desc = 'Code actions', mode = { 'n', 'x' } },
       { 'gld', vim.diagnostic.open_float, desc = 'Show diagnostics' },
-      { 'gls', picker.lsp_symbols, desc = 'Search document symbols' },
-      { 'glS', picker.lsp_workspace_symbols, desc = 'Search workspace symbols' },
+      {
+        'gls',
+        function()
+          require('snacks').picker.lsp_symbols()
+        end,
+        desc = 'Search document symbols',
+      },
+      {
+        'glS',
+        function()
+          require('snacks').picker.lsp_workspace_symbols()
+        end,
+        desc = 'Search workspace symbols',
+      },
       { 'glr', vim.lsp.buf.rename, desc = 'Rename' },
       {
         'gll',
@@ -276,11 +435,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
         desc = 'Refresh & display codelens',
         cond = is_codelens_supported,
       },
+      {
+        '<Leader>Th',
+        function()
+          require('snacks').toggle.inlay_hints()
+        end,
+        desc = 'Codelens',
+        cond = is_inlay_hint_suported,
+      },
     }
-
-    if is_inlay_hint_suported then
-      toggle.inlay_hints():map '<Leader>Th'
-    end
   end,
 })
 
