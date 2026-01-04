@@ -19,18 +19,18 @@ local adapters = {
       '!**/node_modules/**',
     },
   },
-  -- TODO: Figure out typescript debugging
-  -- {
-  --   name = 'Launch file (TypeScript)',
-  --   type = 'node',
-  --   request = 'launch',
-  --   program = '${file}',
-  --   runtimeExecutable = 'tsx',
-  --   cwd = '${workspaceFolder}',
-  --   console = 'integratedTerminal',
-  --   internalConsoleOptions = 'neverOpen',
-  --   skipFiles = { '<node_internals>/**', '${workspaceFolder}/node_modules/**' },
-  -- },
+  {
+    type = 'pwa-node',
+    request = 'launch',
+    name = 'Launch file (tsx)',
+    program = '${file}',
+    cwd = '${workspaceFolder}',
+    runtimeArgs = { '--import', 'tsx/esm' },
+    resolveSourceMapLocations = {
+      '${workspaceFolder}/**',
+      '!**/node_modules/**',
+    },
+  },
   {
     type = 'pwa-node',
     request = 'launch',
