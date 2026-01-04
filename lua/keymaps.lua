@@ -162,6 +162,7 @@ wk.add {
   { '<Leader>fp', picker.projects, desc = 'Find projects' },
   { '<Leader>fs', picker.smart, desc = 'Find buffers/recent/files' },
   { '<Leader>fu', picker.undo, desc = 'Find undo history' },
+  { '<Leader>fj', picker.undo, desc = 'Find jumps' },
   {
     '<Leader>fF',
     function()
