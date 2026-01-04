@@ -6,6 +6,26 @@ local bufdelete = snacks.bufdelete
 local picker = snacks.picker
 local toggle = snacks.toggle
 
+---@param side 'left' | 'right'
+local delete_buffers_to_side = function(side)
+  local buffers = require 'cokeline.buffers'
+
+  vim
+    .iter(buffers.get_visible())
+    :filter(function(buffer)
+      local current_index = require('cokeline.buffers').get_current().index
+
+      if side == 'right' then
+        return buffer.index > current_index
+      else
+        return buffer.index < current_index
+      end
+    end)
+    :each(function(buffer)
+      bufdelete.delete(buffer.number)
+    end)
+end
+
 wk.add {
   { '<Esc>', '<cmd>nohlsearch<CR>' }, -- Clear highlights on search when pressing <Esc> in normal mode
 
@@ -25,7 +45,6 @@ wk.add {
   { '{', '{}<left>', mode = 'i' },
   { '<', '<><left>', mode = 'i' },
 
-  { '<leader>x', vim.diagnostic.setloclist, desc = 'Open diagnostic quickfix list' },
   { '<Esc><Esc>', '<C-\\><C-n>', desc = 'Exit terminal mode', mode = 't' }, -- This won't work in all terminal emulators/tmux/etc
   { '<C-s>', '<Cmd>w<CR><Esc>', mode = { 'n', 'i', 'v', 's' } }, -- Save
   { '<Leader>q', group = 'Quit' },
@@ -111,6 +130,20 @@ wk.add {
   { '<Leader>bd', bufdelete.delete, desc = 'Close current buffer' },
   { '<Leader>bo', bufdelete.other, desc = 'Close all other buffers' },
   { '<Leader>bA', bufdelete.all, desc = 'Close all buffers' },
+  {
+    '<Leader>br',
+    function()
+      delete_buffers_to_side 'right'
+    end,
+    desc = 'Close buffers to the right',
+  },
+  {
+    '<Leader>bl',
+    function()
+      delete_buffers_to_side 'left'
+    end,
+    desc = 'Close buffers to the left',
+  },
   { '<Leader>bb', '<Plug>(cokeline-pick-focus)', desc = 'Focus buffer from tabline' },
   { '<Leader>bD', '<Plug>(cokeline-pick-close)', desc = 'Close buffer from tabline' },
   {
@@ -202,9 +235,8 @@ wk.add {
 
   { '<Leader>S', group = 'Session' },
   { '<Leader>o', group = 'Overseer', icon = '' },
-
   { '<Leader>a', group = 'AI', icon = '' },
-
+  { '<leader>x', group = 'Trouble', icon = { icon = '󰙅', color = 'red' } },
   { '<Leader>T', group = 'Toggles' },
 }
 
