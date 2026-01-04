@@ -203,6 +203,8 @@ wk.add {
   { '<Leader>S', group = 'Session' },
   { '<Leader>o', group = 'Overseer', icon = '' },
 
+  { '<Leader>a', group = 'AI', icon = '' },
+
   { '<Leader>T', group = 'Toggles' },
 }
 
