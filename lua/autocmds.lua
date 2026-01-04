@@ -9,6 +9,14 @@ vim.api.nvim_create_autocmd('User', {
   end,
 })
 
+vim.api.nvim_create_autocmd({ 'BufEnter', 'InsertLeave' }, {
+  desc = 'Clean up builtin marks',
+  callback = function()
+    vim.cmd 'delm 0-9[].^'
+    vim.cmd [[delm \"]]
+  end,
+})
+
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking text',
   callback = function()
