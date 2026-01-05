@@ -130,7 +130,6 @@ vim.filetype.add {
 
 -- Global state
 vim.g.prettier_disabled = false
-vim.g.cokeline_is_picking = false
 
 vim.diagnostic.config {
   severity_sort = true,

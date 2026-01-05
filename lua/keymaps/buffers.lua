@@ -1,27 +1,16 @@
----@param side 'left' | 'right'
-local delete_buffers_to_side = function(side)
-  local buffers = require 'cokeline.buffers'
+local get_path_by_id = function(buf_id)
+  local elements = require('bufferline.commands').get_elements()
+  local target = vim.iter(elements.elements):find(function(buf)
+    return buf.id == buf_id
+  end)
 
-  vim
-    .iter(buffers.get_visible())
-    :filter(function(buffer)
-      local current_index = buffers.get_current().index
-
-      if side == 'right' then
-        return buffer.index > current_index
-      else
-        return buffer.index < current_index
-      end
-    end)
-    :each(function(buffer)
-      require('snacks').bufdelete.delete(buffer.number)
-    end)
+  return target.path
 end
 
 require('which-key').add {
   { '<Leader>b', group = 'Buffers' },
-  { 'L', '<Plug>(cokeline-focus-next)', desc = 'Next buffer' },
-  { 'H', '<Plug>(cokeline-focus-prev)', desc = 'Previous buffer' },
+  { 'L', '<cmd>BufferLineCycleNext<cr>', desc = 'Next buffer' },
+  { 'H', '<cmd>BufferLineCyclePrev<cr>', desc = 'Previous buffer' },
   {
     '<Leader>bd',
     function()
@@ -31,9 +20,7 @@ require('which-key').add {
   },
   {
     '<Leader>bo',
-    function()
-      require('snacks').bufdelete.other()
-    end,
+    '<cmd>BufferLineCloseOthers<cr>',
     desc = 'Close all other buffers',
   },
   {
@@ -45,40 +32,26 @@ require('which-key').add {
   },
   {
     '<Leader>br',
-    function()
-      delete_buffers_to_side 'right'
-    end,
+    '<cmd>BufferLineCloseRight<cr>',
     desc = 'Close buffers to the right',
   },
   {
     '<Leader>bl',
-    function()
-      delete_buffers_to_side 'left'
-    end,
+    '<cmd>BufferLineCloseLeft<cr>',
     desc = 'Close buffers to the left',
   },
-  { '<Leader>bb', '<Plug>(cokeline-pick-focus)', desc = 'Focus buffer from tabline' },
-  { '<Leader>bD', '<Plug>(cokeline-pick-close)', desc = 'Close buffer from tabline' },
+  { '<Leader>bb', '<cmd>BufferLinePick<cr>', desc = 'Focus buffer from tabline' },
+  { '<Leader>bD', '<cmd>BufferLinePickClose<cr>', desc = 'Close buffer from tabline' },
   {
     '<Leader>bp',
-    function()
-      local last = require('cokeline.history'):last()
-      if last ~= nil then
-        require('cokeline.mappings').by_index('focus', last.index)
-      else
-        vim.notify('Buffer history is empty', 'info')
-      end
-    end,
+    '<C-6>',
     desc = 'Focus last buffer',
   },
   {
     '<Leader>bh',
     function()
-      vim.g.cokeline_is_picking = true
-      require('cokeline.mappings').pick(function(buf)
-        vim.cmd.split()
-        require('cokeline.mappings').by_index('focus', buf.index)
-        vim.g.cokeline_is_picking = false
+      require('bufferline.pick').choose_then(function(buf_id)
+        vim.cmd.split(get_path_by_id(buf_id))
       end)
     end,
     desc = 'Horizontal split buffer from tabline',
@@ -86,11 +59,8 @@ require('which-key').add {
   {
     '<Leader>bv',
     function()
-      vim.g.cokeline_is_picking = true
-      require('cokeline.mappings').pick(function(buf)
-        vim.cmd.vsplit()
-        require('cokeline.mappings').by_index('focus', buf.index)
-        vim.g.cokeline_is_picking = false
+      require('bufferline.pick').choose_then(function(buf_id)
+        vim.cmd.vsplit(get_path_by_id(buf_id))
       end)
     end,
     desc = 'Vertical split buffer from tabline',
