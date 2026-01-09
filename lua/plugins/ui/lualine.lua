@@ -57,7 +57,17 @@ return {
         get_linters,
         get_formatters,
       },
-      lualine_z = { 'location' },
+      lualine_z = {
+        'location',
+        {
+          'datetime',
+          icon = '',
+          style = '%H:%M',
+          cond = function()
+            return vim.g.neovide and vim.g.neovide_fullscreen
+          end,
+        },
+      },
     },
   },
 }
