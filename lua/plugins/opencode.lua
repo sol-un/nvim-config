@@ -7,7 +7,35 @@ return {
     opts = {
       default_mode = 'plan',
       default_global_keymaps = false,
-      ui = { input = { text = { wrap = true } } },
+      ui = {
+        picker = {
+          ---@module "snacks"
+          ---@type snacks.picker.layout.Config | nil
+          snacks_layout = {
+            hidden = { 'preview' },
+            fullscreen = false,
+            layout = {
+              backdrop = false,
+              row = 1,
+              width = 0.4,
+              min_width = 80,
+              height = 0.4,
+              border = 'none',
+              box = 'vertical',
+              {
+                win = 'input',
+                height = 1,
+                border = true,
+                title = '{title} {live} {flags}',
+                title_pos = 'center',
+              },
+              { win = 'list', border = 'hpad' },
+              { win = 'preview', title = '{preview}', border = true },
+            },
+          },
+        },
+        input = { text = { wrap = true } },
+      },
       context = {
         enabled = false,
         cursor_data = {
