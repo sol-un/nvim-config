@@ -17,6 +17,7 @@ return {
         },
         opts = {},
       },
+      'moyiz/blink-emoji.nvim',
       'folke/lazydev.nvim',
     },
     --- @module 'blink.cmp'
@@ -49,7 +50,7 @@ return {
         menu = { border = 'rounded' },
       },
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev', 'buffer', 'omni', 'easy-dotnet' },
+        default = { 'lsp', 'path', 'snippets', 'lazydev', 'buffer', 'omni', 'easy-dotnet', 'emoji' },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
           buffer = {
@@ -69,6 +70,7 @@ return {
             score_offset = 10000,
             async = true,
           },
+          emoji = { name = 'emoji', module = 'blink-emoji' },
         },
       },
       snippets = { preset = 'luasnip' },
