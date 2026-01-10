@@ -37,7 +37,8 @@ return {
   },
   opts = {
     kind = 'vsplit',
-    graph_style = 'unicode',
+    -- use https://github.com/rbong/flog-symbols if you don't use Kitty
+    graph_style = 'kitty',
     integrations = {
       diffview = true,
       snacks = true,
