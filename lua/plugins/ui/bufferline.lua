@@ -2,6 +2,10 @@ return {
   'akinsho/bufferline.nvim',
   opts = {
     options = {
+      always_show_bufferline = true,
+      close_command = function(n)
+        require('snacks').bufdelete(n)
+      end,
       show_buffer_close_icons = false,
       show_close_icon = false,
       diagnostics = 'nvim_lsp',
@@ -19,15 +23,39 @@ return {
           attribute = 'fg',
         },
       },
+      pick_visible = {
+        fg = {
+          highlight = 'Special',
+          attribute = 'fg',
+        },
+      },
       pick_selected = {
         fg = {
           highlight = 'Special',
           attribute = 'fg',
         },
       },
-      modified_selected = {
+      error = {
         fg = {
-          highlight = 'Normal',
+          highlight = 'SnacksNotifierBorderError',
+          attribute = 'fg',
+        },
+      },
+      error_visible = {
+        fg = {
+          highlight = 'SnacksNotifierBorderError',
+          attribute = 'fg',
+        },
+      },
+      warning = {
+        fg = {
+          highlight = 'SnacksNotifierBorderWarn',
+          attribute = 'fg',
+        },
+      },
+      warning_visible = {
+        fg = {
+          highlight = 'SnacksNotifierBorderWarn',
           attribute = 'fg',
         },
       },
