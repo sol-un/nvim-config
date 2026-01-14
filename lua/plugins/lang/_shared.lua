@@ -21,6 +21,7 @@ return {
         'make',
         'vim',
         'vimdoc',
+        'just',
       }
     end,
   },
