@@ -1,4 +1,5 @@
-CURRENT = nil
+---@type string|nil
+local CURRENT = nil
 
 local sort_by_modified_time = function(sessions)
   local session_metas = vim
@@ -40,6 +41,15 @@ local get_session_name = function()
   local name_normalized = string.gsub(name, '/', '󰿟')
   return name_normalized
 end
+
+vim.api.nvim_create_autocmd('VimLeavePre', {
+  desc = 'Save session on exit',
+  callback = function()
+    if CURRENT ~= nil then
+      require('mini.sessions').write(CURRENT)
+    end
+  end,
+})
 
 return {
   { 'notjedi/nvim-rooter.lua', lazy = false, opts = {} },

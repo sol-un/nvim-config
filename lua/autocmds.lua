@@ -1,6 +1,13 @@
 vim.api.nvim_create_autocmd('VimEnter', {
   desc = 'Open last session on start',
   callback = function()
+    -- Don't open last session if file arguments were provided
+    -- Makes it possible to create new sessions
+    local file_args = vim.fs.find(vim.v.argv, { path = vim.fn.getcwd(), type = 'file', limit = 1 })
+    if #file_args > 0 then
+      return
+    end
+
     vim.defer_fn(function()
       local last_session = require('mini.sessions').get_latest()
       require('mini.sessions').read(last_session)
@@ -79,17 +86,9 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
 
 vim.api.nvim_create_autocmd('FileType', {
   desc = 'Start treesitter',
-  pattern = { '*' },
+  pattern = '*',
   callback = function()
-    local filetype = vim.bo.filetype
-    if filetype and filetype ~= '' then
-      local success = pcall(function()
-        vim.treesitter.start()
-      end)
-      if not success then
-        return
-      end
-    end
+    pcall(vim.treesitter.start)
   end,
 })
 

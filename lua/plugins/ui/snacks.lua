@@ -7,7 +7,12 @@ return {
       notifier = {},
       indent = {},
       scroll = {},
-      dashboard = { preset = { header = '' }, sections = { { section = 'header' } } },
+      dashboard = {
+        preset = {
+          header = '',
+        },
+        sections = { { section = 'header' } },
+      },
       statuscolumn = {
         left = { 'git', 'sign' }, -- priority of signs on the left (high to low)
         right = { 'mark', 'fold' }, -- priority of signs on the right (high to low)
