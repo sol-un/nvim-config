@@ -12,24 +12,28 @@ return {
       require('gitlab.server').build(true)
     end,
     opts = {
-      global = {
-        disable_all = true,
-      },
-      popup = {
-        perform_action = '<C-s>',
-        discard_changes = '<C-k>',
-      },
-      reviewer_settings = {
-        jump_with_no_diagnostics = true,
-        diffview = {
-          imply_local = true,
+      keymaps = {
+        global = {
+          disable_all = true,
+        },
+        popup = {
+          perform_action = '<C-s>',
+          discard_changes = '<C-k>',
+        },
+        reviewer_settings = {
+          jump_with_no_diagnostics = true,
+          diffview = {
+            imply_local = true,
+          },
+        },
+        discussion_tree = {
+          toggle_sort_method = 'gSt',
+          toggle_date_format = 'gDt',
+          add_emoji = 'gEa',
+          delete_emoji = 'gEd',
         },
       },
       discussion_tree = {
-        toggle_sort_method = 'gSt',
-        toggle_date_format = 'gDt',
-        add_emoji = 'gEa',
-        delete_emoji = 'gEd',
         position = 'left',
         keep_current_open = true,
         draft_mode = true,
@@ -120,7 +124,7 @@ return {
         {
           gitlab_prefix .. 'S',
           function()
-            require('gitlab').start_review()
+            require('gitlab').review()
           end,
           desc = 'Start review',
         },
