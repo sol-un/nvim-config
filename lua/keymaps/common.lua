@@ -21,7 +21,7 @@ require('which-key').add {
   { '<C-s>', '<Cmd>w<CR><Esc>', mode = { 'n', 'i', 'v', 's' } }, -- Save
   { '<Leader>q', group = 'Quit' },
   { '<Leader>qq', '<Cmd>confirm qall<CR>', desc = 'Quit' },
-  { '<Leader>qr', '<Cmd>restart<CR>', desc = 'Restart' },
+  { '<Leader>qr', '<Cmd>restart<CR>', desc = 'Restart', cond = vim.fn.has 'nvim-0.12.0' == 1 },
   {
     '<C-_>', -- this is the same as Ctrl + /, see https://apple.stackexchange.com/questions/24261/how-do-i-send-c-that-is-control-slash-to-the-terminal
     function()
