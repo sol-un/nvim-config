@@ -42,21 +42,14 @@ local get_session_name = function()
   return name_normalized
 end
 
-vim.api.nvim_create_autocmd('VimLeavePre', {
-  desc = 'Save session on exit',
-  callback = function()
-    if CURRENT ~= nil then
-      require('mini.sessions').write(CURRENT)
-    end
-  end,
-})
-
 return {
   { 'notjedi/nvim-rooter.lua', lazy = false, opts = {} },
   {
     'nvim-mini/mini.sessions',
     lazy = false,
     opts = {
+      autoread = true,
+      autowrite = true,
       hooks = {
         post = {
           read = function(current)

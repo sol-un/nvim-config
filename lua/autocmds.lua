@@ -1,20 +1,3 @@
-vim.api.nvim_create_autocmd('VimEnter', {
-  desc = 'Open last session on start',
-  callback = function()
-    -- Don't open last session if file arguments were provided
-    -- Makes it possible to create new sessions
-    local file_args = vim.fs.find(vim.v.argv, { path = vim.fn.getcwd(), type = 'file', limit = 1 })
-    if #file_args > 0 then
-      return
-    end
-
-    vim.defer_fn(function()
-      local last_session = require('mini.sessions').get_latest()
-      require('mini.sessions').read(last_session)
-    end, 0)
-  end,
-})
-
 vim.api.nvim_create_autocmd({ 'BufEnter', 'InsertLeave' }, {
   desc = 'Clean up builtin marks',
   callback = function()
