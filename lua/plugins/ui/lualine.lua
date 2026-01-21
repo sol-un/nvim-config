@@ -62,7 +62,7 @@ return {
           icon = '',
           style = '%H:%M',
           cond = function()
-            return vim.g.neovide and vim.g.neovide_fullscreen
+            return vim.g.clock_visible or (vim.g.neovide and vim.g.neovide_fullscreen)
           end,
         },
       },
