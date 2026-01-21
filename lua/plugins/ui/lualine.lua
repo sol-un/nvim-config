@@ -21,6 +21,14 @@ local function get_macro()
   return #reg ~= 0 and '@' .. reg or ''
 end
 
+local function truncate_string(str)
+  if #str > 25 then
+    return string.sub(str, 1, 22) .. '...'
+  end
+
+  return str
+end
+
 local function get_cwd()
   return vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
 end
@@ -37,21 +45,11 @@ return {
     sections = {
       lualine_a = { 'mode' },
       lualine_b = {
-        { 'branch', icon = '' },
-        { get_cwd, icon = '' },
+        { 'branch', icon = '', fmt = truncate_string },
+        { get_cwd, icon = '', fmt = truncate_string },
       },
       lualine_c = { { get_macro, icon = '' } },
-      lualine_x = {
-        {
-          'diagnostics',
-          symbols = {
-            error = ' ',
-            warn = ' ',
-            info = ' ',
-            hint = ' ',
-          },
-        },
-      },
+      lualine_x = {},
       lualine_y = {
         { 'lsp_status', icon = '', symbols = { done = '', separator = ', ', spinner = {} } },
         get_linters,
