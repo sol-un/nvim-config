@@ -10,7 +10,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     local is_codelens_supported = client and client:supports_method('textDocument/codeLens', event.buf)
 
     require('which-key').add {
-      { 'gl', group = 'Language tools' },
       {
         'gd',
         function()
@@ -28,18 +27,21 @@ vim.api.nvim_create_autocmd('LspAttach', {
       {
         'gI',
         function()
-          require('snacks').picker.lsp_references()
+          require('snacks').picker.lsp_implementations()
         end,
         desc = 'LSP: Goto implementation',
       },
       {
         'gy',
         function()
-          require('snacks').picker.lsp_references()
+          require('snacks').picker.lsp_type_definitions()
         end,
         desc = 'LSP: Goto type definition',
       },
       { 'gD', vim.lsp.buf.declaration, desc = 'LSP: Goto declaration' },
+
+      { 'gl', group = 'Language tools' },
+
       { 'gla', vim.lsp.buf.code_action, desc = 'Code actions', mode = { 'n', 'x' } },
       { 'gld', vim.diagnostic.open_float, desc = 'Show diagnostics' },
       {

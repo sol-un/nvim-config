@@ -25,14 +25,14 @@ require('which-key').add {
   {
     '<C-_>', -- this is the same as Ctrl + /, see https://apple.stackexchange.com/questions/24261/how-do-i-send-c-that-is-control-slash-to-the-terminal
     function()
-      require('snacks').terminal(nil, { cwd = vim.fn.expand '%:h' })
+      require('snacks').terminal.toggle(nil, { cwd = vim.fn.expand '%:h' })
     end,
     desc = 'Toggle terminal',
   },
   {
     '<C-/>',
     function()
-      require('snacks').terminal(nil, { cwd = vim.fn.expand '%:h' })
+      require('snacks').terminal.toggle(nil, { cwd = vim.fn.expand '%:h' })
     end,
     desc = 'Toggle terminal',
   },
