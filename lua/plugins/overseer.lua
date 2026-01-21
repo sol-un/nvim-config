@@ -17,11 +17,5 @@ return {
       { '<Leader>oa', '<cmd>OverseerTaskAction<cr>', desc = 'Task action' },
     }
   end,
-  config = function()
-    local overseer = require 'overseer'
-    overseer.add_template_hook(nil, function()
-      overseer.open { direction = 'right' }
-    end)
-  end,
   keys = '<Leader>o',
 }
