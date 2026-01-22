@@ -72,7 +72,7 @@ opt.path:append '**' -- include subdirectories in search
 opt.mouse = 'a' -- Enable mouse support
 opt.modifiable = true -- Allow buffer modifications
 opt.encoding = 'UTF-8' -- Set encoding
-opt.sessionoptions = 'buffers,curdir,folds,help,tabpages,winsize,globals'
+opt.sessionoptions = 'buffers,curdir,folds,globals,tabpages,winpos,winsize,help'
 vim.schedule(function()
   opt.clipboard = 'unnamedplus'
 end)
