@@ -11,6 +11,20 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
     require('which-key').add {
       {
+        ']]',
+        function()
+          require('snacks').words.jump(1, true)
+        end,
+        desc = 'Next occurrence',
+      },
+      {
+        '[[',
+        function()
+          require('snacks').words.jump(-1, true)
+        end,
+        desc = 'Prev occurrence',
+      },
+      {
         'gd',
         function()
           require('snacks').picker.lsp_definitions()

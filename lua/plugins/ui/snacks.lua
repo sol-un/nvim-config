@@ -7,6 +7,7 @@ return {
       notifier = {},
       indent = {},
       scroll = {},
+      words = {},
       dashboard = {
         preset = {
           header = '',
