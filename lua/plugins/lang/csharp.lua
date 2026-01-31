@@ -39,10 +39,18 @@ return {
       dap.configurations.cs = {
         {
           type = 'netcoredbg',
-          name = 'launch - netcoredbg',
+          name = 'Launch - netcoredbg',
           request = 'launch',
           program = function()
             return vim.fn.input('Path to dll', vim.fn.getcwd() .. '/bin/Debug/', 'file')
+          end,
+        },
+        {
+          type = 'netcoredbg',
+          name = 'Attach - netcoredbg',
+          request = 'attach',
+          processId = function()
+            return require('dap.utils').pick_process()
           end,
         },
       }
