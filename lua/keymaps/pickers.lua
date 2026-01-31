@@ -92,6 +92,13 @@ require('which-key').add {
     desc = 'Find buffers/recent/files',
   },
   {
+    '<Leader>fS',
+    function()
+      require('snacks').picker.snippets()
+    end,
+    desc = 'Find snippets',
+  },
+  {
     '<Leader>fu',
     function()
       require('snacks').picker.undo()
