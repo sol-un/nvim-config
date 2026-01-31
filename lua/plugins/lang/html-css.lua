@@ -15,6 +15,8 @@ return {
         'css-variables-language-server',
         'cssmodules-language-server',
         'stylelint',
+        'some-sass-language-server',
+        'emmet-language-server',
       })
     end,
   },
@@ -23,13 +25,15 @@ return {
     opts = {
       servers = {
         html = {},
-        cssls = {},
+        cssls = { filetypes = { 'css', 'less' } },
         cssmodules_ls = {},
         css_variables = {
           before_init = function(_, config)
             vim.list_extend(config.settings.cssVariables.lookupFiles, { 'node_modules/@skbkontur/colors/colors.css' })
           end,
         },
+        somesass_ls = {},
+        emmet_language_server = {},
       },
     },
   },
