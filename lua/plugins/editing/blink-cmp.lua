@@ -44,15 +44,24 @@ return {
       appearance = {
         nerd_font_variant = 'mono',
       },
-
       completion = {
         documentation = { auto_show = true, window = { border = 'rounded' } },
         menu = { border = 'rounded' },
       },
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'lazydev', 'buffer', 'omni', 'easy-dotnet', 'emoji' },
+        default = {
+          'lsp',
+          'path',
+          'snippets',
+          'lazydev',
+          'buffer',
+          'easy-dotnet',
+          'emoji',
+        },
         providers = {
-          lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
+          lsp = {
+            fallbacks = {},
+          },
           buffer = {
             opts = {
               -- filter to only "normal" buffers
@@ -63,18 +72,25 @@ return {
               end,
             },
           },
+          lazydev = {
+            module = 'lazydev.integrations.blink',
+          },
           ['easy-dotnet'] = {
             name = 'easy-dotnet',
             enabled = true,
             module = 'easy-dotnet.completion.blink',
-            score_offset = 10000,
             async = true,
           },
-          emoji = { name = 'emoji', module = 'blink-emoji' },
+          emoji = {
+            name = 'emoji',
+            module = 'blink-emoji',
+          },
         },
       },
       snippets = { preset = 'luasnip' },
-      fuzzy = { implementation = 'lua' },
+      fuzzy = {
+        implementation = 'lua',
+      },
     },
   },
 }
