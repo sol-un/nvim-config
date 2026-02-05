@@ -32,9 +32,9 @@ return {
   },
   {
     'neovim/nvim-lspconfig', -- provides LSP server configs
+    opts_extend = { 'servers' },
     config = function(_, opts)
-      for server, config in pairs(opts.servers) do
-        vim.lsp.config(server, config)
+      for _, server in ipairs(opts.servers or {}) do
         vim.lsp.enable(server)
       end
     end,

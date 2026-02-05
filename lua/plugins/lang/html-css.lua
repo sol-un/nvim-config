@@ -24,16 +24,12 @@ return {
     'neovim/nvim-lspconfig',
     opts = {
       servers = {
-        html = {},
-        cssls = { filetypes = { 'css', 'less' } },
-        cssmodules_ls = {},
-        css_variables = {
-          before_init = function(_, config)
-            vim.list_extend(config.settings.cssVariables.lookupFiles, { 'node_modules/@skbkontur/colors/colors.css' })
-          end,
-        },
-        somesass_ls = {},
-        emmet_language_server = {},
+        'html',
+        'cssls',
+        'css_variables',
+        'cssmodules_ls',
+        'somesass_ls',
+        'emmet_language_server',
       },
     },
   },

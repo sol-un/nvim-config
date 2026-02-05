@@ -114,24 +114,7 @@ return {
     'neovim/nvim-lspconfig',
     opts = {
       servers = {
-        ts_ls = {
-          settings = {
-            typescript = {
-              inlayHints = {
-                includeInlayParameterNameHints = 'all',
-                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
-              },
-              implementationsCodeLens = { enabled = true },
-              referencesCodeLens = { enabled = true, showOnAllFunctions = true },
-            },
-          },
-        },
+        'ts_ls',
       },
     },
   },
@@ -141,8 +124,6 @@ return {
       for _, filetype in pairs(filetypes) do
         opts.linters_by_ft[filetype] = { 'eslint' }
       end
-
-      return opts
     end,
   },
   {

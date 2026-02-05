@@ -23,6 +23,7 @@ return {
       linters_by_ft = {
         json = { 'jsonlint' },
         jsonc = { 'jsonlint' },
+        json5 = { 'jsonlint' },
         yaml = { 'yamllint' },
         yml = { 'yamllint' },
       },
@@ -34,6 +35,7 @@ return {
       formatters_by_ft = {
         json = { 'fixjson' },
         jsonc = { 'fixjson' },
+        json5 = { 'fixjson' },
         yaml = { 'prettier' },
         yml = { 'prettier' },
       },
@@ -43,23 +45,8 @@ return {
     'neovim/nvim-lspconfig',
     opts = {
       servers = {
-        yamlls = {
-          before_init = function(_, config)
-            (config.settings or {}).yaml.schemas = require('schemastore').yaml.schemas()
-          end,
-          settings = {
-            redhat = { telemetry = { enabled = false } },
-            yaml = { schemaStore = { enable = false, url = '' }, validate = true },
-          },
-        },
-        jsonls = {
-          before_init = function(_, config)
-            (config.settings or {}).json.schemas = require('schemastore').json.schemas()
-          end,
-          settings = {
-            json = { validate = { enable = true } },
-          },
-        },
+        'yamlls',
+        'jsonls',
       },
     },
   },

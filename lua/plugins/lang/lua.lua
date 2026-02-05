@@ -13,7 +13,9 @@ return {
   },
   {
     'neovim/nvim-lspconfig',
-    opts = { servers = { lua_ls = {} } },
+    opts = {
+      servers = { 'lua_ls' },
+    },
   },
   {
     'mfussenegger/nvim-lint', -- Linters

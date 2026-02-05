@@ -20,7 +20,9 @@ return {
   },
   {
     'neovim/nvim-lspconfig',
-    opts = { servers = { marksman = {} } },
+    opts = {
+      servers = { 'marksman' },
+    },
   },
   {
     'mfussenegger/nvim-lint', -- Linters
