@@ -14,9 +14,12 @@ return {
   },
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
-    opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed or {}, { 'marksman', 'markdownlint-cli2' })
-    end,
+    opts = {
+      ensure_installed = {
+        'marksman',
+        'markdownlint-cli2',
+      },
+    },
   },
   {
     'neovim/nvim-lspconfig',

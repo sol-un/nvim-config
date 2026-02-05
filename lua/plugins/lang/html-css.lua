@@ -7,8 +7,8 @@ return {
   },
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
-    opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed or {}, {
+    opts = {
+      ensure_installed = {
         'html-lsp',
         'htmlhint',
         'css-lsp',
@@ -17,8 +17,8 @@ return {
         'stylelint',
         'some-sass-language-server',
         'emmet-language-server',
-      })
-    end,
+      },
+    },
   },
   {
     'neovim/nvim-lspconfig',

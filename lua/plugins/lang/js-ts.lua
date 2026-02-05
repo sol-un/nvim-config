@@ -106,9 +106,14 @@ return {
   },
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
-    opts = function(_, opts)
-      vim.list_extend(opts.ensure_installed or {}, { 'typescript-language-server', 'eslint-lsp', 'eslint_d', 'js-debug-adapter' })
-    end,
+    opts = {
+      ensure_installed = {
+        'typescript-language-server',
+        'eslint-lsp',
+        'eslint_d',
+        'js-debug-adapter',
+      },
+    },
   },
   {
     'neovim/nvim-lspconfig',

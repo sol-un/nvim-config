@@ -28,7 +28,11 @@ return {
   { 'mason-org/mason.nvim', opts = {} }, -- package manager for LSP servers, DAP servers, linters, and formatters
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim', -- automatically installs mason packages
-    opts = { auto_update = true, ensure_installed = { 'prettier' } },
+    opts_extend = { 'ensure_installed' },
+    opts = {
+      auto_update = true,
+      ensure_installed = { 'prettier' },
+    },
   },
   {
     'neovim/nvim-lspconfig', -- provides LSP server configs
