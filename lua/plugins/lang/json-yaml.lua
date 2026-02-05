@@ -1,11 +1,5 @@
 return {
   {
-    'nvim-treesitter/nvim-treesitter',
-    opts = function()
-      require('nvim-treesitter').install { 'json', 'yaml' }
-    end,
-  },
-  {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     opts = {
       ensure_installed = {

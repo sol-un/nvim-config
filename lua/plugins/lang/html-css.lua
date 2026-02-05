@@ -1,11 +1,5 @@
 return {
   {
-    'nvim-treesitter/nvim-treesitter',
-    opts = function()
-      require('nvim-treesitter').install { 'html', 'html_tags', 'css', 'scss' }
-    end,
-  },
-  {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     opts = {
       ensure_installed = {

@@ -7,12 +7,6 @@ local keymaps_meta = {
 
 return {
   {
-    'nvim-treesitter/nvim-treesitter',
-    opts = function()
-      require('nvim-treesitter').install { 'markdown', 'markdown-inline' }
-    end,
-  },
-  {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     opts = {
       ensure_installed = {

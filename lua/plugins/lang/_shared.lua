@@ -7,22 +7,7 @@ return {
     lazy = false,
     build = ':TSUpdate',
     opts = function()
-      require('nvim-treesitter').install {
-        'bash',
-        'regex',
-        'vim',
-        'comment',
-        'diff',
-        'gitattributes',
-        'gitcommit',
-        'gitignore',
-        'git_config',
-        'git_rebase',
-        'make',
-        'vim',
-        'vimdoc',
-        'just',
-      }
+      require('nvim-treesitter').install { 'all' }
     end,
   },
   { 'mason-org/mason.nvim', opts = {} }, -- package manager for LSP servers, DAP servers, linters, and formatters
@@ -53,9 +38,6 @@ return {
     'stevearc/conform.nvim', -- Formatters
     event = { 'BufWritePre' },
     cmd = { 'ConformInfo' },
-    config = function(_, opts)
-      require('conform').setup(opts)
-    end,
     keys = {
       {
         'glf',
