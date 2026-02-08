@@ -61,7 +61,7 @@ return {
         providers = {
           snippets = { score_offset = 100 },
           lsp = {
-            score_offset = 10,
+            score_offset = 100,
             fallbacks = {},
           },
           buffer = {
