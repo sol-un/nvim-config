@@ -1,10 +1,14 @@
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
 return {
+  capabilities = capabilities,
   before_init = function(_, config)
-    (config.settings or {}).json.schemas = require('schemastore').json.schemas()
     vim.list_extend(config.filetypes or {}, { 'json5' })
   end,
   settings = {
     json = {
+      schemas = require('schemastore').json.schemas(),
       validate = { enable = true },
     },
   },

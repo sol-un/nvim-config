@@ -1,7 +1,4 @@
 return {
-  before_init = function(_, config)
-    (config.settings or {}).yaml.schemas = require('schemastore').yaml.schemas()
-  end,
   settings = {
     redhat = {
       telemetry = {
@@ -9,6 +6,7 @@ return {
       },
     },
     yaml = {
+      schemas = require('schemastore').yaml.schemas(),
       schemaStore = {
         enable = false,
         url = '',
