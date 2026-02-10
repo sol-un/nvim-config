@@ -6,8 +6,6 @@ vim.g.have_nerd_font = true
 
 require 'lazy-setup'
 
-require 'neovide'
-
 require 'keymaps.common'
 require 'keymaps.lsp'
 require 'keymaps.toggles'
