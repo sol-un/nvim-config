@@ -1,14 +1,14 @@
-local function get_linters()
-  local linters = require('lint')._resolve_linter_by_ft(vim.bo.filetype)
+local function linters()
+  local current_linters = require('lint')._resolve_linter_by_ft(vim.bo.filetype)
 
-  return table.concat(linters, ', ')
+  return table.concat(current_linters, ', ')
 end
 
-local function get_formatters()
-  local formatters = require('conform').list_formatters(0)
+local function formatters()
+  local current_formatters = require('conform').list_formatters(0)
 
   local formatter_names = vim
-    .iter(formatters)
+    .iter(current_formatters)
     :map(function(formatter)
       return formatter.name
     end)
@@ -16,7 +16,7 @@ local function get_formatters()
   return table.concat(formatter_names, ', ')
 end
 
-local function get_macro()
+local function macro()
   local reg = vim.fn.reg_recording()
   return #reg ~= 0 and '@' .. reg or ''
 end
@@ -29,7 +29,7 @@ local function truncate_string(str)
   return str
 end
 
-local function get_cwd()
+local function cwd()
   return vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
 end
 
@@ -46,14 +46,14 @@ return {
       lualine_a = { 'mode' },
       lualine_b = {
         { 'branch', icon = '', fmt = truncate_string },
-        { get_cwd, icon = '', fmt = truncate_string },
+        { cwd, icon = '', fmt = truncate_string },
       },
-      lualine_c = { { get_macro, icon = '' } },
+      lualine_c = { { macro, icon = '' } },
       lualine_x = {},
       lualine_y = {
         { 'lsp_status', icon = '', symbols = { done = '', separator = ', ', spinner = {} } },
-        get_linters,
-        get_formatters,
+        linters,
+        formatters,
       },
       lualine_z = {
         'location',

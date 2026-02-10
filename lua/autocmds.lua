@@ -13,8 +13,16 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+vim.api.nvim_create_autocmd('FileType', {
+  desc = 'Start treesitter',
+  pattern = '*',
+  callback = function()
+    pcall(vim.treesitter.start)
+  end,
+})
+
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufWrite', 'InsertLeave', 'TextChanged' }, {
-  desc = 'Automatic linting',
+  desc = 'Lint',
   callback = function()
     local lint = require 'lint'
 
@@ -26,7 +34,7 @@ vim.api.nvim_create_autocmd({ 'BufRead', 'BufWrite', 'InsertLeave', 'TextChanged
 })
 
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
-  desc = 'Format on save',
+  desc = 'Format',
   callback = function()
     local conform = require 'conform'
 
@@ -37,18 +45,9 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-  desc = 'Start treesitter',
-  pattern = '*',
-  callback = function()
-    pcall(vim.treesitter.start)
-  end,
-})
-
-vim.api.nvim_create_autocmd('FileType', {
-  desc = 'Wrap and check for spell in text filetypes',
+  desc = 'Spell checking',
   pattern = { 'text', 'plaintex', 'typst', 'gitcommit', 'markdown' },
   callback = function()
-    vim.opt_local.wrap = true
     vim.opt_local.spell = true
   end,
 })

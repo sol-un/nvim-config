@@ -36,8 +36,6 @@ return {
   },
   {
     'stevearc/conform.nvim', -- Formatters
-    event = { 'BufWritePre' },
-    cmd = { 'ConformInfo' },
     keys = {
       {
         'glf',

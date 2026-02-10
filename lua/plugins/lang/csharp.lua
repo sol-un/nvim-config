@@ -19,7 +19,7 @@ return {
   },
   -- provides an LSP and other C#-related features
   -- NOTE: EasyDotnet tool must be installed for this to work (dotnet tool install -g EasyDotnet)
-  { 'GustavEikaas/easy-dotnet.nvim', ft = { 'cs', 'csproj', 'sln' }, opts = {} },
+  { 'GustavEikaas/easy-dotnet.nvim', cmd = 'Dotnet', opts = {} },
   {
     'mfussenegger/nvim-dap',
     opts = function()

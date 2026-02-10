@@ -3,7 +3,7 @@ require('which-key').add {
   {
     '<Leader>,',
     function()
-      require('snacks').picker.buffers()
+      require('snacks').picker.buffers { hidden = true, ignored = true }
     end,
     desc = 'Find buffers',
   },
@@ -24,16 +24,9 @@ require('which-key').add {
   {
     '<Leader>fc',
     function()
-      require('snacks').picker.grep_word()
+      require('snacks').picker.grep_word { hidden = true, ignored = true }
     end,
     desc = 'Find word under cursor',
-  },
-  {
-    '<Leader>fC',
-    function()
-      require('snacks').picker.commands()
-    end,
-    desc = 'Find commands',
   },
   {
     '<Leader>fh',
@@ -59,7 +52,7 @@ require('which-key').add {
   {
     '<Leader>fo',
     function()
-      require('snacks').picker.recent()
+      require('snacks').picker.recent { hidden = true, ignored = true }
     end,
     desc = 'Find old files',
   },
@@ -71,28 +64,14 @@ require('which-key').add {
     desc = 'Find marks',
   },
   {
-    '<Leader>fr',
-    function()
-      require('snacks').picker.registers()
-    end,
-    desc = 'Find registers',
-  },
-  {
-    '<Leader>fp',
-    function()
-      require('snacks').picker.projects()
-    end,
-    desc = 'Find projects',
-  },
-  {
     '<Leader>fs',
     function()
-      require('snacks').picker.smart()
+      require('snacks').picker.smart { hidden = true, ignored = true }
     end,
     desc = 'Find buffers/recent/files',
   },
   {
-    '<Leader>fS',
+    '<Leader>fp',
     function()
       require('snacks').picker.snippets()
     end,
@@ -113,40 +92,18 @@ require('which-key').add {
     desc = 'Find jumps',
   },
   {
-    '<Leader>fF',
-    function()
-      require('snacks').picker.files { hidden = true, ignored = true }
-    end,
-    desc = 'Find all files',
-  },
-  {
-    '<Leader>fO',
-    function()
-      require('snacks').picker.recent { filter = { cwd = true } }
-    end,
-    desc = 'Find old files (cwd)',
-  },
-  {
     '<Leader>ff',
     function()
-      require('snacks').picker.files { hidden = vim.tbl_get((vim.uv or vim.loop).fs_stat '.git' or {}, 'type') == 'directory' }
+      require('snacks').picker.files { hidden = true, ignored = true }
     end,
     desc = 'Find files',
   },
   {
     '<Leader>fw',
     function()
-      require('snacks').picker.grep()
-    end,
-    desc = 'Find words',
-    cond = vim.fn.executable 'rg' == 1,
-  },
-  {
-    '<Leader>fW',
-    function()
       require('snacks').picker.grep { hidden = true, ignored = true }
     end,
-    desc = 'Find words in all files',
+    desc = 'Find words',
     cond = vim.fn.executable 'rg' == 1,
   },
 }

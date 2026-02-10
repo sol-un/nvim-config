@@ -1,7 +1,6 @@
 return {
   'sindrets/diffview.nvim',
   dependencies = { 'nvim-lua/plenary.nvim' },
-  opts_extend = { 'plugins.git.keymaps.lua' },
   opts = {
     enhanced_diff_hl = true,
     file_panel = {
