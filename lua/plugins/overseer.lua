@@ -2,6 +2,7 @@ return {
   'stevearc/overseer.nvim',
   cmd = { 'OverseerRun', 'OverseerToggle' },
   opts = {
+    dap = false,
     task_list = {
       direction = 'right',
       keymaps = {
