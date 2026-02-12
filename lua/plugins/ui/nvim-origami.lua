@@ -3,7 +3,7 @@ return {
   event = 'VeryLazy',
   opts = {
     foldtext = {
-      disableOnFt = { 'NeogitStatus', 'NeogitLogView' },
+      disableOnFt = { 'NeogitStatus', 'NeogitLogView', 'grug-far' },
     },
     autoFold = {
       enabled = false,
