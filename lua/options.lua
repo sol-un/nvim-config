@@ -129,7 +129,6 @@ vim.filetype.add {
 }
 
 -- Global state
-vim.g.prettier_disabled = false
 vim.g.clock_visible = false
 
 vim.diagnostic.config {

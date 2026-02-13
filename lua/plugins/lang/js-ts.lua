@@ -128,26 +128,11 @@ return {
   {
     'stevearc/conform.nvim',
     opts = function(_, opts)
-      -- prettier may interfere with eslint if the latter is used as a formatter
-      -- providing an option to disable prettier in this case
-      local maybe_with_prettier = function()
-        if vim.g.prettier_disabled then
-          return { 'eslint_d' }
-        else
-          return { 'eslint_d', 'prettier' }
-        end
-      end
-
       for _, filetype in pairs(filetypes) do
-        opts.formatters_by_ft[filetype] = maybe_with_prettier
+        opts.formatters_by_ft[filetype] = { 'eslint_d' }
       end
 
       return opts
-    end,
-    keys = function()
-      require('snacks').keymap.set('n', '<Leader>Tf', function()
-        vim.g.prettier_disabled = not vim.g.prettier_disabled
-      end, { desc = 'Toggle prettier', ft = filetypes })
     end,
   },
   {

@@ -30,8 +30,6 @@ return {
         json = { 'fixjson' },
         jsonc = { 'fixjson' },
         json5 = { 'fixjson' },
-        yaml = { 'prettier' },
-        yml = { 'prettier' },
       },
     },
   },

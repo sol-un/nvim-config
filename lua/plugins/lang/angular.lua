@@ -14,12 +14,4 @@ return {
       servers = { 'angularls' },
     },
   },
-  {
-    'stevearc/conform.nvim',
-    opts = {
-      formatters_by_ft = {
-        htmlangular = { 'prettier' },
-      },
-    },
-  },
 }
