@@ -28,14 +28,7 @@ return {
       { '<Leader>gR', gitsigns.reset_buffer, desc = 'Reset Git buffer' },
       { '<Leader>gs', gitsigns.stage_hunk, desc = 'Stage/Unstage Git hunk' },
       { '<Leader>gS', gitsigns.stage_buffer, desc = 'Stage Git buffer' },
-      { '<Leader>gb', gitsigns.blame_line, desc = 'Git blame line' },
-      {
-        '<Leader>gB',
-        function()
-          gitsigns.blame_line { full = true }
-        end,
-        desc = 'Git blame file',
-      },
+      { '<Leader>gb', gitsigns.blame, desc = 'Git blame' },
       {
         ']h',
         function()
