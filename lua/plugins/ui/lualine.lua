@@ -1,3 +1,5 @@
+vim.g.clock_visible = false
+
 local function linters()
   local current_linters = require('lint')._resolve_linter_by_ft(vim.bo.filetype)
 
@@ -68,4 +70,18 @@ return {
       },
     },
   },
+  init = function()
+    require('snacks').toggle
+      .new({
+        id = 'clock_visible',
+        name = 'Clock',
+        get = function()
+          return vim.g.clock_visible
+        end,
+        set = function(value)
+          vim.g.clock_visible = value
+        end,
+      })
+      :map '<Leader>Tc'
+  end,
 }

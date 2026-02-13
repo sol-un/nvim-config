@@ -128,9 +128,6 @@ vim.filetype.add {
   },
 }
 
--- Global state
-vim.g.clock_visible = false
-
 vim.diagnostic.config {
   severity_sort = true,
   float = { border = 'rounded', source = 'if_many' },
