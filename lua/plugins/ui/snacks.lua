@@ -69,6 +69,7 @@ local snippets_picker = {
 
 return {
   'folke/snacks.nvim',
+  priority = 1000,
   opts = function(_, opts)
     ---@module 'snacks'
     ---@type snacks.Config

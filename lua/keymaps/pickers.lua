@@ -3,7 +3,7 @@ require('which-key').add {
   {
     '<Leader>,',
     function()
-      require('snacks').picker.buffers { hidden = true, ignored = true }
+      require('snacks').picker.buffers()
     end,
     desc = 'Find buffers',
   },
