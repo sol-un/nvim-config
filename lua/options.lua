@@ -143,4 +143,3 @@ vim.diagnostic.config {
   virtual_lines = { current_line = true },
   virtual_text = { current_line = false },
 }
--- vim: ts=2 sts=2 sw=2 et
