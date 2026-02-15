@@ -15,8 +15,17 @@ return {
         style = 'none',
       },
       tab_size = 0,
+      custom_filter = function(buf_number)
+        return vim.bo[buf_number].buftype == ''
+      end,
     },
     highlights = {
+      fill = {
+        bg = {
+          highlight = 'BufferLineTabSeparator',
+          attribute = 'bg',
+        },
+      },
       pick = {
         fg = {
           highlight = 'Special',
