@@ -65,4 +65,11 @@ require('which-key').add {
     end,
     desc = 'Vertical split buffer from tabline',
   },
+  {
+    '<Leader>by',
+    function()
+      vim.fn.setreg(vim.v.register, vim.fn.expand '%:p')
+    end,
+    desc = 'Copy current file path',
+  },
 }
