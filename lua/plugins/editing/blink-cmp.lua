@@ -55,7 +55,6 @@ return {
           'snippets',
           'lazydev',
           'buffer',
-          'easy-dotnet',
           'emoji',
         },
         providers = {
@@ -76,12 +75,6 @@ return {
           },
           lazydev = {
             module = 'lazydev.integrations.blink',
-          },
-          ['easy-dotnet'] = {
-            name = 'easy-dotnet',
-            enabled = true,
-            module = 'easy-dotnet.completion.blink',
-            async = true,
           },
           emoji = {
             name = 'emoji',
