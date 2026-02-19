@@ -170,4 +170,10 @@ return {
       )
     end,
   },
+  {
+    'dmmulroy/tsc.nvim',
+    opts = {
+      use_trouble_qflist = true,
+    },
+  },
 }
