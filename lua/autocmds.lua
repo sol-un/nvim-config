@@ -43,11 +43,3 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
     end
   end,
 })
-
-vim.api.nvim_create_autocmd('FileType', {
-  desc = 'Spell checking',
-  pattern = { 'text', 'plaintex', 'typst', 'gitcommit', 'markdown' },
-  callback = function()
-    vim.opt_local.spell = true
-  end,
-})

@@ -26,11 +26,14 @@ return {
     opts_extend = { 'ensure_installed' },
     opts = {
       auto_update = true,
-      ensure_installed = { 'prettier' },
+      ensure_installed = { 'prettier', 'codebook', 'just-lsp' },
     },
   },
   {
     'neovim/nvim-lspconfig', -- provides LSP server configs
+    opts = {
+      servers = { 'codebook', 'just' },
+    },
     opts_extend = { 'servers' },
     config = function(_, opts)
       for _, server in ipairs(opts.servers or {}) do
