@@ -1,3 +1,4 @@
+vim.g.lang_features_visible = false
 vim.g.clock_visible = false
 
 local function linters()
@@ -51,11 +52,28 @@ return {
         { cwd, icon = '', fmt = truncate_string },
       },
       lualine_c = { { macro, icon = '' } },
-      lualine_x = {},
+      lualine_x = { { 'overseer', unique = true } },
       lualine_y = {
-        { 'lsp_status', icon = '', symbols = { done = '', separator = ', ', spinner = {} } },
-        linters,
-        formatters,
+        {
+          'lsp_status',
+          icon = '',
+          symbols = { done = '', separator = ', ', spinner = {} },
+          cond = function()
+            return vim.g.lang_features_visible
+          end,
+        },
+        {
+          linters,
+          cond = function()
+            return vim.g.lang_features_visible
+          end,
+        },
+        {
+          formatters,
+          cond = function()
+            return vim.g.lang_features_visible
+          end,
+        },
       },
       lualine_z = {
         'location',
