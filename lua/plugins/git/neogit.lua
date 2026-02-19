@@ -19,8 +19,7 @@ return {
     -- use https://github.com/rbong/flog-symbols if you don't use Kitty
     graph_style = 'kitty',
     integrations = {
-      codediff = true,
-      diffview = false,
+      diffview = true,
       snacks = true,
     },
     signs = {
