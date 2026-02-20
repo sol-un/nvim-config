@@ -1,0 +1,31 @@
+return {
+  {
+    'SmiteshP/nvim-navic',
+    opts = {
+      icons = {
+        File = '󰈔 ',
+        Module = '󰏗 ',
+        Namespace = '󰅩 ',
+        Package = '󰆦 ',
+        Class = ' ',
+        Property = ' ',
+        Field = ' ',
+        Constructor = ' ',
+        Enum = ' ',
+        Interface = ' ',
+        Variable = '󰀫 ',
+        String = '󰉾 ',
+        Boolean = ' ',
+        Null = '󰢤 ',
+        EnumMember = ' ',
+        Struct = ' ',
+        TypeParameter = '󰆩 ',
+      },
+      highlight = true,
+      separator = '  ',
+      lsp = {
+        auto_attach = true,
+      },
+    },
+  },
+}

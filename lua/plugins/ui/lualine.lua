@@ -54,11 +54,7 @@ return {
         { cwd, icon = '', fmt = truncate_string },
       },
       lualine_c = {
-        {
-          function()
-            return require('dropbar.utils.bar').get_current():cat()
-          end,
-        },
+        { 'navic', color_correction = 'dynamic' },
         { macro, icon = '' },
       },
       lualine_x = { { 'overseer', unique = true } },
