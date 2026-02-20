@@ -1,7 +1,33 @@
 -- Basic settings for the plugins adding language support to neovim
 -- These are extended for specific languages in {language}.lua files in this directory
 
--- prettier can be disabled globally
+-- For debugging
+vim.api.nvim_create_user_command('PrintActiveLangFeatures', function()
+  local linters = require('lint')._resolve_linter_by_ft(vim.bo.filetype)
+
+  local formatters = require('conform').list_formatters(0)
+  local formatter_names = vim
+    .iter(formatters)
+    :map(function(formatter)
+      return formatter.name
+    end)
+    :totable()
+
+  local lsp_client_names = vim
+    .iter(vim.lsp.get_clients())
+    :map(function(client)
+      return client.name
+    end)
+    :totable()
+
+  vim.notify(vim.inspect {
+    lsp_clients = lsp_client_names,
+    linters = linters,
+    formatters = formatter_names,
+  })
+end, {})
+
+-- Prettier can be disabled globally
 vim.g.prettier_enabled = true
 local maybe_with_prettier = function()
   if vim.g.prettier_enabled then

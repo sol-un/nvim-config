@@ -1,29 +1,6 @@
 vim.g.lang_features_visible = false
 vim.g.clock_visible = false
 
-local function linters()
-  local current_linters = require('lint')._resolve_linter_by_ft(vim.bo.filetype)
-
-  return table.concat(current_linters, ', ')
-end
-
-local function formatters()
-  local current_formatters = require('conform').list_formatters(0)
-
-  local formatter_names = vim
-    .iter(current_formatters)
-    :map(function(formatter)
-      return formatter.name
-    end)
-    :totable()
-  return table.concat(formatter_names, ', ')
-end
-
-local function macro()
-  local reg = vim.fn.reg_recording()
-  return #reg ~= 0 and '@' .. reg or ''
-end
-
 local function truncate_string(str)
   local MAX_LENGTH = 21
 
@@ -32,10 +9,6 @@ local function truncate_string(str)
   end
 
   return str
-end
-
-local function cwd()
-  return vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
 end
 
 return {
@@ -51,11 +24,23 @@ return {
       lualine_a = { 'mode' },
       lualine_b = {
         { 'branch', icon = '', fmt = truncate_string },
-        { cwd, icon = '', fmt = truncate_string },
+        {
+          function()
+            return vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
+          end,
+          icon = '',
+          fmt = truncate_string,
+        },
       },
       lualine_c = {
         { 'navic', color_correction = 'dynamic' },
-        { macro, icon = '' },
+        {
+          function()
+            local reg = vim.fn.reg_recording()
+            return #reg ~= 0 and '@' .. reg or ''
+          end,
+          icon = '',
+        },
       },
       lualine_x = { { 'overseer', unique = true } },
       lualine_y = {
@@ -63,18 +48,6 @@ return {
           'lsp_status',
           icon = '',
           symbols = { done = '', separator = ', ', spinner = {} },
-          cond = function()
-            return vim.g.lang_features_visible
-          end,
-        },
-        {
-          linters,
-          cond = function()
-            return vim.g.lang_features_visible
-          end,
-        },
-        {
-          formatters,
           cond = function()
             return vim.g.lang_features_visible
           end,
