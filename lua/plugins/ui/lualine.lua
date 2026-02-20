@@ -51,7 +51,14 @@ return {
         { 'branch', icon = '', fmt = truncate_string },
         { cwd, icon = '', fmt = truncate_string },
       },
-      lualine_c = { { macro, icon = '' } },
+      lualine_c = {
+        {
+          function()
+            return require('dropbar.utils.bar').get_current():cat()
+          end,
+        },
+        { macro, icon = '' },
+      },
       lualine_x = { { 'overseer', unique = true } },
       lualine_y = {
         {
