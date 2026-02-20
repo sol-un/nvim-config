@@ -25,8 +25,10 @@ local function macro()
 end
 
 local function truncate_string(str)
-  if #str > 25 then
-    return string.sub(str, 1, 22) .. '...'
+  local MAX_LENGTH = 21
+
+  if #str > MAX_LENGTH then
+    return string.sub(str, 1, MAX_LENGTH - 3) .. '...'
   end
 
   return str
