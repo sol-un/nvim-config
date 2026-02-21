@@ -1,6 +1,7 @@
 return {
   {
     'saghen/blink.cmp',
+    build = 'cargo build --release',
     event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
       {
@@ -58,17 +59,20 @@ return {
           'emoji',
         },
         providers = {
-          snippets = { score_offset = 100 },
           lsp = {
             score_offset = 100,
             fallbacks = {},
           },
+          snippets = {
+            score_offset = 100,
+          },
           buffer = {
             opts = {
-              -- filter to only "normal" buffers
+              -- filter to only "normal" and help buffers
               get_bufnrs = function()
                 return vim.tbl_filter(function(bufnr)
-                  return vim.bo[bufnr].buftype == ''
+                  local buftype = vim.bo[bufnr].buftype
+                  return buftype == '' or buftype == 'help'
                 end, vim.api.nvim_list_bufs())
               end,
             },
@@ -79,11 +83,15 @@ return {
           emoji = {
             name = 'emoji',
             module = 'blink-emoji',
+            score_offset = function(ctx)
+              return ctx.trigger.initial_character == ':' and 100 or 0
+            end,
           },
         },
       },
       snippets = { preset = 'luasnip' },
       fuzzy = {
+        sorts = { 'exact', 'score', 'sort_text' },
         implementation = 'prefer_rust_with_warning',
       },
     },

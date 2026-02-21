@@ -1,5 +1,7 @@
 return {
   'akinsho/bufferline.nvim',
+  ---@module 'bufferline'
+  ---@class bufferline.UserConfig
   opts = {
     options = {
       always_show_bufferline = true,
@@ -15,9 +17,6 @@ return {
         style = 'none',
       },
       tab_size = 0,
-      custom_filter = function(buf_number)
-        return vim.bo[buf_number].buftype == ''
-      end,
     },
     highlights = {
       fill = {

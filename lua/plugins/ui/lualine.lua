@@ -1,14 +1,13 @@
 vim.g.lang_features_visible = false
 vim.g.clock_visible = false
 
+local TRUNCATE_LENGTH = 21
 local function truncate_string(str)
-  local MAX_LENGTH = 21
-
-  if #str > MAX_LENGTH then
-    return string.sub(str, 1, MAX_LENGTH - 3) .. '...'
+  if #str < TRUNCATE_LENGTH then
+    return str
   end
 
-  return str
+  return string.sub(str, 1, TRUNCATE_LENGTH - 3) .. '...'
 end
 
 return {

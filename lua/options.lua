@@ -141,5 +141,5 @@ vim.diagnostic.config {
     },
   },
   virtual_lines = { current_line = true },
-  virtual_text = { current_line = false },
+  virtual_text = false,
 }

@@ -4,6 +4,7 @@ return {
   {
     'nvim-mini/mini.surround',
     opts = {
+      n_lines = 999,
       mappings = {
         add = prefix .. 'a', -- Add surrounding in Normal and Visual modes
         delete = prefix .. 'd', -- Delete surrounding
