@@ -5,7 +5,7 @@ require('which-key').add {
     function()
       require('snacks').picker.buffers()
     end,
-    desc = 'Find buffers',
+    desc = 'Open buffers',
   },
   {
     '<Leader>f<CR>',

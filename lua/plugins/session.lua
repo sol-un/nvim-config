@@ -61,7 +61,7 @@ return {
     },
     keys = {
       {
-        '<Leader>Sl',
+        '<Leader>sl',
         function()
           local last_session = require('mini.sessions').get_latest()
           require('mini.sessions').read(last_session)
@@ -69,21 +69,21 @@ return {
         desc = 'Last session',
       },
       {
-        '<Leader>SD',
+        '<Leader>sd',
         function()
           read_or_delete 'delete'
         end,
         desc = 'Delete session',
       },
       {
-        '<Leader>SF',
+        '<Leader>sf',
         function()
           read_or_delete 'read'
         end,
         desc = 'Select session',
       },
       {
-        '<Leader>SS',
+        '<Leader>ss',
         function()
           require('mini.sessions').write(get_session_name())
         end,

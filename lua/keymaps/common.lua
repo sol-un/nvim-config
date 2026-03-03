@@ -17,6 +17,7 @@ require('which-key').add {
   { '{', '{}<left>', mode = 'i' },
   { '<', '<><left>', mode = 'i' },
 
+  -- Terminal
   { '<Esc><Esc>', '<C-\\><C-n>', desc = 'Exit terminal mode', mode = 't' }, -- This won't work in all terminal emulators/tmux/etc
   { '<C-s>', '<Cmd>w<CR><Esc>', mode = { 'n', 'i', 'v', 's' } }, -- Save
   { '<Leader>q', group = 'Quit' },
@@ -43,6 +44,7 @@ require('which-key').add {
   { '<C-k>', '<cmd>wincmd k<cr>', mode = 't' },
   { '<C-l>', '<cmd>wincmd l<cr>', mode = 't' },
 
+  -- Navigation
   {
     '[e',
     function()
@@ -71,37 +73,13 @@ require('which-key').add {
     end,
     desc = 'Next warning',
   },
+
   { '<Leader>p', group = 'Packages', icon = '' },
-  { '<Leader>pi', '<cmd>Lazy home<cr>', desc = 'Plugins' },
+  { '<Leader>pl', '<cmd>Lazy home<cr>', desc = 'Lazy' },
   { '<Leader>pm', '<cmd>Mason<cr>', desc = 'Mason' },
 
-  { '<Leader><Tab>', group = 'Tabs' },
-  { '<Leader><Tab>o', '<cmd>tabonly<cr>', desc = 'Close Other Tabs' },
-  { '<Leader><Tab><Tab>', '<cmd>tabnew<cr>', desc = 'New Tab' },
-  { '<Leader><Tab>d', '<cmd>tabclose<cr>', desc = 'Close Tab' },
-  { 'gt', '<cmd>tabnext<cr>', desc = 'Next Tab' },
-  { 'gT', '<cmd>tabprevious<cr>', desc = 'Previous Tab' },
-
-  { '<Leader>w', group = 'Windows' },
-  { '<C-h>', '<C-w><C-h>', desc = 'Move focus to the left window' },
-  { '<C-l>', '<C-w><C-l>', desc = 'Move focus to the right window' },
-  { '<C-j>', '<C-w><C-j>', desc = 'Move focus to the lower window' },
-  { '<C-k>', '<C-w><C-k>', desc = 'Move focus to the upper window' },
-  { '<Leader>wv', '<cmd>vsplit<cr>', desc = 'Vertical split' },
-  { '<Leader>wd', '<C-W>c', desc = 'Close current window' },
-  { '<Leader>wh', '<cmd>split<cr>', desc = 'Horizontal split' },
-  { '<Leader>wo', '<cmd>only<cr>', desc = 'Close all other windows' },
-  { '<Leader>wJ', '<C-W>J', desc = 'Move window to far bottom' },
-  { '<Leader>wK', '<C-W>K', desc = 'Move window to far top' },
-  { '<Leader>wH', '<C-W>H', desc = 'Move window to far left' },
-  { '<Leader>wL', '<C-W>L', desc = 'Move window to far right' },
-  { '<C-Up>', require('smart-splits').resize_up, desc = 'Increase Window Height' },
-  { '<C-Down>', require('smart-splits').resize_down, desc = 'Decrease Window Height' },
-  { '<C-Left>', require('smart-splits').resize_left, desc = 'Decrease Window Width' },
-  { '<C-Right>', require('smart-splits').resize_right, desc = 'Increase Window Width' },
-
   { '<Leader>g', group = 'Git' },
-  { '<Leader>S', group = 'Session' },
+  { '<Leader>s', group = 'Session' },
   { '<Leader>o', group = 'Overseer', icon = '' },
   { '<Leader>a', group = 'AI', icon = '' },
   { '<leader>x', group = 'Trouble', icon = { icon = '󰙅', color = 'red' } },

@@ -10,7 +10,7 @@ require 'keymaps.common'
 require 'keymaps.lsp'
 require 'keymaps.toggles'
 require 'keymaps.pickers'
-require 'keymaps.buffers'
+require 'keymaps.buffers-windows-tabs'
 
 require 'options'
 
