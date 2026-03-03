@@ -95,6 +95,10 @@ require('which-key').add {
   { '<Leader>wK', '<C-W>K', desc = 'Move window to far top' },
   { '<Leader>wH', '<C-W>H', desc = 'Move window to far left' },
   { '<Leader>wL', '<C-W>L', desc = 'Move window to far right' },
+  { '<C-Up>', require('smart-splits').resize_up, desc = 'Increase Window Height' },
+  { '<C-Down>', require('smart-splits').resize_down, desc = 'Decrease Window Height' },
+  { '<C-Left>', require('smart-splits').resize_left, desc = 'Decrease Window Width' },
+  { '<C-Right>', require('smart-splits').resize_right, desc = 'Increase Window Width' },
 
   { '<Leader>g', group = 'Git' },
   { '<Leader>S', group = 'Session' },
