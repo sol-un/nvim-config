@@ -16,6 +16,7 @@ return {
     },
   },
   keys = {
-    { '<Leader>fr', '<cmd>GrugFar<cr>', desc = 'Search/replace' },
+    { '<Leader>fr', '<cmd>GrugFar<cr>', desc = 'Search & replace' },
+    { '<Leader>fr', "<cmd>'<,'>GrugFarWithin<cr>", desc = 'Search & replace', mode = 'v' },
   },
 }
