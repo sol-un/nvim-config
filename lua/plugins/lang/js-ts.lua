@@ -113,17 +113,10 @@ return {
     'neovim/nvim-lspconfig',
     opts = {
       servers = {
+        'eslint',
         'ts_ls',
       },
     },
-  },
-  {
-    'mfussenegger/nvim-lint',
-    opts = function(_, opts)
-      for _, filetype in pairs(filetypes) do
-        opts.linters_by_ft[filetype] = { 'eslint' }
-      end
-    end,
   },
   {
     'stevearc/conform.nvim',
