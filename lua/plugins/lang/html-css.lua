@@ -28,7 +28,7 @@ return {
     },
   },
   {
-    'mfussenegger/nvim-lint', -- Linters
+    'mfussenegger/nvim-lint',
     opts = {
       linters_by_ft = {
         html = { 'htmlhint' },

@@ -118,7 +118,7 @@ return {
     },
   },
   {
-    'mfussenegger/nvim-lint', -- Linters
+    'mfussenegger/nvim-lint',
     opts = function(_, opts)
       for _, filetype in pairs(filetypes) do
         opts.linters_by_ft[filetype] = { 'eslint' }
