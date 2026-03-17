@@ -34,21 +34,20 @@ return {
     },
   },
   {
-    'OXY2DEV/markview.nvim',
-    ft = 'markdown',
-    opts = function()
-      return {
-        markdown = { horizontal_rules = require('markview.presets').horizontal_rules.thin },
-        preview = {
-          filetypes = { 'markdown', 'opencode_output', 'gitlab' },
-        },
-      }
-    end,
+    'MeanderingProgrammer/render-markdown.nvim',
+    ft = { 'markdown', 'codecompanion', 'opencode_output', 'gitlab' },
+    ---@module 'render-markdown'
+    ---@type render.md.UserConfig
+    opts = {
+      preset = 'obsidian',
+      anti_conceal = { enabled = false },
+      file_types = { 'markdown', 'codecompanion', 'opencode_output', 'gitlab' },
+    },
     keys = function()
       local set = require('snacks').keymap.set
 
       set({ 'n', 'v' }, '<Leader>m', '', { desc = '󰽛 Markdown', ft = 'markdown' })
-      set('n', '<Leader>mt', '<cmd>Markview toggle<cr>', { ft = 'markdown', desc = 'Toggle preview' })
+      set('n', '<Leader>mt', '<cmd>RenderMarkdown buf_toggle<cr>', { ft = 'markdown', desc = 'Toggle preview' })
       vim.iter(keymaps_meta):each(function(keymap_meta)
         local key = keymap_meta.key
         local sym = keymap_meta.symbol
