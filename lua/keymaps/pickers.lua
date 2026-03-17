@@ -83,7 +83,13 @@ require('which-key').add {
   {
     '<Leader>fr',
     function()
-      require('snacks').picker.recent()
+      require('snacks').picker.recent {
+        filter = {
+          paths = {
+            [vim.fn.getcwd()] = true,
+          },
+        },
+      }
     end,
     desc = 'Files (recent)',
   },
