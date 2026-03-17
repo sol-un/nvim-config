@@ -31,7 +31,7 @@ end, {})
 vim.g.prettier_enabled = true
 local maybe_with_prettier = function()
   if vim.g.prettier_enabled then
-    return { 'prettier' }
+    return { 'prettierd' }
   else
     return {}
   end
@@ -52,7 +52,7 @@ return {
     opts_extend = { 'ensure_installed' },
     opts = {
       auto_update = true,
-      ensure_installed = { 'prettier', 'codebook', 'just-lsp' },
+      ensure_installed = { 'prettierd', 'codebook', 'just-lsp' },
     },
   },
   {
@@ -83,7 +83,6 @@ return {
     init = function()
       local snacks = require 'snacks'
       local set, toggle = snacks.keymap.set, snacks.toggle
-
       set('n', 'glf', function()
         require('conform').format { async = true, lsp_format = 'fallback' }
       end, { desc = 'Format buffer' })
