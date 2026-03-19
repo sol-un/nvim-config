@@ -1,7 +1,7 @@
 vim.api.nvim_create_autocmd('User', {
   desc = 'Update buffers on Neogit events',
   group = vim.api.nvim_create_augroup('neogit_buffers_update', { clear = true }),
-  pattern = { 'NeogitBranchCheckout', 'NeogitPullComplete' },
+  pattern = { 'NeogitBranchCheckout', 'NeogitPullComplete', 'NeogitRebase' },
   callback = function()
     vim.cmd 'set autoread | checktime'
   end,
