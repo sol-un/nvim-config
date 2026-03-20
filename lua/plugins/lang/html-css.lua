@@ -1,16 +1,20 @@
+local stylelint_diagnostics = require('null-ls').builtins.diagnostics.stylelint
+local stylelint_formatting = require('null-ls').builtins.formatting.stylelint
+local markuplint = require('null-ls').builtins.diagnostics.markuplint
+
 return {
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     opts = {
       ensure_installed = {
+        'emmet-language-server',
         'html-lsp',
-        'htmlhint',
         'css-lsp',
         'css-variables-language-server',
         'cssmodules-language-server',
-        'stylelint',
         'some-sass-language-server',
-        'emmet-language-server',
+        'markuplint',
+        'stylelint',
       },
     },
   },
@@ -28,13 +32,12 @@ return {
     },
   },
   {
-    'mfussenegger/nvim-lint',
+    'nvimtools/none-ls.nvim',
     opts = {
-      linters_by_ft = {
-        html = { 'htmlhint' },
-        css = { 'stylelint' },
-        scss = { 'stylelint' },
-        less = { 'stylelint' },
+      sources = {
+        stylelint_diagnostics,
+        stylelint_formatting,
+        markuplint,
       },
     },
   },

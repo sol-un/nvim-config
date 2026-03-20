@@ -1,36 +1,20 @@
+local yamllint = require 'none-ls.diagnostics.yamllint'
+
 return {
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     opts = {
       ensure_installed = {
         'json-lsp',
-        'jsonlint',
-        'fixjson',
         'yaml-language-server',
         'yamllint',
       },
     },
   },
   {
-    'mfussenegger/nvim-lint',
+    'nvimtools/none-ls.nvim',
     opts = {
-      linters_by_ft = {
-        json = { 'jsonlint' },
-        jsonc = { 'jsonlint' },
-        json5 = { 'jsonlint' },
-        yaml = { 'yamllint' },
-        yml = { 'yamllint' },
-      },
-    },
-  },
-  {
-    'stevearc/conform.nvim',
-    opts = {
-      formatters_by_ft = {
-        json = { 'fixjson' },
-        jsonc = { 'fixjson' },
-        json5 = { 'fixjson' },
-      },
+      sources = { yamllint },
     },
   },
   {

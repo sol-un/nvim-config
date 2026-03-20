@@ -1,3 +1,7 @@
+local markdownlint = require('null-ls').builtins.diagnostics.markdownlint.with {
+  extra_args = { '--disable', 'MD013', 'MD033' },
+}
+
 local keymaps_meta = {
   { desc = 'Bold', key = 'b', symbol = '**' },
   { desc = 'Italic', key = 'i', symbol = '_' },
@@ -11,7 +15,7 @@ return {
     opts = {
       ensure_installed = {
         'marksman',
-        'markdownlint-cli2',
+        'markdownlint',
       },
     },
   },
@@ -22,15 +26,9 @@ return {
     },
   },
   {
-    'mfussenegger/nvim-lint',
-    opts = { linters_by_ft = { markdown = { 'markdownlint-cli2' } } },
-  },
-  {
-    'stevearc/conform.nvim',
+    'nvimtools/none-ls.nvim',
     opts = {
-      formatters_by_ft = {
-        markdown = { 'markdownlint-cli2' },
-      },
+      sources = { markdownlint },
     },
   },
   {

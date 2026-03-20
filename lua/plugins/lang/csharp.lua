@@ -1,3 +1,5 @@
+local csharpier = require('null-ls').builtins.formatting.csharpier
+
 return {
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -10,11 +12,9 @@ return {
     },
   },
   {
-    'stevearc/conform.nvim',
+    'nvimtools/none-ls.nvim',
     opts = {
-      formatters_by_ft = {
-        cs = { 'csharpier' },
-      },
+      sources = { csharpier },
     },
   },
   -- provides an LSP and other C#-related features

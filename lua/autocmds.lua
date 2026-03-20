@@ -31,25 +31,21 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-vim.api.nvim_create_autocmd({ 'BufRead', 'BufWrite', 'InsertLeave', 'TextChanged' }, {
-  desc = 'Lint',
-  callback = function()
-    local lint = require 'lint'
-
-    if vim.bo.modifiable then
-      local client = vim.lsp.get_clients({ bufnr = 0 })[1] or {}
-      lint.try_lint(nil, { cwd = client.root_dir })
-    end
-  end,
-})
-
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
-  desc = 'Format',
-  callback = function()
-    local conform = require 'conform'
-
-    if vim.bo.modifiable then
-      conform.format { quiet = true }
+  desc = 'Format on save',
+  callback = function(ev)
+    if not vim.bo.modifiable then
+      return
     end
+
+    -- Could have used none-ls and its eslint/eslint_d builtins, but it's kinda buggy and regularly fails with a "failed to decode json" error
+    ---@see https://github.com/jose-elias-alvarez/null-ls.nvim/issues/1496
+    vim.iter({ 'null-ls', 'eslint' }):each(function(name)
+      local client = vim.lsp.get_clients { name = name, bufnr = ev.buf }
+
+      if not vim.tbl_isempty(client) then
+        vim.lsp.buf.format { name = name }
+      end
+    end)
   end,
 })

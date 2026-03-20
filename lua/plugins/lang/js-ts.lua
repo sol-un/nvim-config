@@ -104,7 +104,6 @@ return {
       ensure_installed = {
         'typescript-language-server',
         'eslint-lsp',
-        'eslint_d',
         'js-debug-adapter',
       },
     },
@@ -113,20 +112,10 @@ return {
     'neovim/nvim-lspconfig',
     opts = {
       servers = {
-        'eslint',
         'ts_ls',
+        'eslint',
       },
     },
-  },
-  {
-    'stevearc/conform.nvim',
-    opts = function(_, opts)
-      for _, filetype in pairs(filetypes) do
-        opts.formatters_by_ft[filetype] = { 'eslint_d' }
-      end
-
-      return opts
-    end,
   },
   {
     'mfussenegger/nvim-dap',

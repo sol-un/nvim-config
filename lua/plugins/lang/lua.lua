@@ -1,3 +1,6 @@
+local stylua = require('null-ls').builtins.formatting.stylua
+local selene = require('null-ls').builtins.diagnostics.selene
+
 return {
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -16,15 +19,9 @@ return {
     },
   },
   {
-    'mfussenegger/nvim-lint',
-    opts = { linters_by_ft = { lua = { 'selene' } } },
-  },
-  {
-    'stevearc/conform.nvim',
+    'nvimtools/none-ls.nvim',
     opts = {
-      formatters_by_ft = {
-        lua = { 'stylua' },
-      },
+      sources = { stylua, selene },
     },
   },
   {
