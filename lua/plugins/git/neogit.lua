@@ -26,7 +26,7 @@ return {
       item = { '', '' },
       section = { '', '' },
     },
-    status = { recent_commit_count = 30 },
+    status = { recent_commit_count = 35 },
     sections = { recent = { folded = false } },
     commit_editor = {
       kind = 'split',

@@ -1,6 +1,3 @@
-vim.g.lang_features_visible = false
-vim.g.clock_visible = false
-
 local TRUNCATE_LENGTH = 21
 local function truncate_string(str)
   if #str < TRUNCATE_LENGTH then
@@ -42,41 +39,10 @@ return {
         },
       },
       lualine_x = { { 'overseer', unique = true } },
-      lualine_y = {
-        {
-          'lsp_status',
-          icon = '',
-          symbols = { done = '', separator = ', ', spinner = {} },
-          cond = function()
-            return vim.g.lang_features_visible
-          end,
-        },
-      },
+      lualine_y = {},
       lualine_z = {
         'location',
-        {
-          'datetime',
-          icon = '',
-          style = '%H:%M',
-          cond = function()
-            return vim.g.clock_visible
-          end,
-        },
       },
     },
   },
-  init = function()
-    require('snacks').toggle
-      .new({
-        id = 'clock_visible',
-        name = 'Clock',
-        get = function()
-          return vim.g.clock_visible
-        end,
-        set = function(value)
-          vim.g.clock_visible = value
-        end,
-      })
-      :map '<Leader>Tc'
-  end,
 }

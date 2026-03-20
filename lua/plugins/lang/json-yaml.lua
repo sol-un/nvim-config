@@ -28,7 +28,7 @@ return {
   },
   {
     'vuki656/package-info.nvim',
-    event = 'BufReadPost package.json',
+    event = 'BufEnter package.json',
     opts = {},
   },
   {

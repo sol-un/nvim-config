@@ -1,6 +1,5 @@
 return {
   'MagicDuck/grug-far.nvim',
-  cmd = { 'GrugFarWithin' },
   ---@module 'grug-far'
   ---@type grug.far.OptionsOverride
   opts = {
@@ -37,7 +36,15 @@ return {
       },
       {
         '<Leader>r',
-        "<cmd>'<,'>GrugFarWithin<cr>",
+        function()
+          local grug_far = require 'grug-far'
+          local range = grug_far.get_current_visual_selection_as_range_str()
+
+          grug_far.open {
+            visualSelectionUsage = 'ignore',
+            prefills = { paths = range },
+          }
+        end,
         desc = 'Search & replace (selection)',
         mode = 'v',
       },
