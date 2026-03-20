@@ -39,7 +39,7 @@ return {
     opts_extend = { 'ensure_installed' },
     opts = {
       auto_update = true,
-      ensure_installed = { 'prettierd', 'codebook', 'just-lsp' },
+      ensure_installed = { 'prettierd', 'codebook' },
     },
   },
   {
