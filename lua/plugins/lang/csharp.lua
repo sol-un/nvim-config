@@ -1,4 +1,6 @@
-local csharpier = require('null-ls').builtins.formatting.csharpier
+local csharpier = require('null-ls').builtins.formatting.csharpier.with {
+  args = { 'format', '--stdin-path', '$FILENAME' },
+}
 
 return {
   {
