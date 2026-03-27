@@ -11,6 +11,8 @@ return {
     build = function()
       require('gitlab.server').build(true)
     end,
+    ---@module 'gitlab'
+    ---@type Settings
     opts = {
       keymaps = {
         global = {
@@ -34,6 +36,7 @@ return {
         },
       },
       discussion_tree = {
+        auto_open = true,
         position = 'left',
         keep_current_open = true,
         draft_mode = true,

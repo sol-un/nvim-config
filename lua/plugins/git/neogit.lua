@@ -13,11 +13,16 @@ return {
     'nvim-lua/plenary.nvim',
     'sindrets/diffview.nvim',
   },
+  ---@module 'neogit'
+  ---@type NeogitConfig
   opts = {
     disable_hint = true,
+    prompt_amend_commit = false,
     kind = 'vsplit',
     -- use https://github.com/rbong/flog-symbols if you don't use Kitty
     graph_style = 'kitty',
+    auto_show_console = false,
+    console_timeout = math.huge,
     integrations = {
       diffview = true,
       snacks = true,
