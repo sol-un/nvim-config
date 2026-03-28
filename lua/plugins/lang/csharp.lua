@@ -33,10 +33,12 @@ return {
 
       -- Expands complex types like System.Guid
       require('easy-dotnet.netcoredbg').register_dap_variables_viewer()
+      -- Fix netcoredbg on Windows
+      local win_cmd = vim.fn.stdpath 'data' .. '\\mason\\packages\\netcoredbg\\netcoredbg\\netcoredbg.exe'
 
       dap.adapters.netcoredbg = {
         type = 'executable',
-        command = 'netcoredbg',
+        command = require('utils').is_windows() and win_cmd or 'netcoredbg',
         args = { '--interpreter=vscode' },
       }
 
@@ -62,8 +64,9 @@ return {
   },
   {
     'nvim-neotest/neotest',
+    dependencies = { 'nsidorenco/neotest-vstest' },
     opts = function(_, opts)
-      table.insert(opts.adapters or {}, require 'neotest-vstest'())
+      table.insert(opts.adapters or {}, require 'neotest-vstest')
     end,
   },
 }
