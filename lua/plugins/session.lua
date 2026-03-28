@@ -1,7 +1,7 @@
 ---@type string|nil
 local CURRENT = nil
 
-local sort_by_modified_time = function(sessions)
+local names_by_modify_time = function(sessions)
   local session_metas = vim
     .iter(vim.tbl_values(sessions))
     :filter(function(session)
@@ -24,7 +24,7 @@ end
 ---@param action "read"|"delete"
 local read_or_delete = function(action)
   local ms = require 'mini.sessions'
-  local sorted_session_names = sort_by_modified_time(ms.detected)
+  local sorted_session_names = names_by_modify_time(ms.detected)
   local current_session_name = CURRENT ~= nil and ' (' .. CURRENT .. ')' or ''
 
   vim.ui.select(sorted_session_names, {
@@ -36,9 +36,18 @@ local read_or_delete = function(action)
   end)
 end
 
-local get_session_name = function()
+---@return string|nil
+local get_normalized_session_name = function()
   local name = vim.fn.getcwd()
-  local name_normalized = string.gsub(name, '/', '󰿟')
+  local is_windows = require('utils').is_windows()
+  local name_normalized = nil
+
+  if is_windows then
+    name_normalized = name:gsub('\\', '󰿟'):gsub(':', '꞉')
+  else
+    name_normalized = name:gsub('/', '󰿟')
+  end
+
   return name_normalized
 end
 
@@ -61,33 +70,30 @@ return {
     },
     keys = {
       {
-        '<Leader>sl',
-        function()
-          local last_session = require('mini.sessions').get_latest()
-          require('mini.sessions').read(last_session)
-        end,
-        desc = 'Last session',
-      },
-      {
         '<Leader>sd',
         function()
           read_or_delete 'delete'
         end,
-        desc = 'Delete session',
+        desc = 'Delete',
       },
       {
         '<Leader>sf',
         function()
           read_or_delete 'read'
         end,
-        desc = 'Select session',
+        desc = 'Select',
       },
       {
         '<Leader>ss',
         function()
-          require('mini.sessions').write(get_session_name())
+          local session_name = get_normalized_session_name()
+          if session_name then
+            require('mini.sessions').write(session_name)
+          else
+            vim.notify('Failed to save session', vim.log.levels.ERROR)
+          end
         end,
-        desc = 'Save this session',
+        desc = 'Save',
       },
     },
   },
