@@ -25,7 +25,7 @@ end
 local read_or_delete = function(action)
   local ms = require 'mini.sessions'
   local sorted_session_names = names_by_modify_time(ms.detected)
-  local current_session_name = CURRENT ~= nil and ' (' .. CURRENT .. ')' or ''
+  local current_session_name = CURRENT ~= nil and ' (current: ' .. CURRENT .. ')' or ''
 
   vim.ui.select(sorted_session_names, {
     prompt = 'Select session to ' .. action .. current_session_name,
@@ -34,21 +34,6 @@ local read_or_delete = function(action)
       ms[action](session)
     end
   end)
-end
-
----@return string|nil
-local get_normalized_session_name = function()
-  local name = vim.fn.getcwd()
-  local is_windows = require('utils').is_windows()
-  local name_normalized = nil
-
-  if is_windows then
-    name_normalized = name:gsub('\\', '󰿟'):gsub(':', '꞉')
-  else
-    name_normalized = name:gsub('/', '󰿟')
-  end
-
-  return name_normalized
 end
 
 return {
@@ -86,12 +71,8 @@ return {
       {
         '<Leader>ss',
         function()
-          local session_name = get_normalized_session_name()
-          if session_name then
-            require('mini.sessions').write(session_name)
-          else
-            vim.notify('Failed to save session', vim.log.levels.ERROR)
-          end
+          local session_name = require('utils').get_cwd_name()
+          require('mini.sessions').write(session_name)
         end,
         desc = 'Save',
       },

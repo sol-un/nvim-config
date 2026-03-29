@@ -21,9 +21,7 @@ return {
       lualine_b = {
         { 'branch', icon = '', fmt = truncate_string },
         {
-          function()
-            return vim.fn.fnamemodify(vim.fn.getcwd(), ':t')
-          end,
+          require('utils').get_cwd_name,
           icon = '',
           fmt = truncate_string,
         },
