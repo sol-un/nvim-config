@@ -9,7 +9,6 @@ return {
       ensure_installed = {
         'csharpier',
         'lemminx',
-        'netcoredbg',
       },
     },
   },
@@ -19,54 +18,32 @@ return {
       sources = { csharpier },
     },
   },
-  -- provides an LSP and other C#-related features
-  -- NOTE: EasyDotnet tool must be installed for this to work (dotnet tool install -g EasyDotnet)
+  -- NOTE: easy-dotnet.nvim sets up LSP and DAP for C# internally and ships with its own test runner, so neotest, nvim-lspconfig etc aren't needed
   {
     'GustavEikaas/easy-dotnet.nvim',
     ft = { 'csproj', 'cs' },
-    opts = {},
-  },
-  {
-    'mfussenegger/nvim-dap',
-    opts = function()
-      local dap = require 'dap'
-
-      -- Expands complex types like System.Guid
-      require('easy-dotnet.netcoredbg').register_dap_variables_viewer()
-      -- Fix netcoredbg on Windows
-      local win_cmd = vim.fn.stdpath 'data' .. '\\mason\\packages\\netcoredbg\\netcoredbg\\netcoredbg.exe'
-
-      dap.adapters.netcoredbg = {
-        type = 'executable',
-        command = require('utils').is_windows() and win_cmd or 'netcoredbg',
-        args = { '--interpreter=vscode' },
-      }
-
-      dap.configurations.cs = {
-        {
-          type = 'netcoredbg',
-          name = 'Launch - netcoredbg',
-          request = 'launch',
-          program = function()
-            return vim.fn.input('Path to dll', vim.fn.getcwd() .. '/bin/Debug/', 'file')
-          end,
-        },
-        {
-          type = 'netcoredbg',
-          name = 'Attach - netcoredbg',
-          request = 'attach',
-          processId = function()
-            return require('dap.utils').pick_process()
-          end,
-        },
+    ---@module "easy-dotnet"
+    ---@type easy-dotnet.Options
+    opts = {
+      test_runner = {
+        auto_start_testrunner = false,
+        hide_legend = true,
+        viewmode = 'vsplit',
+        vsplit_width = math.floor(vim.o.columns * 0.35),
+      },
+    },
+    init = function()
+      require('which-key').add {
+        { '<Leader>.', group = '.NET', icon = { icon = '󰪮', color = 'blue' } },
+        { '<Leader>.t', '<cmd>Dotnet testrunner<cr>', desc = 'Toggle test runner' },
       }
     end,
   },
   {
-    'nvim-neotest/neotest',
-    dependencies = { 'nsidorenco/neotest-vstest' },
-    opts = function(_, opts)
-      table.insert(opts.adapters or {}, require 'neotest-vstest')
+    'mfussenegger/nvim-dap',
+    opts = function()
+      -- Preview values of complex types like System.Guid
+      require('easy-dotnet.netcoredbg').register_dap_variables_viewer()
     end,
   },
 }
