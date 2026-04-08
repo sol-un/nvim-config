@@ -1,5 +1,5 @@
 -- Delete default LSP keymaps to be replaced with Snacks.picker
-for _, lhs in ipairs { 'gra', 'grt', 'grn', 'grr', 'gri', 'gO' } do
+for _, lhs in ipairs { 'gra', 'grt', 'grn', 'grr', 'gri', 'grx', 'gO' } do
   pcall(vim.keymap.del, { 'n', 'x' }, lhs)
 end
 

@@ -2,47 +2,64 @@ require('which-key').add {
   { '<Esc>', '<cmd>nohlsearch<CR>' }, -- Clear highlights on search when pressing <Esc> in normal mode
 
   -- Better up/down on wrapped lines
-  { 'j', "v:count == 0 ? 'gj' : 'j'", expr = true, silent = true, mode = { 'n', 'x' } },
-  { 'k', "v:count == 0 ? 'gk' : 'k'", expr = true, silent = true, mode = { 'n', 'x' } },
+  {
+    mode = { 'n', 'x' },
+    expr = true,
+    silent = true,
+    { 'j', "v:count == 0 ? 'gj' : 'j'" },
+    { 'k', "v:count == 0 ? 'gk' : 'k'" },
+  },
 
   -- Better indenting (stay in visual mode)
-  { '<', '<gv', mode = 'v' },
-  { '>', '>gv', mode = 'v' },
+  {
+    mode = 'v',
+    { '<', '<gv' },
+    { '>', '>gv' },
+  },
 
   -- Auto-close pairs
-  { '`', '``<left>', mode = 'i' },
-  { '"', '""<left>', mode = 'i' },
-  { '(', '()<left>', mode = 'i' },
-  { '[', '[]<left>', mode = 'i' },
-  { '{', '{}<left>', mode = 'i' },
-  { '<', '<><left>', mode = 'i' },
+  {
+    mode = 'i',
+    { '`', '``<left>' },
+    { '"', '""<left>' },
+    { '(', '()<left>' },
+    { '[', '[]<left>' },
+    { '{', '{}<left>' },
+    { '<', '<><left>' },
+  },
 
-  -- Terminal
-  { '<Esc><Esc>', '<C-\\><C-n>', desc = 'Exit terminal mode', mode = 't' }, -- This won't work in all terminal emulators/tmux/etc
-  { '<C-s>', '<Cmd>w<CR><Esc>', mode = { 'n', 'i', 'v', 's' } }, -- Save
+  -- Saving, quitting
+  { '<C-s>', '<Cmd>w<CR><Esc>', mode = { 'n', 'i', 'v', 's' }, desc = 'Save' },
   { '<Leader>q', group = 'Quit' },
   { '<Leader>qq', '<Cmd>confirm qall<CR>', desc = 'Quit' },
-  { '<Leader>qr', '<Cmd>restart<CR>', desc = 'Restart', cond = vim.fn.has 'nvim-0.12.0' == 1 },
+  { '<Leader>qr', '<Cmd>restart<CR>', desc = 'Restart' },
+
+  -- Terminal
   {
-    '<C-_>', -- this is the same as Ctrl + /, see https://apple.stackexchange.com/questions/24261/how-do-i-send-c-that-is-control-slash-to-the-terminal
-    function()
-      require('snacks').terminal.toggle(nil, { cwd = vim.fn.expand '%:h' })
-    end,
     desc = 'Toggle terminal',
+    {
+      '<C-/>',
+      function()
+        require('snacks').terminal.toggle(nil, { cwd = vim.fn.expand '%:h' })
+      end,
+    },
+    {
+      '<C-_>', -- this is the same as Ctrl + /, see https://apple.stackexchange.com/questions/24261/how-do-i-send-c-that-is-control-slash-to-the-terminal
+      function()
+        require('snacks').terminal.toggle(nil, { cwd = vim.fn.expand '%:h' })
+      end,
+    },
   },
   {
-    '<C-/>',
-    function()
-      require('snacks').terminal.toggle(nil, { cwd = vim.fn.expand '%:h' })
-    end,
-    desc = 'Toggle terminal',
+    mode = 't',
+    { '<Esc><Esc>', '<C-\\><C-n>', desc = 'Exit terminal mode' }, -- This won't work in all terminal emulators/tmux/etc
+    { '<C-/>', '<cmd>close<cr>', desc = 'Hide Terminal' },
+    { '<C-_>', '<cmd>close<cr>', desc = 'Hide Terminal' },
+    { '<C-h>', '<Backspace>' },
+    { '<C-j>', '<cmd>wincmd j<cr>' },
+    { '<C-k>', '<cmd>wincmd k<cr>' },
+    { '<C-l>', '<cmd>wincmd l<cr>' },
   },
-  { '<C-/>', '<cmd>close<cr>', desc = 'Hide Terminal', mode = 't' },
-  { '<C-_>', '<cmd>close<cr>', desc = 'Hide Terminal', mode = 't' },
-  { '<C-h>', '<Backspace>' },
-  { '<C-j>', '<cmd>wincmd j<cr>', mode = 't' },
-  { '<C-k>', '<cmd>wincmd k<cr>', mode = 't' },
-  { '<C-l>', '<cmd>wincmd l<cr>', mode = 't' },
 
   -- Navigation
   {
