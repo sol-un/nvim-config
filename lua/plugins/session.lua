@@ -76,6 +76,14 @@ return {
         end,
         desc = 'Save',
       },
+      {
+        '<Leader>qr',
+        function()
+          -- Preserves current session
+          require('mini.sessions').restart()
+        end,
+        desc = 'Restart',
+      },
     },
   },
 }

@@ -32,7 +32,6 @@ require('which-key').add {
   { '<C-s>', '<Cmd>w<CR><Esc>', mode = { 'n', 'i', 'v', 's' }, desc = 'Save' },
   { '<Leader>q', group = 'Quit' },
   { '<Leader>qq', '<Cmd>confirm qall<CR>', desc = 'Quit' },
-  { '<Leader>qr', '<Cmd>restart<CR>', desc = 'Restart' },
 
   -- Terminal
   {
