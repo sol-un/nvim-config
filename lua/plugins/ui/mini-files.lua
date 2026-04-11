@@ -5,6 +5,13 @@ vim.api.nvim_create_autocmd('User', {
   end,
 })
 
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'MiniFilesActionDelete',
+  callback = function(event)
+    require('snacks').bufdelete.delete { file = event.data.from, force = true }
+  end,
+})
+
 return {
   'nvim-mini/mini.files',
   opts = {
@@ -15,20 +22,25 @@ return {
       width_preview = math.floor(vim.o.columns * 0.69),
     },
   },
-  config = function(_, opts)
-    local set = require('snacks').keymap.set
-    set('n', '<Leader>e', function()
-      if not require('mini.files').close() then
-        require('mini.files').open(vim.api.nvim_buf_get_name(0))
-      end
-    end, { desc = 'Explorer' })
-    set('n', '<Leader>E', function()
-      if not require('mini.files').close() then
-        require('mini.files').open(vim.uv.cwd())
-      end
-    end, { desc = 'Explorer (CWD)' })
-
-    require('mini.files').setup(opts)
+  init = function()
+    require('snacks').keymap.set('n', '<Leader>e', function()
+      require('mini.files').close()
+    end, { ft = 'minifiles' })
   end,
-  keys = { { '<Leader>e', desc = 'Explorer' }, { '<Leader>E', desc = 'Explorer (CWD)' } },
+  keys = {
+    {
+      '<Leader>e',
+      function()
+        require('mini.files').open(vim.fn.expand '%:p')
+      end,
+      desc = 'Explorer',
+    },
+    {
+      '<Leader>E',
+      function()
+        require('mini.files').open(nil, false)
+      end,
+      desc = 'Explorer (CWD)',
+    },
+  },
 }
