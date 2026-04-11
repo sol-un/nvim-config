@@ -72,6 +72,7 @@ opt.mouse = 'a' -- Enable mouse support
 opt.modifiable = true -- Allow buffer modifications
 opt.encoding = 'UTF-8' -- Set encoding
 opt.sessionoptions = 'buffers,curdir,folds,globals,tabpages,winpos,winsize,help'
+opt.autocomplete = false -- Handled by blink.cmp
 vim.schedule(function()
   opt.clipboard = 'unnamedplus'
 end)
