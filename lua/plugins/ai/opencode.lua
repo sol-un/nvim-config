@@ -1,22 +1,35 @@
+local prefix = '<Leader>a'
+
 return {
   'sudo-tee/opencode.nvim',
   cond = true,
   dependencies = {
     'nvim-lua/plenary.nvim',
   },
+  ---@module 'opencode'
+  ---@type OpencodeConfig
   opts = {
     default_mode = 'plan',
     default_global_keymaps = false,
     ui = {
+      enable_treesitter_markdown = false,
       picker = {
-        ---@module "snacks"
-        ---@type snacks.picker.layout.Config | nil
         snacks_layout = {
           preset = 'vscode',
           fullscreen = false,
         },
       },
       input = { text = { wrap = true } },
+      questions = {
+        use_vim_ui_select = true,
+      },
+      output = {
+        filetype = 'markdown',
+        compact_assistant_headers = true,
+        tools = {
+          show_reasoning_output = false,
+        },
+      },
     },
     context = {
       enabled = false,
@@ -57,19 +70,34 @@ return {
       },
     },
   },
-  keys = '<Leader>a',
-  init = function()
-    local set = require('snacks').keymap.set
-
-    set('n', '<Leader>ac', function()
-      require('opencode.api').open_input_new_session()
-    end, { desc = 'New session' })
-    set('n', '<Leader>ah', function()
-      require('opencode.api').select_session()
-    end, { desc = 'Select session' })
-    set('n', '<Leader>at', function()
-      require('opencode.api').timeline()
-    end, { desc = 'Timeline picker', ft = { 'opencode', 'opencode_output' } })
-    set('n', '<Leader>am', '<cmd>Opencode models<cr>', { desc = 'Select model', ft = { 'opencode', 'opencode_output' } })
-  end,
+  keys = {
+    {
+      prefix .. 'c',
+      function()
+        require('opencode.api').open_input_new_session()
+      end,
+      desc = 'New session',
+    },
+    {
+      prefix .. 'h',
+      function()
+        require('opencode.api').select_session()
+      end,
+      desc = 'Select session',
+    },
+    {
+      prefix .. 't',
+      function()
+        require('opencode.api').timeline()
+      end,
+      desc = 'Timeline picker',
+      ft = { 'opencode', 'opencode_output' },
+    },
+    {
+      prefix .. 'm',
+      '<cmd>Opencode models<cr>',
+      desc = 'Select model',
+      ft = { 'opencode', 'opencode_output' },
+    },
+  },
 }

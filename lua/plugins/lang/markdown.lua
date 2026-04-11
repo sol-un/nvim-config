@@ -33,13 +33,13 @@ return {
   },
   {
     'MeanderingProgrammer/render-markdown.nvim',
-    ft = { 'markdown', 'codecompanion', 'opencode_output', 'gitlab' },
+    ft = { 'markdown', 'gitlab' },
     ---@module 'render-markdown'
     ---@type render.md.UserConfig
     opts = {
       preset = 'obsidian',
       anti_conceal = { enabled = false },
-      file_types = { 'markdown', 'codecompanion', 'opencode_output', 'gitlab' },
+      file_types = { 'markdown', 'gitlab' },
     },
     keys = function()
       local set = require('snacks').keymap.set
