@@ -9,6 +9,17 @@ local keymaps_meta = {
   { desc = 'Strikethrough', key = 's', symbol = '~~' },
 }
 
+local add_md_link = function(rhs)
+  local link = vim.fn.input 'URL'
+  if link == nil or link == '' then
+    return
+  end
+
+  local rhs_with_link = string.format(rhs, link)
+  local input = vim.api.nvim_replace_termcodes(rhs_with_link, true, false, true)
+  vim.api.nvim_feedkeys(input, 'n', false)
+end
+
 return {
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -41,11 +52,12 @@ return {
       anti_conceal = { enabled = false },
       file_types = { 'markdown', 'gitlab' },
     },
-    keys = function()
+    init = function()
+      require('which-key').add { '<Leader>m', group = 'Markdown', icon = { icon = ' ', color = 'grey' } }
       local set = require('snacks').keymap.set
 
-      set({ 'n', 'v' }, '<Leader>m', '', { desc = '󰽛 Markdown', ft = 'markdown' })
       set('n', '<Leader>mt', '<cmd>RenderMarkdown buf_toggle<cr>', { ft = 'markdown', desc = 'Toggle preview' })
+
       vim.iter(keymaps_meta):each(function(keymap_meta)
         local key = keymap_meta.key
         local sym = keymap_meta.symbol
@@ -54,13 +66,14 @@ return {
         set('v', '<Leader>m' .. key, string.format('c%s<c-r>"%s<esc>', sym, sym), { ft = 'markdown', desc = desc })
         set('n', '<Leader>m' .. key, string.format('viwc%s<c-r>"%s<esc>', sym, sym), { ft = 'markdown', desc = desc })
       end)
-    end,
-  },
-  {
-    'antonk52/markdowny.nvim',
-    ft = 'markdown',
-    keys = function()
-      require('snacks').keymap.set('v', '<Leader>ml', ":lua require('markdowny').link()<cr>", { ft = 'markdown', desc = 'Link' })
+
+      set('v', '<Leader>ml', function()
+        add_md_link 'c[<c-r>"](%s)<esc>'
+      end, { ft = 'markdown', desc = 'Link' })
+
+      set('n', '<Leader>ml', function()
+        add_md_link 'viwc[<c-r>"](%s)<esc>'
+      end, { ft = 'markdown', desc = 'Link' })
     end,
   },
 }
