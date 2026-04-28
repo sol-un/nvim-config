@@ -1,7 +1,9 @@
 return {
   {
     'saghen/blink.cmp',
-    build = 'cargo build --release',
+    build = function()
+      require('blink.cmp').build():wait(60000)
+    end,
     event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
       {
@@ -18,8 +20,9 @@ return {
         },
         opts = {},
       },
-      'moyiz/blink-emoji.nvim',
+      { 'moyiz/blink-emoji.nvim', cond = false },
       'folke/lazydev.nvim',
+      'saghen/blink.lib',
     },
     --- @module 'blink.cmp'
     --- @type blink.cmp.Config
@@ -56,7 +59,7 @@ return {
           'snippets',
           'lazydev',
           'buffer',
-          'emoji',
+          -- 'emoji',
         },
         providers = {
           lsp = {
@@ -80,13 +83,13 @@ return {
           lazydev = {
             module = 'lazydev.integrations.blink',
           },
-          emoji = {
-            name = 'emoji',
-            module = 'blink-emoji',
-            score_offset = function(ctx)
-              return ctx.trigger.initial_character == ':' and 100 or 0
-            end,
-          },
+          -- emoji = {
+          --   name = 'emoji',
+          --   module = 'blink-emoji',
+          --   score_offset = function(ctx)
+          --     return ctx.trigger.initial_character == ':' and 100 or 0
+          --   end,
+          -- },
         },
       },
       snippets = { preset = 'luasnip' },
