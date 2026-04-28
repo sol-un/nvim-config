@@ -75,7 +75,6 @@ return {
     ---@type snacks.Config
     local config = {
       notifier = {},
-      input = { win = { row = vim.o.lines } },
       indent = {},
       scroll = {},
       words = {},
