@@ -74,6 +74,16 @@ return {
       set('n', '<Leader>ml', function()
         add_md_link 'viwc[<c-r>"](%s)<esc>'
       end, { ft = 'markdown', desc = 'Link' })
+
+      set('n', '<Leader>mC', function()
+        local language = vim.fn.input 'Language'
+        if language == nil or language == '' then
+          return
+        end
+
+        local block_top = '```' .. language
+        vim.api.nvim_put({ block_top, '```' }, 'c', true, true)
+      end, { ft = 'markdown', desc = 'Insert code block' })
     end,
   },
 }
