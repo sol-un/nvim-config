@@ -36,7 +36,7 @@ return {
           icon = '',
         },
       },
-      lualine_x = { { 'overseer', unique = true } },
+      lualine_x = {},
       lualine_y = {},
       lualine_z = {
         'location',
