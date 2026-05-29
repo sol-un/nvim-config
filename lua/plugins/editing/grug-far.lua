@@ -35,6 +35,15 @@ return {
         desc = 'Open buffers',
       },
       {
+        '<Leader>rc',
+        function()
+          require('grug-far').open {
+            prefills = { paths = vim.fn.getcwd() },
+          }
+        end,
+        desc = 'CWD',
+      },
+      {
         '<Leader>r',
         function()
           local grug_far = require 'grug-far'
