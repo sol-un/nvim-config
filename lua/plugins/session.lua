@@ -73,8 +73,9 @@ return {
         function()
           local session_name = require('utils').get_cwd_name()
           require('mini.sessions').write(session_name)
+          require('mini.sessions').read(session_name)
         end,
-        desc = 'Save',
+        desc = 'Create & switch to',
       },
       {
         '<Leader>qr',
