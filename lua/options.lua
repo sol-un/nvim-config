@@ -159,10 +159,11 @@ vim.diagnostic.config {
   underline = true,
   signs = {
     text = {
-      [vim.diagnostic.severity.ERROR] = ' ',
-      [vim.diagnostic.severity.WARN] = ' ',
-      [vim.diagnostic.severity.INFO] = ' ',
-      [vim.diagnostic.severity.HINT] = ' ',
+      -- There is already virtual text for diagnostics, so conceal for less visual noise
+      [vim.diagnostic.severity.ERROR] = '',
+      [vim.diagnostic.severity.WARN] = '',
+      [vim.diagnostic.severity.INFO] = '',
+      [vim.diagnostic.severity.HINT] = '',
     },
   },
   virtual_lines = { current_line = true },
