@@ -1,3 +1,19 @@
+local dispose_all = function()
+  local overseer = require 'overseer'
+  local tasks = overseer.list_tasks()
+
+  for _, task in ipairs(tasks) do
+    overseer.run_action(task, 'dispose')
+  end
+end
+
+vim.api.nvim_create_autocmd('ExitPre', {
+  desc = 'Dispose all tasks',
+  callback = function()
+    dispose_all()
+  end,
+})
+
 return {
   'stevearc/overseer.nvim',
   cmd = { 'OverseerRun', 'OverseerToggle' },
@@ -21,12 +37,7 @@ return {
       {
         '<Leader>od',
         function()
-          local overseer = require 'overseer'
-          local tasks = overseer.list_tasks()
-
-          for _, task in ipairs(tasks) do
-            overseer.run_action(task, 'dispose')
-          end
+          dispose_all()
         end,
         desc = 'Dispose all tasks',
       },
