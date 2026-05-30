@@ -6,7 +6,7 @@ return {
     dependencies = {
       'MunifTanjim/nui.nvim',
       'nvim-lua/plenary.nvim',
-      'sindrets/diffview.nvim',
+      'dlyongemallo/diffview.nvim',
     },
     build = function()
       require('gitlab.server').build(true)
