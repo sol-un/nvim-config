@@ -10,10 +10,19 @@ return {
     'nvim-lua/plenary.nvim',
     'folke/trouble.nvim',
   },
+  ---@module 'neotest'
+  ---@type neotest.Config
   opts = {
     adapters = {},
     status = { virtual_text = true },
     output = { open_on_run = true },
+    summary = {
+      mappings = {
+        expand = 'l',
+        expand_all = 'E',
+        stop = '<C-c>',
+      },
+    },
     quickfix = {
       open = function()
         require('trouble').open { mode = 'quickfix', focus = false }
