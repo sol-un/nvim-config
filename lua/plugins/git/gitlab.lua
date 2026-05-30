@@ -6,13 +6,14 @@ return {
     dependencies = {
       'MunifTanjim/nui.nvim',
       'nvim-lua/plenary.nvim',
-      'sindrets/diffview.nvim',
+      'dlyongemallo/diffview-plus.nvim',
     },
     build = function()
       require('gitlab.server').build(true)
     end,
     ---@module 'gitlab'
     ---@type Settings
+    ---@diagnostic disable: missing-fields
     opts = {
       keymaps = {
         global = {
