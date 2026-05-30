@@ -1,7 +1,7 @@
 return {
   {
     'dlyongemallo/diffview.nvim',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    dependencies { 'nvim-lua/plenary.nvim' },
     ---@module 'diffview.config'
     ---@type DiffviewConfig
     opts = {
