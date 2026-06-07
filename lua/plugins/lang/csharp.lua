@@ -1,5 +1,68 @@
+local resharper_cleanup = function()
+  local path = vim.fn.expand '%:p'
+  local notify_id = math.random(math.huge)
+  local timer = vim.loop.new_timer()
+
+  if timer then
+    timer:start(
+      0,
+      100,
+      vim.schedule_wrap(function()
+        vim.notify('Cleaning up...', nil, {
+          id = notify_id,
+          replace = notify_id,
+          title = 'ReSharper',
+        })
+      end)
+    )
+  end
+
+  vim.system(
+    { 'jb', 'cleanupcode', path },
+    { text = true },
+    ---@param out vim.SystemCompleted
+    vim.schedule_wrap(function(out)
+      if out.code ~= 0 then
+        return
+      end
+
+      if timer then
+        timer:stop()
+        timer:close()
+      end
+
+      vim.cmd 'set autoread | checktime'
+      vim.notify('Done cleaning up', nil, {
+        id = notify_id,
+        replace = notify_id,
+        title = 'ReSharper',
+      })
+    end)
+  )
+end
+
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = '*.cs',
+  callback = function()
+    local cwd = vim.fn.getcwd()
+    local edi_sln = cwd .. '/EDI/EDI.sln'
+    local stat = vim.loop.fs_stat(edi_sln)
+
+    if stat then
+      resharper_cleanup()
+    end
+  end,
+})
+
 local csharpier = require('null-ls').builtins.formatting.csharpier.with {
+
   args = { 'format', '--stdin-path', '$FILENAME' },
+  condition = function()
+    local cwd = vim.fn.getcwd()
+    local postavki_sln = cwd .. '/Source/Postavki.sln'
+    local stat = vim.loop.fs_stat(postavki_sln)
+    return stat ~= nil
+  end,
 }
 
 return {
@@ -24,8 +87,9 @@ return {
     ft = { 'csproj', 'cs' },
     ---@module "easy-dotnet"
     ---@type easy-dotnet.Options
+    ---@diagnostic disable: missing-fields
     opts = {
-      -- NOTE: easy-dotnet's built-in test runner is less sophisticated than neotest but can handle large test suites (thousands of tests)
+      -- NOTE: easy-dotnet's built-in test runner is less sophisticated than neotest but can handle larger test suites (thousands of tests)
       test_runner = {
         auto_start_testrunner = false,
         hide_legend = true,
@@ -64,6 +128,10 @@ return {
               '<cmd>Dotnet testrunner<cr>',
               desc = 'Test Summary',
             },
+          },
+          {
+            '<Leader>.f',
+            resharper_cleanup,
           },
         },
       }
