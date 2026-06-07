@@ -1,4 +1,23 @@
+local helpers = require 'null-ls.helpers'
+local methods = require 'null-ls.methods'
 local yamllint = require 'none-ls.diagnostics.yamllint'
+
+local FORMATTING = methods.internal.FORMATTING
+
+local tombi = helpers.make_builtin {
+  name = 'tombi',
+  method = FORMATTING,
+  filetypes = { 'toml' },
+  generator_opts = {
+    command = 'tombi',
+    args = {
+      'format',
+      '-',
+    },
+    to_stdin = true,
+  },
+  factory = helpers.formatter_factory,
+}
 
 return {
   {
@@ -8,13 +27,14 @@ return {
         'json-lsp',
         'yaml-language-server',
         'yamllint',
+        'tombi',
       },
     },
   },
   {
     'nvimtools/none-ls.nvim',
     opts = {
-      sources = { yamllint },
+      sources = { yamllint, tombi },
     },
   },
   {
@@ -23,6 +43,7 @@ return {
       servers = {
         'yamlls',
         'jsonls',
+        'tombi',
       },
     },
   },
