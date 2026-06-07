@@ -64,7 +64,7 @@ local adapters = {
 vim.api.nvim_create_autocmd('FileType', {
   pattern = filetypes,
   callback = function()
-    ---@diagnostic disable: assign-type-mismatch
+    --- @diagnostic disable: assign-type-mismatch
     require('which-key').add {
       {
         'glu',
@@ -93,7 +93,7 @@ vim.api.nvim_create_autocmd('FileType', {
         desc = 'Add missing imports',
       },
     }
-    ---@diagnostic enable: assign-type-mismatch
+    --- @diagnostic enable: assign-type-mismatch
   end,
 })
 

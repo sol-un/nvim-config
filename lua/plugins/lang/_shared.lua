@@ -33,10 +33,19 @@ return {
       require('nvim-treesitter').install { 'all' }
     end,
   },
-  { 'mason-org/mason.nvim', opts = {} }, -- package manager for LSP servers, DAP servers, linters, and formatters
+  {
+    'mason-org/mason.nvim', -- package manager for LSP servers, DAP servers, linters, and formatters
+    --- @module 'mason'
+    --- @type MasonSettings
+    --- @diagnostic disable: missing-fields
+    opts = {},
+  },
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim', -- automatically installs mason packages
     opts_extend = { 'ensure_installed' },
+    --- @module 'mason-tool-installer'
+    --- @type MasonToolInstallerSettings
+    --- @diagnostic disable: missing-fields
     opts = {
       auto_update = true,
       ensure_installed = { 'prettierd', 'codebook' },

@@ -1,4 +1,4 @@
----@type string|nil
+--- @type string|nil
 local CURRENT = nil
 
 local names_by_modify_time = function(sessions)
@@ -21,7 +21,7 @@ local names_by_modify_time = function(sessions)
     :totable()
 end
 
----@param action "read"|"delete"
+--- @param action "read"|"delete"
 local read_or_delete = function(action)
   local ms = require 'mini.sessions'
   local sorted_session_names = names_by_modify_time(ms.detected)

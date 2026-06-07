@@ -10,8 +10,9 @@ return {
     'nvim-lua/plenary.nvim',
     'folke/trouble.nvim',
   },
-  ---@module 'neotest'
-  ---@type neotest.Config
+  --- @module 'neotest'
+  --- @type neotest.Config
+  --- @diagnostic disable: missing-fields
   opts = {
     adapters = {},
     status = { virtual_text = true },
@@ -124,8 +125,8 @@ return {
         watch_prefix .. 'S',
         function()
           --- NOTE: The proper type of the argument is missing in the documentation
-          ---@see https://github.com/nvim-neotest/neotest/blob/master/doc/neotest.txt#L626-L632
-          ---@diagnostic disable-next-line: missing-parameter
+          --- @see https://github.com/nvim-neotest/neotest/blob/master/doc/neotest.txt#L626-L632
+          --- @diagnostic disable-next-line: missing-parameter
           require('neotest').watch.stop()
         end,
         desc = 'Stop all watches',

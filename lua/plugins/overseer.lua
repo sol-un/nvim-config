@@ -17,8 +17,9 @@ vim.api.nvim_create_autocmd('ExitPre', {
 return {
   'stevearc/overseer.nvim',
   cmd = { 'OverseerRun', 'OverseerToggle' },
-  ---@module 'overseer'
-  ---@type overseer.SetupOpts
+  --- @module 'overseer'
+  --- @type overseer.SetupOpts
+  --- @diagnostic disable: missing-fields
   opts = {
     dap = false,
     task_list = {

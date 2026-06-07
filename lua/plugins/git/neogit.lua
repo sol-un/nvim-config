@@ -13,9 +13,9 @@ return {
     'nvim-lua/plenary.nvim',
     'dlyongemallo/diffview-plus.nvim',
   },
-  ---@module 'neogit'
-  ---@type NeogitConfig
-  ---@diagnostic disable: missing-fields
+  --- @module 'neogit'
+  --- @type NeogitConfig
+  --- @diagnostic disable: missing-fields
   opts = {
     disable_hint = true,
     prompt_amend_commit = false,

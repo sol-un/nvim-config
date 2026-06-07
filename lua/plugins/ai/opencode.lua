@@ -6,8 +6,9 @@ return {
   dependencies = {
     'nvim-lua/plenary.nvim',
   },
-  ---@module 'opencode'
-  ---@type OpencodeConfig
+  --- @module 'opencode'
+  --- @type OpencodeConfig
+  --- @diagnostic disable: missing-fields
   opts = {
     default_mode = 'plan',
     default_global_keymaps = false,

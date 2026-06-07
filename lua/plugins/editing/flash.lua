@@ -1,6 +1,9 @@
 return {
   'folke/flash.nvim',
   event = 'VeryLazy',
+  --- @module 'flash'
+  --- @type Flash.Config
+  --- @diagnostic disable: missing-fields
   opts = { label = { rainbow = { enabled = true } } },
   keys = function()
     local wk = require 'which-key'

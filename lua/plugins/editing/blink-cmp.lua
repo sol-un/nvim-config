@@ -26,6 +26,7 @@ return {
     },
     --- @module 'blink.cmp'
     --- @type blink.cmp.Config
+    --- @diagnostic disable: missing-fields
     opts = {
       cmdline = {
         enabled = true,

@@ -11,9 +11,9 @@ return {
     build = function()
       require('gitlab.server').build(true)
     end,
-    ---@module 'gitlab'
-    ---@type Settings
-    ---@diagnostic disable: missing-fields
+    --- @module 'gitlab'
+    --- @type Settings
+    --- @diagnostic disable: missing-fields
     opts = {
       keymaps = {
         global = {

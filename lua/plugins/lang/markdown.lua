@@ -45,8 +45,8 @@ return {
   {
     'MeanderingProgrammer/render-markdown.nvim',
     ft = { 'markdown', 'gitlab' },
-    ---@module 'render-markdown'
-    ---@type render.md.UserConfig
+    --- @module 'render-markdown'
+    --- @type render.md.UserConfig
     opts = {
       preset = 'obsidian',
       anti_conceal = { enabled = false },

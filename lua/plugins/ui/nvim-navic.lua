@@ -1,6 +1,9 @@
 return {
   {
     'SmiteshP/nvim-navic',
+    --- @module 'nvim-navic'
+    --- @type Options
+    --- @diagnostic disable: missing-fields
     opts = {
       icons = {
         File = '󰈔 ',

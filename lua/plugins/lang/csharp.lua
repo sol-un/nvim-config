@@ -20,7 +20,7 @@ local resharper_cleanup = function()
   vim.system(
     { 'jb', 'cleanupcode', path },
     { text = true },
-    ---@param out vim.SystemCompleted
+    --- @param out vim.SystemCompleted
     vim.schedule_wrap(function(out)
       if out.code ~= 0 then
         return
@@ -85,9 +85,9 @@ return {
   {
     'GustavEikaas/easy-dotnet.nvim',
     ft = { 'csproj', 'cs' },
-    ---@module "easy-dotnet"
-    ---@type easy-dotnet.Options
-    ---@diagnostic disable: missing-fields
+    --- @module "easy-dotnet"
+    --- @type easy-dotnet.Options
+    --- @diagnostic disable: missing-fields
     opts = {
       -- NOTE: easy-dotnet's built-in test runner is less sophisticated than neotest but can handle larger test suites (thousands of tests)
       test_runner = {

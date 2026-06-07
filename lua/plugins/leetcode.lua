@@ -18,6 +18,9 @@ return {
     'nvim-lua/plenary.nvim',
     'MunifTanjim/nui.nvim',
   },
+  --- @module 'leetcode'
+  --- @type lc.UserConfig
+  --- @diagnostic disable: missing-fields
   opts = {
     lang = 'typescript',
     plugins = {

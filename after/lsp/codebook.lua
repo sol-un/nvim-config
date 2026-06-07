@@ -1,4 +1,4 @@
----@type vim.lsp.Config
+--- @type vim.lsp.Config
 return {
   -- Disable virtual text diagnostics specifically for codebook to reduce visual noise
   on_attach = function(client)

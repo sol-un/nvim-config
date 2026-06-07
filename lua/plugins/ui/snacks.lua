@@ -71,8 +71,9 @@ return {
   'folke/snacks.nvim',
   priority = 1000,
   opts = function(_, opts)
-    ---@module 'snacks'
-    ---@type snacks.Config
+    --- @module 'snacks'
+    --- @type snacks.Config
+    --- @diagnostic disable: missing-fields
     local config = {
       notifier = {},
       indent = {},

@@ -3,6 +3,9 @@ return {
   dependencies = {
     'MunifTanjim/nui.nvim',
   },
+  --- @module 'noice'
+  --- @type NoiceConfig
+  --- @diagnostic disable: missing-fields
   opts = {
     lsp = {
       override = {

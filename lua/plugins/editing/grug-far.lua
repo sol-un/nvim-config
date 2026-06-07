@@ -1,7 +1,8 @@
 return {
   'MagicDuck/grug-far.nvim',
-  ---@module 'grug-far'
-  ---@type grug.far.OptionsOverride
+  --- @module 'grug-far'
+  --- @type grug.far.OptionsOverride
+  --- @diagnostic disable: missing-fields
   opts = {
     folding = {
       enabled = false,

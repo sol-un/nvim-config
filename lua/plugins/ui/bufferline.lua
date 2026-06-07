@@ -1,7 +1,8 @@
 return {
   'akinsho/bufferline.nvim',
-  ---@module 'bufferline'
-  ---@class bufferline.UserConfig
+  --- @module 'bufferline'
+  --- @class bufferline.UserConfig
+  --- @diagnostic disable: missing-fields
   opts = {
     options = {
       always_show_bufferline = true,

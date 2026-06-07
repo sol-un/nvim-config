@@ -2,9 +2,9 @@ return {
   {
     'dlyongemallo/diffview-plus.nvim',
     dependencies = { 'nvim-lua/plenary.nvim' },
-    ---@module 'diffview.config'
-    ---@type DiffviewConfig
-    ---@diagnostic disable: missing-fields
+    --- @module 'diffview.config'
+    --- @type DiffviewConfig
+    --- @diagnostic disable: missing-fields
     opts = {
       enhanced_diff_hl = true,
       diffopt = { algorithm = 'histogram' },
