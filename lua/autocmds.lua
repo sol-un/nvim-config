@@ -35,14 +35,10 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
       return
     end
 
-    -- Could have used none-ls and its eslint/eslint_d builtins, but it's kinda buggy and regularly fails with a "failed to decode json" error
-    --- @see https://github.com/jose-elias-alvarez/null-ls.nvim/issues/1496
-    vim.iter({ 'null-ls', 'eslint' }):each(function(name)
-      local client = vim.lsp.get_clients { name = name, bufnr = ev.buf }
+    local client = vim.lsp.get_clients { name = 'null-ls', bufnr = ev.buf }
 
-      if not vim.tbl_isempty(client) then
-        vim.lsp.buf.format { name = name }
-      end
-    end)
+    if not vim.tbl_isempty(client) then
+      vim.lsp.buf.format { name = 'null-ls' }
+    end
   end,
 })

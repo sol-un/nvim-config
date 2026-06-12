@@ -1,3 +1,5 @@
+local eslint_d_diagnostics, eslint_d_formatting = require 'none-ls.diagnostics.eslint_d', require 'none-ls.formatting.eslint_d'
+
 local filetypes = {
   'javascript',
   'javascriptreact',
@@ -103,8 +105,17 @@ return {
     opts = {
       ensure_installed = {
         'typescript-language-server',
-        'eslint-lsp',
+        'eslint_d',
         'js-debug-adapter',
+      },
+    },
+  },
+  {
+    'nvimtools/none-ls.nvim',
+    opts = {
+      sources = {
+        eslint_d_diagnostics,
+        eslint_d_formatting,
       },
     },
   },
@@ -113,7 +124,6 @@ return {
     opts = {
       servers = {
         'ts_ls',
-        'eslint',
       },
     },
   },
