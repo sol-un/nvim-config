@@ -9,6 +9,7 @@ return {
       enhanced_diff_hl = true,
       diffopt = { algorithm = 'histogram' },
       show_help_hints = false,
+      restore_session = false, -- NOTE: as of writing, does not properly persist the diffview tab state, but creates a redundant session on restart; maybe try again later
       show_root_path = false,
       hide_merge_artifacts = true,
       clean_up_buffers = true,
