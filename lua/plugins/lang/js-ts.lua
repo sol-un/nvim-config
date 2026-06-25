@@ -1,4 +1,4 @@
-local eslint_d_diagnostics, eslint_d_formatting = require 'none-ls.diagnostics.eslint_d', require 'none-ls.formatting.eslint_d'
+local eslint_d_formatting = require 'none-ls.formatting.eslint_d'
 
 local filetypes = {
   'javascript',
@@ -104,8 +104,9 @@ return {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     opts = {
       ensure_installed = {
-        'typescript-language-server',
+        'vtsls',
         'eslint_d',
+        'eslint-lsp',
         'js-debug-adapter',
       },
     },
@@ -114,7 +115,6 @@ return {
     'nvimtools/none-ls.nvim',
     opts = {
       sources = {
-        eslint_d_diagnostics,
         eslint_d_formatting,
       },
     },
@@ -123,7 +123,8 @@ return {
     'neovim/nvim-lspconfig',
     opts = {
       servers = {
-        'ts_ls',
+        'vtsls',
+        'eslint',
       },
     },
   },
