@@ -64,19 +64,15 @@ return {
         },
         providers = {
           lsp = {
-            score_offset = 100,
             fallbacks = {},
-          },
-          snippets = {
-            score_offset = 100,
           },
           buffer = {
             opts = {
-              -- filter to only "normal" and help buffers
+              -- filter to only "normal" buffers
               get_bufnrs = function()
                 return vim.tbl_filter(function(bufnr)
                   local buftype = vim.bo[bufnr].buftype
-                  return buftype == '' or buftype == 'help'
+                  return buftype == ''
                 end, vim.api.nvim_list_bufs())
               end,
             },
