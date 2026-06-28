@@ -31,7 +31,7 @@ vim.api.nvim_create_autocmd('FileType', {
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   desc = 'Format on save',
   callback = function(ev)
-    if not vim.bo.modifiable then
+    if not vim.bo.modifiable or not vim.g.format_on_save_enabled then
       return
     end
 

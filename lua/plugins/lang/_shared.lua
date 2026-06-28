@@ -1,29 +1,6 @@
 -- Basic settings for the plugins adding language support to neovim
 -- These are extended for specific languages in {language}.lua files in this directory
 
--- Prettier can be disabled globally
-vim.g.prettier_enabled = true
-local prettier_conditional = {
-  runtime_condition = function()
-    return vim.g.prettier_enabled
-  end,
-}
-
-local snacks = require 'snacks'
-local toggle = snacks.toggle
-toggle
-  .new({
-    id = 'prettier_enabled',
-    name = 'Prettier',
-    get = function()
-      return vim.g.prettier_enabled
-    end,
-    set = function(value)
-      vim.g.prettier_enabled = value
-    end,
-  })
-  :map '<Leader>Tf'
-
 return {
   {
     'nvim-treesitter/nvim-treesitter', -- language AST parsers
@@ -71,7 +48,7 @@ return {
       local null_ls = require 'null-ls'
 
       vim.list_extend(opts.sources or {}, {
-        null_ls.builtins.formatting.prettierd.with(prettier_conditional),
+        null_ls.builtins.formatting.prettierd,
       })
 
       null_ls.setup(opts)
