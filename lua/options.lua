@@ -159,7 +159,7 @@ vim.diagnostic.config {
   underline = true,
   signs = {
     text = {
-      -- There is already virtual text for diagnostics, so conceal for less visual noise
+      -- There is already virtual text for diagnostics, so signs are concealed for less visual noise
       [vim.diagnostic.severity.ERROR] = '',
       [vim.diagnostic.severity.WARN] = '',
       [vim.diagnostic.severity.INFO] = '',
@@ -169,3 +169,6 @@ vim.diagnostic.config {
   virtual_lines = { current_line = true },
   virtual_text = { current_line = false },
 }
+
+-- Format on save can be disabled globally
+vim.g.format_on_save_enabled = true
