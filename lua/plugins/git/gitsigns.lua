@@ -1,6 +1,7 @@
 return {
   'lewis6991/gitsigns.nvim',
   opts = {
+    numhl = true,
     signs = {
       add = { text = '│' },
       change = { text = '│' },
@@ -18,12 +19,16 @@ return {
       untracked = { text = '┊' },
     },
     attach_to_untracked = true,
+    current_line_blame = true,
+    current_line_blame_opts = {
+      delay = 0,
+    },
   },
   config = function(_, opts)
     local gitsigns = require 'gitsigns'
 
     require('which-key').add {
-      { '<Leader>gp', gitsigns.preview_hunk_inline, desc = 'Preview diff' },
+      { '<Leader>gp', gitsigns.preview_hunk, desc = 'Preview diff' },
       { '<Leader>gr', gitsigns.reset_hunk, desc = 'Reset hunk' },
       {
         '<Leader>gr',
