@@ -53,7 +53,13 @@ return {
       file_types = { 'markdown', 'gitlab' },
     },
     init = function()
-      require('which-key').add { '<Leader>m', group = 'Markdown', icon = { icon = ' ', color = 'grey' } }
+      require('which-key').add {
+        '<Leader>m',
+        group = 'Markdown',
+        icon = { icon = ' ', color = 'grey' },
+        { '<Leader>mw', desc = 'Format word' },
+        { '<Leader>mW', desc = 'Format WORD' },
+      }
       local set = require('snacks').keymap.set
 
       set('n', '<Leader>mt', '<cmd>RenderMarkdown buf_toggle<cr>', { ft = 'markdown', desc = 'Toggle preview' })
@@ -64,7 +70,8 @@ return {
         local desc = keymap_meta.desc
 
         set('v', '<Leader>m' .. key, string.format('c%s<c-r>"%s<esc>', sym, sym), { ft = 'markdown', desc = desc })
-        set('n', '<Leader>m' .. key, string.format('viwc%s<c-r>"%s<esc>', sym, sym), { ft = 'markdown', desc = desc })
+        set('n', '<Leader>mw' .. key, string.format('viwc%s<c-r>"%s<esc>', sym, sym), { ft = 'markdown', desc = desc })
+        set('n', '<Leader>mW' .. key, string.format('viWc%s<c-r>"%s<esc>', sym, sym), { ft = 'markdown', desc = desc })
       end)
 
       set('v', '<Leader>ml', function()
