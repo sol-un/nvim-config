@@ -25,16 +25,20 @@ return {
     task_list = {
       direction = 'right',
       keymaps = {
-        ['<C-u>'] = 'keymap.scroll_output_up',
-        ['<C-d>'] = 'keymap.scroll_output_down',
+        ['k'] = "<CMD>lua require('overseer.task_list.sidebar').get():jump(-1)<CR>",
+        ['j'] = "<CMD>lua require('overseer.task_list.sidebar').get():jump(1)<CR>",
+        ['<C-d>'] = { 'keymap.run_action', opts = { action = 'dispose' }, desc = 'Dispose task' },
+        ['<C-r>'] = { 'keymap.run_action', opts = { action = 'restart' }, desc = 'Restart task' },
+        ['<C-q>'] = { 'keymap.run_action', opts = { action = 'set quickfix diagnostics' }, desc = 'Send results to quickfix' },
+        ['<C-w>'] = { 'keymap.run_action', opts = { action = 'watch' }, desc = 'Watch' },
+        ['<C-u>'] = { 'keymap.run_action', opts = { action = 'unwatch' }, desc = 'Unwatch' },
       },
     },
   },
   init = function()
     require('which-key').add {
-      { '<Leader>ot', '<cmd>OverseerToggle! right<cr>', desc = 'Toggle task list' },
+      { '<Leader>ot', '<cmd>OverseerToggle!<cr>', desc = 'Toggle task list' },
       { '<Leader>or', '<cmd>OverseerRun<cr>', desc = 'Run task' },
-      { '<Leader>oa', '<cmd>OverseerTaskAction<cr>', desc = 'Task action' },
       {
         '<Leader>od',
         function()
