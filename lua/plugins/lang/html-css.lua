@@ -7,7 +7,6 @@ return {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     opts = {
       ensure_installed = {
-        'emmet-language-server',
         'html-lsp',
         'css-lsp',
         'css-variables-language-server',
@@ -27,7 +26,6 @@ return {
         'css_variables',
         'cssmodules_ls',
         'somesass_ls',
-        'emmet_language_server',
       },
     },
   },
