@@ -169,4 +169,23 @@ return {
       use_trouble_qflist = true,
     },
   },
+  {
+    'vuki656/package-info.nvim',
+    event = 'BufEnter package.json',
+    opts = {},
+    config = function()
+      local prefix = '<Leader>pj'
+      require('which-key').add {
+        {
+          prefix,
+          group = 'JSON',
+          icon = { icon = '󰛷', color = 'red' },
+          { prefix .. 'i', '<cmd>PackageInfoInstall<cr>', desc = 'Install' },
+          { prefix .. 'u', '<cmd>PackageInfoUpdate<cr>', desc = 'Update' },
+          { prefix .. 'd', '<cmd>PackageInfoDelete<cr>', desc = 'Uninstall' },
+          { prefix .. 'v', '<cmd>PackageInfoChangeVersion<cr>', desc = 'Change version' },
+        },
+      }
+    end,
+  },
 }

@@ -48,11 +48,6 @@ return {
     },
   },
   {
-    'vuki656/package-info.nvim',
-    event = 'BufEnter package.json',
-    opts = {},
-  },
-  {
     'b0o/SchemaStore.nvim',
     lazy = true,
     version = false,
