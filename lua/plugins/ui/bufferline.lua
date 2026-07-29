@@ -68,6 +68,12 @@ return {
           attribute = 'fg',
         },
       },
+      info_selected = {
+        fg = {
+          highlight = 'Normal',
+          attribute = 'fg',
+        },
+      },
     },
   },
 }
