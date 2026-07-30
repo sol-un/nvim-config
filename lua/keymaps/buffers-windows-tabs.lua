@@ -62,13 +62,34 @@ require('which-key').add {
     '<Leader>by',
     function()
       local path = vim.fn.expand '%'
-      local row = unpack(vim.api.nvim_win_get_cursor(0))
+      local _, row = unpack(vim.fn.getpos '.')
       local context = string.format('@%s line %d', path, row)
 
       vim.fn.setreg(vim.v.register, context)
       vim.notify(context)
     end,
     desc = 'Copy cursor context',
+  },
+  {
+    '<Leader>by',
+    function()
+      local path = vim.fn.expand '%'
+      local _, eov_row = unpack(vim.fn.getpos 'v')
+      local _, cursor_row = unpack(vim.fn.getpos '.')
+      local first_row, last_row = math.min(eov_row, cursor_row), math.max(eov_row, cursor_row)
+
+      local context
+      if first_row == last_row then
+        context = string.format('@%s line %d', path, first_row)
+      else
+        context = string.format('@%s lines %d through %d', path, first_row, last_row)
+      end
+
+      vim.fn.setreg(vim.v.register, context)
+      vim.notify(context)
+    end,
+    desc = 'Copy cursor context',
+    mode = 'v',
   },
 
   { '<Leader>w', group = 'Windows' },
