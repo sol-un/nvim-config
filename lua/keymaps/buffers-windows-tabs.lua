@@ -61,11 +61,14 @@ require('which-key').add {
   {
     '<Leader>by',
     function()
-      local path = vim.fn.expand '%:p'
-      vim.fn.setreg(vim.v.register, path)
-      vim.notify('Copied to clipboard: ' .. path)
+      local path = vim.fn.expand '%'
+      local row = unpack(vim.api.nvim_win_get_cursor(0))
+      local context = string.format('@%s line %d', path, row)
+
+      vim.fn.setreg(vim.v.register, context)
+      vim.notify(context)
     end,
-    desc = 'Copy file path',
+    desc = 'Copy cursor context',
   },
 
   { '<Leader>w', group = 'Windows' },
