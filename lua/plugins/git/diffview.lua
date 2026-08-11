@@ -26,7 +26,6 @@ return {
         },
       },
       view = {
-        one_sided_layout = 'raw',
         merge_tool = {
           layout = 'diff4_mixed',
           disable_diagnostics = true,
