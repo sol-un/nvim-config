@@ -57,8 +57,6 @@ return {
         '<Leader>m',
         group = 'Markdown',
         icon = { icon = ' ', color = 'grey' },
-        { '<Leader>mw', desc = 'Format word' },
-        { '<Leader>mW', desc = 'Format WORD' },
       }
       local set = require('snacks').keymap.set
 

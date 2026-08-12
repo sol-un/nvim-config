@@ -41,21 +41,7 @@ local resharper_cleanup = function()
   )
 end
 
-vim.api.nvim_create_autocmd('BufWritePre', {
-  pattern = '*.cs',
-  callback = function()
-    local cwd = vim.fn.getcwd()
-    local edi_sln = cwd .. '/EDI/EDI.sln'
-    local stat = vim.loop.fs_stat(edi_sln)
-
-    if stat then
-      resharper_cleanup()
-    end
-  end,
-})
-
 local csharpier = require('null-ls').builtins.formatting.csharpier.with {
-
   args = { 'format', '--stdin-path', '$FILENAME' },
   condition = function()
     local cwd = vim.fn.getcwd()
@@ -64,6 +50,8 @@ local csharpier = require('null-ls').builtins.formatting.csharpier.with {
     return stat ~= nil
   end,
 }
+
+local ft = { 'csproj', 'cs' }
 
 return {
   {
@@ -84,7 +72,8 @@ return {
   -- NOTE: easy-dotnet.nvim sets up LSP and DAP for C# internally, so these require no explicit setup
   {
     'GustavEikaas/easy-dotnet.nvim',
-    ft = { 'csproj', 'cs' },
+    cmd = 'Dotnet',
+    ft = ft,
     --- @module "easy-dotnet"
     --- @type easy-dotnet.Options
     --- @diagnostic disable: missing-fields
@@ -120,22 +109,27 @@ return {
           '<Leader>.',
           group = '.NET',
           icon = { icon = '󰪮', color = 'blue' },
-          {
-            '<Leader>.t',
-            group = 'Tests',
-            {
-              '<Leader>.ts',
-              '<cmd>Dotnet testrunner<cr>',
-              desc = 'Test Summary',
-            },
-          },
-          {
-            '<Leader>.f',
-            resharper_cleanup,
-          },
         },
       }
     end,
+    keys = {
+      {
+        '<Leader>.t',
+        group = 'Tests',
+        ft = ft,
+      },
+      {
+        '<Leader>.ts',
+        '<cmd>Dotnet testrunner<cr>',
+        desc = 'Test Summary',
+        ft = ft,
+      },
+      {
+        '<Leader>.f',
+        resharper_cleanup,
+        ft = ft,
+      },
+    },
   },
   {
     'mfussenegger/nvim-dap',
