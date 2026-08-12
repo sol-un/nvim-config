@@ -24,19 +24,26 @@ require('which-key').add {
   {
     '<Leader>fw',
     function()
+      require('snacks').picker.grep_word {
+        hidden = true,
+        ignored = true,
+        search = function()
+          local query = vim.fn.input 'Query'
+          return query or ''
+        end,
+      }
+    end,
+    desc = 'Word',
+    cond = vim.fn.executable 'rg' == 1,
+  },
+  {
+    '<Leader>fW',
+    function()
       require('snacks').picker.grep_word { hidden = true, ignored = true }
     end,
     cond = vim.fn.executable 'rg' == 1,
     desc = 'Word (under cursor/selection)',
     mode = { 'n', 'x' },
-  },
-  {
-    '<Leader>fW',
-    function()
-      require('snacks').picker.grep { hidden = true, ignored = true }
-    end,
-    desc = 'Word (any)',
-    cond = vim.fn.executable 'rg' == 1,
   },
   {
     '<Leader>fh',
