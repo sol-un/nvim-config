@@ -22,5 +22,17 @@ require('lazy').setup {
     enabled = true,
     notify = true,
   },
+  performance = {
+    rtp = {
+      disabled_plugins = {
+        'gzip',
+        'tarPlugin',
+        'zipPlugin',
+        'tohtml',
+        'tutor',
+        'netrwPlugin',
+      },
+    },
+  },
   install = { colorscheme = { 'tokyonight' } },
 }
