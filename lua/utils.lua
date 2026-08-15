@@ -11,7 +11,7 @@ local M = {
   end,
   --- @return boolean
   is_kitty = function()
-    return os.getenv 'TERM' ~= 'xterm-kitty'
+    return vim.env.KITTY_WINDOW_ID ~= nil
   end,
   --- @return string
   get_cwd_name = function()

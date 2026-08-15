@@ -4,6 +4,8 @@ vim.g.maplocalleader = ' '
 
 vim.g.have_nerd_font = true
 
+require 'options'
+
 require 'lazy-setup'
 
 require 'keymaps.common'
@@ -11,7 +13,5 @@ require 'keymaps.lsp'
 require 'keymaps.toggles'
 require 'keymaps.pickers'
 require 'keymaps.buffers-windows-tabs'
-
-require 'options'
 
 require 'autocmds'

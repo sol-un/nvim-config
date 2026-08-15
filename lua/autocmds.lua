@@ -1,7 +1,9 @@
-vim.api.nvim_create_autocmd({ 'BufEnter', 'BufLeave', 'InsertLeave', 'CursorMoved' }, {
+vim.api.nvim_create_autocmd({ 'BufEnter', 'BufLeave', 'InsertLeave' }, {
   desc = 'Clean up builtin marks',
-  callback = function()
-    vim.cmd 'delm 0-9[].^<>'
+  callback = function(ev)
+    for mark = 0, 9 do
+      vim.api.nvim_buf_del_mark(ev.buf, tostring(mark))
+    end
     vim.api.nvim_buf_del_mark(0, '"')
     vim.api.nvim_buf_del_mark(0, "'")
   end,
