@@ -17,17 +17,6 @@ require('which-key').add {
     { '>', '>gv' },
   },
 
-  -- Auto-close pairs
-  {
-    mode = 'i',
-    { '`', '``<left>' },
-    { '"', '""<left>' },
-    { '(', '()<left>' },
-    { '[', '[]<left>' },
-    { '{', '{}<left>' },
-    { '<', '<><left>' },
-  },
-
   -- Saving, quitting
   { '<C-s>', '<Cmd>w<CR><Esc>', mode = { 'n', 'i', 'v', 's' }, desc = 'Save' },
   { '<Leader>q', group = 'Quit' },
