@@ -37,13 +37,13 @@ require('which-key').add {
     cond = vim.fn.executable 'rg' == 1,
   },
   {
-    '<Leader>fW',
+    '<Leader>fw',
     function()
       require('snacks').picker.grep_word { hidden = true, ignored = true }
     end,
     cond = vim.fn.executable 'rg' == 1,
-    desc = 'Word (under cursor/selection)',
-    mode = { 'n', 'x' },
+    desc = 'Word (selection)',
+    mode = { 'x' },
   },
   {
     '<Leader>fh',
