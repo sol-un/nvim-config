@@ -3,7 +3,7 @@ vim.api.nvim_create_autocmd('User', {
   group = vim.api.nvim_create_augroup('neogit_buffers_update', { clear = true }),
   pattern = { 'NeogitBranchCheckout', 'NeogitPullComplete', 'NeogitRebase', 'NeogitStash' },
   callback = function()
-    vim.cmd 'set autoread | checktime'
+    vim.cmd.checktime()
   end,
 })
 
@@ -20,8 +20,8 @@ return {
     disable_hint = true,
     prompt_amend_commit = false,
     kind = 'vsplit',
-    -- use https://github.com/rbong/flog-symbols if you don't use Kitty
-    graph_style = 'kitty',
+    -- install https://github.com/rbong/flog-symbols if you don't use kitty
+    graph_style = require('utils').is_kitty() and 'kitty' or 'unicode',
     auto_show_console = false,
     console_timeout = math.huge,
     integrations = {

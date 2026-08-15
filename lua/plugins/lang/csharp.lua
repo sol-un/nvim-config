@@ -31,7 +31,7 @@ local resharper_cleanup = function()
         timer:close()
       end
 
-      vim.cmd 'set autoread | checktime'
+      vim.cmd.checktime()
       vim.notify('Done cleaning up', nil, {
         id = notify_id,
         replace = notify_id,

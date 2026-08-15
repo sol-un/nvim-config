@@ -33,7 +33,7 @@ return {
     'neovim/nvim-lspconfig', -- provides community-maintained LSP server configs, which can be extended (see  ../../../after/lsp/)
     opts_extend = { 'servers' },
     opts = {
-      servers = { 'codebook', 'just' },
+      servers = { 'codebook' },
     },
     config = function(_, opts)
       for _, server in ipairs(opts.servers or {}) do
