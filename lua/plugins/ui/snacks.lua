@@ -92,7 +92,11 @@ return {
       },
       bigfile = {},
       picker = {
-        actions = require('trouble.sources.snacks').actions,
+        actions = {
+          trouble_open = function(picker)
+            require('trouble.sources.snacks').open(picker, { type = 'smart' })
+          end,
+        },
         win = {
           wo = { wrap = true },
           input = {

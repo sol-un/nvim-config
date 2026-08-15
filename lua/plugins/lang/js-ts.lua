@@ -165,6 +165,7 @@ return {
   },
   {
     'dmmulroy/tsc.nvim',
+    cmd = 'TSC',
     opts = {
       use_trouble_qflist = true,
     },

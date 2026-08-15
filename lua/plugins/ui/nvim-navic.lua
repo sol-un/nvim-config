@@ -1,6 +1,7 @@
 return {
   {
     'SmiteshP/nvim-navic',
+    lazy = true,
     --- @module 'nvim-navic'
     --- @type Options
     --- @diagnostic disable: missing-fields

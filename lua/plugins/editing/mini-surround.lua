@@ -3,6 +3,7 @@ local prefix = 'gz'
 return {
   {
     'nvim-mini/mini.surround',
+    event = 'VeryLazy',
     opts = {
       n_lines = 999,
       mappings = {

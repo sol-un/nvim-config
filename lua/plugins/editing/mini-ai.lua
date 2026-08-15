@@ -1,5 +1,6 @@
 return {
   'nvim-mini/mini.ai',
+  event = 'VeryLazy',
   opts = {
     mappings = {
       around_next = 'aN',

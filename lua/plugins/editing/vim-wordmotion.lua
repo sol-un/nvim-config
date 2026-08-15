@@ -1,1 +1,1 @@
-return { 'chaoren/vim-wordmotion' }
+return { 'chaoren/vim-wordmotion', event = 'VeryLazy' }

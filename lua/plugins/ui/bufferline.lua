@@ -1,5 +1,6 @@
 return {
   'akinsho/bufferline.nvim',
+  event = 'VeryLazy',
   --- @module 'bufferline'
   --- @class bufferline.UserConfig
   --- @diagnostic disable: missing-fields

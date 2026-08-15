@@ -4,6 +4,7 @@ local excluded_filetypes = {
 
 return {
   'okuuva/auto-save.nvim',
+  event = 'VeryLazy',
   opts = {
     trigger_events = {
       immediate_save = {},

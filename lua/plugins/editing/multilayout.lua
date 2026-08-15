@@ -1,5 +1,6 @@
 return {
   'mrsobakin/multilayout.nvim',
+  event = 'VeryLazy',
   opts = {
     layouts = {
       ru = 'ru',

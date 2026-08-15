@@ -19,6 +19,7 @@ return {
   },
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim', -- automatically installs mason packages
+    event = 'VeryLazy',
     opts_extend = { 'ensure_installed' },
     --- @module 'mason-tool-installer'
     --- @type MasonToolInstallerSettings
