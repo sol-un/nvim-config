@@ -1,7 +1,7 @@
 local resharper_cleanup = function()
   local path = vim.fn.expand '%:p'
-  local notify_id = math.random(math.huge)
-  local timer = vim.loop.new_timer()
+  local notify_id = 'resharper_cleanup_' .. path
+  local timer = vim.uv.new_timer()
 
   if timer then
     timer:start(
@@ -46,7 +46,7 @@ local csharpier = require('null-ls').builtins.formatting.csharpier.with {
   condition = function()
     local cwd = vim.fn.getcwd()
     local postavki_sln = cwd .. '/Source/Postavki.sln'
-    local stat = vim.loop.fs_stat(postavki_sln)
+    local stat = vim.uv.fs_stat(postavki_sln)
     return stat ~= nil
   end,
 }

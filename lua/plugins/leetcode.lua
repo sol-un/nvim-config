@@ -1,5 +1,4 @@
 local keymaps = {
-  { lhs = '<Leader>l', rhs = function() end, desc = 'LeetCode' },
   { lhs = '<Leader>lc', rhs = '<cmd>Leet console<cr>', desc = 'Console' },
   { lhs = '<Leader>lh', rhs = '<cmd>Leet hints<cr>', desc = 'Hints' },
   { lhs = '<Leader>ls', rhs = '<cmd>Leet submit<cr>', desc = 'Submit' },
@@ -18,6 +17,11 @@ return {
     'nvim-lua/plenary.nvim',
     'MunifTanjim/nui.nvim',
   },
+  init = function()
+    require('which-key').add {
+      { '<Leader>l', group = 'LeetCode' },
+    }
+  end,
   --- @module 'leetcode'
   --- @type lc.UserConfig
   --- @diagnostic disable: missing-fields

@@ -47,9 +47,8 @@ return {
     config = function(_, opts)
       local null_ls = require 'null-ls'
 
-      vim.list_extend(opts.sources or {}, {
-        null_ls.builtins.formatting.prettierd,
-      })
+      opts.sources = opts.sources or {}
+      table.insert(opts.sources, null_ls.builtins.formatting.prettierd)
 
       null_ls.setup(opts)
     end,

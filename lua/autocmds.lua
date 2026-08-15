@@ -31,14 +31,14 @@ vim.api.nvim_create_autocmd('FileType', {
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   desc = 'Format on save',
   callback = function(ev)
-    if not vim.bo.modifiable or not vim.g.format_on_save_enabled then
+    if not vim.bo[ev.buf].modifiable or not vim.g.format_on_save_enabled then
       return
     end
 
     local client = vim.lsp.get_clients { name = 'null-ls', bufnr = ev.buf }
 
     if not vim.tbl_isempty(client) then
-      vim.lsp.buf.format { name = 'null-ls' }
+      vim.lsp.buf.format { name = 'null-ls', bufnr = ev.buf }
     end
   end,
 })
