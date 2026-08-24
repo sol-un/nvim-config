@@ -15,7 +15,6 @@ require('lazy').setup {
     { import = 'plugins.git' },
     { import = 'plugins.ui' },
     { import = 'plugins.editing' },
-    { import = 'plugins.ai' },
   },
   ui = { size = { width = 1, height = 1 } },
   checker = {
