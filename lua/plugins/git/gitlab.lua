@@ -12,9 +12,25 @@ return {
       require('gitlab.server').build(true)
     end,
     --- @module 'gitlab'
-    --- @type Settings
-    --- @diagnostic disable: missing-fields
+    --- @type GitlabSettings
+    --- @diagnostic disable: missing-fields, missing-parameter
     opts = {
+      discussion_tree = {
+        position = 'left',
+        keep_current_open = true,
+        draft_mode = true,
+        tree_type = 'by_file_name',
+      },
+      reviewer_settings = {
+        jump_with_no_diagnostics = true,
+        diffview = {
+          imply_local = true,
+        },
+      },
+      popup = {
+        width = '70%',
+        height = '70%',
+      },
       keymaps = {
         global = {
           disable_all = true,
@@ -23,25 +39,13 @@ return {
           perform_action = '<C-s>',
           discard_changes = '<C-k>',
         },
-        reviewer_settings = {
-          jump_with_no_diagnostics = true,
-          diffview = {
-            imply_local = true,
-          },
-        },
+
         discussion_tree = {
           toggle_sort_method = 'gSt',
           toggle_date_format = 'gDt',
           add_emoji = 'gEa',
           delete_emoji = 'gEd',
         },
-      },
-      discussion_tree = {
-        auto_open = true,
-        position = 'left',
-        keep_current_open = true,
-        draft_mode = true,
-        tree_type = 'by_file_name',
       },
     },
     keys = { { gitlab_prefix, desc = 'GitLab' } },
