@@ -59,7 +59,7 @@ return {
     -- install https://github.com/rbong/flog-symbols if you don't use kitty
     graph_style = require('utils').is_kitty() and 'kitty' or 'unicode',
     auto_show_console = false,
-    console_timeout = math.huge,
+    console_timeout = 1000 * 60 * 5,
     integrations = {
       diffview = true,
       snacks = true,
