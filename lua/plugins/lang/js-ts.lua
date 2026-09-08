@@ -74,12 +74,12 @@ vim.api.nvim_create_autocmd('FileType', {
           vim.lsp.buf.code_action {
             apply = true,
             context = {
-              only = { 'source.removeUnused.ts' },
+              only = { 'source.removeUnusedImports' },
               diagnostics = {},
             },
           }
         end,
-        desc = 'Remove unused code',
+        desc = 'Remove unused imports',
       },
       {
         'glA',
@@ -87,12 +87,12 @@ vim.api.nvim_create_autocmd('FileType', {
           vim.lsp.buf.code_action {
             apply = true,
             context = {
-              only = { 'source.addMissingImports.ts' },
+              only = { 'source.fixAll' },
               diagnostics = {},
             },
           }
         end,
-        desc = 'Add missing imports',
+        desc = 'Fix all',
       },
     }
     --- @diagnostic enable: assign-type-mismatch
@@ -104,7 +104,7 @@ return {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     opts = {
       ensure_installed = {
-        'vtsls',
+        'tsc',
         'eslint_d',
         'eslint-lsp',
         'js-debug-adapter',
@@ -123,7 +123,7 @@ return {
     'neovim/nvim-lspconfig',
     opts = {
       servers = {
-        'vtsls',
+        'tsc',
         'eslint',
       },
     },
