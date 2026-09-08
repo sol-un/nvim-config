@@ -7,6 +7,13 @@ local dispose_all = function()
   end
 end
 
+vim.api.nvim_create_autocmd('User', {
+  pattern = 'SessionRead',
+  callback = function()
+    dispose_all()
+  end,
+})
+
 vim.api.nvim_create_autocmd('ExitPre', {
   desc = 'Dispose all tasks',
   callback = function()

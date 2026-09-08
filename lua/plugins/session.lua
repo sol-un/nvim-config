@@ -48,6 +48,11 @@ return {
         post = {
           read = function(current)
             CURRENT = current['name']
+
+            vim.api.nvim_exec_autocmds('User', {
+              pattern = 'SessionRead',
+            })
+
             vim.cmd ':Rooter'
           end,
         },
