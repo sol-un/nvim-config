@@ -1,4 +1,4 @@
 --- @type vim.lsp.Config
 return {
-  filetypes = { 'html', 'htmlangular' },
+  filetypes = { 'typescript', 'html', 'typescriptreact', 'htmlangular' },
 }

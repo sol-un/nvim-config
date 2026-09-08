@@ -29,6 +29,7 @@ return {
       separator = '  ',
       lsp = {
         auto_attach = true,
+        preference = { 'tsc', 'angularls' },
       },
     },
   },
