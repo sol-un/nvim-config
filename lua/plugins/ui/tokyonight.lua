@@ -16,6 +16,10 @@ return {
         fg = '#636DA6',
         italic = true,
       }
+      hl.AnnotatorAnnotationVirtual = {
+        default = true,
+        link = 'DiagnosticInfo',
+      }
     end,
   },
 }

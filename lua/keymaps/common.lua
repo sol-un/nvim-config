@@ -86,7 +86,7 @@ require('which-key').add {
   { '<Leader>g', group = 'Git' },
   { '<Leader>s', group = 'Session' },
   { '<Leader>o', group = 'Overseer', icon = '' },
-  { '<Leader>a', group = 'AI', icon = '' },
+  { '<Leader>a', group = 'Annotator', icon = '󰺿' },
   { '<leader>x', group = 'Trouble', icon = { icon = '󰙅', color = 'red' } },
   { '<leader>r', group = 'Search & replace', mode = { 'n', 'v' }, icon = { icon = '󰛔', color = 'blue' } },
 }

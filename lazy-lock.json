@@ -1,6 +1,7 @@
 {
   "LuaSnip": { "branch": "master", "commit": "642b0c595e11608b4c18219e93b88d7637af27bc" },
   "SchemaStore.nvim": { "branch": "main", "commit": "077872be5d1c7ef47fb667df84ab49ea1dfcb1bc" },
+  "annotator.nvim": { "branch": "main", "commit": "5c37f2c954dc37cea9fea4516a79684fb895d7ac" },
   "auto-save.nvim": { "branch": "main", "commit": "9aabcb8396224dcbf8d51c0c1d620d88a46e89d7" },
   "blink-emoji.nvim": { "branch": "master", "commit": "7cb075860373e41bd0dbc6fe0e655c346feff5cc" },
   "blink.cmp": { "branch": "main", "commit": "49d39fda6350d7f789d1da1053e86c9e256f8108" },
