@@ -1,3 +1,38 @@
+---@type fun(annotation: AnnotatorAnnotation): string
+local comment_normalizer = function(annotation)
+  local start_line = annotation['start_line']
+  local end_line = annotation['end_line']
+  local is_multiline = start_line ~= end_line
+
+  local lines = is_multiline and string.format('lines %s to %s', start_line, end_line) or string.format('line %s', start_line)
+  local meta = annotation['relative_path'] .. ' ' .. lines
+
+  return '- ' .. meta .. ': ' .. annotation['comment']
+end
+
+---@type fun(annotation: AnnotatorAnnotation): string
+local suggest_normalizer = function(annotation)
+  local start_line = annotation['start_line']
+  local end_line = annotation['end_line']
+  local is_multiline = start_line ~= end_line
+
+  local lines = is_multiline and string.format('lines %s to %s', start_line, end_line) or string.format('line %s', start_line)
+  local meta = annotation['relative_path'] .. ' ' .. lines
+
+  return '- ' .. meta .. ': ' .. 'Suggested replacement:\n```\n' .. annotation['replacement'] .. '\n```'
+end
+
+---@type { [AnnotatorAnnotationKind]: function }
+local normalizers_map = {
+  comment = comment_normalizer,
+  suggest = suggest_normalizer,
+}
+
+---@param annotation AnnotatorAnnotation
+local normalize_annotation = function(annotation)
+  return normalizers_map[annotation['kind']](annotation)
+end
+
 local prefix = '<Leader>a'
 
 return {
@@ -12,8 +47,16 @@ return {
       kinds = {
         comment = { sign_text = '󱓩' },
         suggest = { sign_text = '󱘓' },
-        delete = { sign_text = '󱘕' },
       },
+    },
+    hooks = {
+      export = function(ctx)
+        local normalized = vim.iter(ctx.annotations):map(normalize_annotation):totable()
+        vim.fn.setreg('+', table.concat(normalized, '\n'))
+
+        ctx.clear_exported()
+        ctx.notify('Copied annotations', 'info')
+      end,
     },
   },
   keys = {
