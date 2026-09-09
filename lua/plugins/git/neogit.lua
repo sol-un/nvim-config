@@ -110,5 +110,15 @@ return {
       },
     },
   },
-  keys = { { '<Leader>gg', '<cmd>Neogit<cr>', desc = 'Neogit' } },
+  keys = {
+    { '<Leader>gg', '<cmd>Neogit<cr>', desc = 'Neogit' },
+    -- Stashes can be inspected via Neogit, but the Snacks interface is more convenient
+    {
+      '<Leader>gz',
+      function()
+        require('snacks').picker.git_stash()
+      end,
+      desc = 'Inspect stashed changes',
+    },
+  },
 }
