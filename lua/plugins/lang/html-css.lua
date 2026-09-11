@@ -1,7 +1,3 @@
-local stylelint_diagnostics = require('null-ls').builtins.diagnostics.stylelint
-local stylelint_formatting = require('null-ls').builtins.formatting.stylelint
-local markuplint = require('null-ls').builtins.diagnostics.markuplint
-
 return {
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -30,12 +26,23 @@ return {
     },
   },
   {
-    'nvimtools/none-ls.nvim',
+    'stevearc/conform.nvim',
     opts = {
-      sources = {
-        stylelint_diagnostics,
-        stylelint_formatting,
-        markuplint,
+      formatters_by_ft = {
+        css = { 'stylelint' },
+        scss = { 'stylelint' },
+        less = { 'stylelint' },
+      },
+    },
+  },
+  {
+    'mfussenegger/nvim-lint',
+    opts = {
+      linters_by_ft = {
+        html = { 'markuplint' },
+        css = { 'stylelint' },
+        scss = { 'stylelint' },
+        less = { 'stylelint' },
       },
     },
   },

@@ -1,5 +1,3 @@
-local xmllint = require('null-ls').builtins.formatting.xmllint
-
 local resharper_cleanup = function()
   local path = vim.fn.expand '%:p'
   local notify_id = 'resharper_cleanup_' .. path
@@ -43,10 +41,6 @@ local resharper_cleanup = function()
   )
 end
 
-local csharpier = require('null-ls').builtins.formatting.csharpier.with {
-  args = { 'format', '--stdin-path', '$FILENAME' },
-}
-
 local ft = { 'csproj', 'cs' }
 
 return {
@@ -59,9 +53,12 @@ return {
     },
   },
   {
-    'nvimtools/none-ls.nvim',
+    'stevearc/conform.nvim',
     opts = {
-      sources = { csharpier, xmllint },
+      formatters_by_ft = {
+        cs = { 'csharpier' },
+        xml = { 'xmllint' },
+      },
     },
   },
   -- NOTE: easy-dotnet.nvim sets up LSP and DAP for C# internally, so these require no explicit setup

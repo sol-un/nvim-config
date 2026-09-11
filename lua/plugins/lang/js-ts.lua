@@ -1,5 +1,3 @@
-local eslint_d_formatting = require 'none-ls.formatting.eslint_d'
-
 local filetypes = {
   'javascript',
   'javascriptreact',
@@ -112,12 +110,16 @@ return {
     },
   },
   {
-    'nvimtools/none-ls.nvim',
-    opts = {
-      sources = {
-        eslint_d_formatting,
-      },
-    },
+    'stevearc/conform.nvim',
+    opts = function(_, opts)
+      opts.formatters_by_ft = opts.formatters_by_ft or {}
+
+      for _, filetype in ipairs(filetypes) do
+        opts.formatters_by_ft[filetype] = { 'eslint_d' }
+      end
+
+      return opts
+    end,
   },
   {
     'neovim/nvim-lspconfig',
