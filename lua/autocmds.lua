@@ -30,6 +30,17 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
+vim.api.nvim_create_autocmd({ 'BufRead', 'BufWritePost', 'InsertLeave' }, {
+  desc = 'Lint',
+  callback = function(ev)
+    if not vim.bo[ev.buf].modifiable then
+      return
+    end
+
+    require('lint').try_lint()
+  end,
+})
+
 vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
   desc = 'Format on save',
   callback = function(ev)
@@ -37,10 +48,6 @@ vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
       return
     end
 
-    local client = vim.lsp.get_clients { name = 'null-ls', bufnr = ev.buf }
-
-    if not vim.tbl_isempty(client) then
-      vim.lsp.buf.format { name = 'null-ls', bufnr = ev.buf }
-    end
+    require('conform').format { quiet = true, bufnr = ev.buf }
   end,
 })

@@ -1,6 +1,28 @@
 -- Basic settings for the plugins adding language support to neovim
 -- These are extended for specific languages in {language}.lua files in this directory
 
+local prettier_supported_fts = {
+  javascript = true,
+  javascriptreact = true,
+  typescript = true,
+  typescriptreact = true,
+  vue = true,
+  css = true,
+  scss = true,
+  less = true,
+  html = true,
+  json = true,
+  json5 = true,
+  jsonc = true,
+  yaml = true,
+  markdown = true,
+  graphql = true,
+  handlebars = true,
+  svelte = true,
+  astro = true,
+  htmlangular = true,
+}
+
 return {
   {
     'nvim-treesitter/nvim-treesitter', -- language AST parsers
@@ -41,16 +63,31 @@ return {
     end,
   },
   {
-    'nvimtools/none-ls.nvim', -- injects LSP diagnostics from preconfigured sources (linters, formatters etc)
-    dependencies = { 'nvimtools/none-ls-extras.nvim' },
-    opts_extend = { 'sources' },
+    'mfussenegger/nvim-lint', -- Linters
+    opts = {},
     config = function(_, opts)
-      local null_ls = require 'null-ls'
-
-      opts.sources = opts.sources or {}
-      table.insert(opts.sources, null_ls.builtins.formatting.prettierd)
-
-      null_ls.setup(opts)
+      require('lint').linters_by_ft = opts.linters_by_ft
     end,
+  },
+  {
+    'stevearc/conform.nvim', -- Formatters
+    ---@module 'conform'
+    ---@type conform.setupOpts
+    opts = {
+      formatters_by_ft = {
+        ['*'] = function(bufnr)
+          local ft = vim.bo[bufnr].filetype
+          if prettier_supported_fts[ft] then
+            return { 'prettierd' }
+          end
+
+          return {}
+        end,
+      },
+      default_format_opts = {
+        timeout_ms = 3000,
+        lsp_format = 'fallback',
+      },
+    },
   },
 }

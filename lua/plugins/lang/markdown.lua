@@ -1,6 +1,9 @@
-local markdownlint = require('null-ls').builtins.diagnostics.markdownlint.with {
-  extra_args = { '--disable', 'MD013', 'MD033' },
-}
+local markdownlint = require('lint').linters.markdownlint
+vim.list_extend(markdownlint.args, {
+  '--disable',
+  'MD013',
+  'MD033',
+})
 
 return {
   {
@@ -19,9 +22,19 @@ return {
     },
   },
   {
-    'nvimtools/none-ls.nvim',
+    'mfussenegger/nvim-lint',
     opts = {
-      sources = { markdownlint },
+      linters_by_ft = {
+        markdown = { 'markdownlint' },
+      },
+    },
+  },
+  {
+    'stevearc/conform.nvim',
+    opts = {
+      formatters_by_ft = {
+        markdown = { 'markdownlint' },
+      },
     },
   },
   {

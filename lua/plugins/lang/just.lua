@@ -1,5 +1,3 @@
-local just = require('null-ls').builtins.formatting.just
-
 return {
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -14,9 +12,11 @@ return {
     },
   },
   {
-    'nvimtools/none-ls.nvim',
+    'stevearc/conform.nvim',
     opts = {
-      sources = { just },
+      formatters_by_ft = {
+        just = { 'just' },
+      },
     },
   },
 }

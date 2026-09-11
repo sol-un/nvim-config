@@ -1,24 +1,3 @@
-local helpers = require 'null-ls.helpers'
-local methods = require 'null-ls.methods'
-local yamllint = require 'none-ls.diagnostics.yamllint'
-
-local FORMATTING = methods.internal.FORMATTING
-
-local tombi = helpers.make_builtin {
-  name = 'tombi',
-  method = FORMATTING,
-  filetypes = { 'toml' },
-  generator_opts = {
-    command = 'tombi',
-    args = {
-      'format',
-      '-',
-    },
-    to_stdin = true,
-  },
-  factory = helpers.formatter_factory,
-}
-
 return {
   {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
@@ -32,9 +11,19 @@ return {
     },
   },
   {
-    'nvimtools/none-ls.nvim',
+    'mfussenegger/nvim-lint',
     opts = {
-      sources = { yamllint, tombi },
+      linters_by_ft = {
+        yaml = { 'yamllint' },
+      },
+    },
+  },
+  {
+    'stevearc/conform.nvim',
+    opts = {
+      formatters_by_ft = {
+        toml = { 'tombi' },
+      },
     },
   },
   {
