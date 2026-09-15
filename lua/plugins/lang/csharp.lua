@@ -1,3 +1,13 @@
+--- @param bufnr number
+--- @return boolean
+local is_postavki = function(bufnr)
+  local sln = vim.fs.find('Postavki.sln', {
+    path = vim.api.nvim_buf_get_name(bufnr),
+    upward = true,
+  })
+  return #sln > 0
+end
+
 local resharper_cleanup = function()
   local path = vim.fn.expand '%:p'
   local notify_id = 'resharper_cleanup_' .. path
@@ -56,7 +66,9 @@ return {
     'stevearc/conform.nvim',
     opts = {
       formatters_by_ft = {
-        cs = { 'csharpier' },
+        cs = function(bufnr)
+          return is_postavki(bufnr) and { 'csharpier' } or {}
+        end,
         xml = { 'xmllint' },
       },
     },
