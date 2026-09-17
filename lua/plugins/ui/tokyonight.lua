@@ -13,12 +13,28 @@ return {
     style = 'moon',
     on_highlights = function(hl)
       hl.LspCodeLens = {
-        fg = '#636DA6',
-        italic = true,
+        link = 'Comment',
       }
       hl.AnnotatorAnnotationVirtual = {
-        default = true,
         link = 'DiagnosticInfo',
+      }
+      hl.DiffAdd = {
+        link = 'NeogitDiffAddHighlight',
+      }
+      hl.DiffDelete = {
+        link = 'NeogitDiffDeleteHighlight',
+      }
+      hl.GitSignsAddInline = {
+        link = 'NeogitDiffAddInline',
+      }
+      hl.GitSignsDeleteInline = {
+        link = 'NeogitDiffDeleteInline',
+      }
+      hl.DiffviewDiffAddInline = {
+        link = 'NeogitDiffAddInline',
+      }
+      hl.DiffviewDiffDeleteInline = {
+        link = 'NeogitDiffDeleteInline',
       }
     end,
   },
