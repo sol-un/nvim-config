@@ -52,7 +52,7 @@ return {
 
           grug_far.open {
             visualSelectionUsage = 'ignore',
-            prefills = { paths = range },
+            prefills = { paths = range, flags = '--multiline' },
           }
         end,
         desc = 'Search & replace (selection)',
