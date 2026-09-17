@@ -29,7 +29,13 @@ return {
     local gitsigns = require 'gitsigns'
 
     require('which-key').add {
-      { '<Leader>gp', gitsigns.preview_hunk, desc = 'Preview diff' },
+      {
+        '<Leader>gp',
+        function()
+          gitsigns.diffthis(nil, { unified = true })
+        end,
+        desc = 'Preview diff',
+      },
       { '<Leader>gr', gitsigns.reset_hunk, desc = 'Reset hunk' },
       {
         '<Leader>gr',
