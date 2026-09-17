@@ -24,6 +24,9 @@ return {
     current_line_blame_opts = {
       delay = 0,
     },
+    diff_opts = {
+      algorithm = 'histogram',
+    },
   },
   config = function(_, opts)
     local gitsigns = require 'gitsigns'
