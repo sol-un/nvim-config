@@ -82,29 +82,9 @@ return {
     --- @type easy-dotnet.Options
     --- @diagnostic disable: missing-fields
     opts = {
-      -- NOTE: easy-dotnet's built-in test runner is less sophisticated than neotest but can handle larger test suites (thousands of tests)
+      -- NOTE: prefer neotest with vstest, it's much more efficient and convenient
       test_runner = {
         auto_start_testrunner = false,
-        hide_legend = true,
-        viewmode = 'vsplit',
-        vsplit_width = math.floor(vim.o.columns * 0.35),
-        -- Set up as consistently as possible with neotest
-        mappings = {
-          get_build_errors = { lhs = 'e', desc = 'Build errors' },
-          debug_test = { lhs = 'd', desc = 'debug' },
-          go_to_file = { lhs = 'i', desc = 'jumpto' },
-          run_all = { lhs = 'R', desc = 'run all' },
-          run = { lhs = 'r', desc = 'run' },
-          peek_stacktrace = { lhs = 'o', desc = 'output' },
-          expand = { lhs = 'l', desc = 'expand' },
-          expand_node = { lhs = 'E', desc = 'expand_all' },
-          refresh_testrunner = { lhs = '<C-r>', desc = 'refresh' },
-          cancel = { lhs = '<C-c>', desc = 'stop' },
-          run_test_from_buffer = { lhs = '<Leader>.tt', desc = 'Run test' },
-          run_all_tests_from_buffer = { lhs = '<Leader>.tf', desc = 'Run all tests in file' },
-          peek_stack_trace_from_buffer = { lhs = '<Leader>.tO', desc = 'Output hover' },
-          debug_test_from_buffer = { lhs = '<Leader>.td', desc = 'Debug test' },
-        },
       },
     },
     init = function()
@@ -136,27 +116,11 @@ return {
     },
   },
   {
-    'mfussenegger/nvim-dap',
-    opts = function()
-      -- Preview values of complex types like System.Guid
-      require('easy-dotnet.netcoredbg').register_dap_variables_viewer()
-    end,
-  },
-  {
+    -- NOTE: neotest-vstest doesn't play nice with easy-dotnet's debugger; a problem yet to be solved
     'nvim-neotest/neotest',
-    dependencies = {
-      {
-        'GustavEikaas/easy-dotnet.nvim',
-        opts = {
-          test_runner = {
-            neotest_integration = true,
-          },
-        },
-      },
-    },
+    dependencies = { 'nsidorenco/neotest-vstest' },
     opts = function(_, opts)
-      -- NOTE: Better UX than easy-dotnet's test runner, but can only handle moderately sized test suites (hundreds of tests)
-      table.insert(opts.adapters or {}, require 'easy-dotnet.neotest')
+      table.insert(opts.adapters or {}, require 'neotest-vstest')
     end,
   },
 }
