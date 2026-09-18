@@ -1,5 +1,4 @@
---- @param bufnr number
---- @return boolean
+--- @type fun (bufnr: number): boolean
 local is_postavki = function(bufnr)
   local sln = vim.fs.find('Postavki.sln', {
     path = vim.api.nvim_buf_get_name(bufnr),
@@ -59,6 +58,7 @@ return {
     opts = {
       ensure_installed = {
         'csharpier',
+        'netcoredbg',
       },
     },
   },
@@ -98,17 +98,6 @@ return {
     end,
     keys = {
       {
-        '<Leader>.t',
-        group = 'Tests',
-        ft = ft,
-      },
-      {
-        '<Leader>.ts',
-        '<cmd>Dotnet testrunner<cr>',
-        desc = 'Test Summary',
-        ft = ft,
-      },
-      {
         '<Leader>.f',
         resharper_cleanup,
         ft = ft,
@@ -116,7 +105,23 @@ return {
     },
   },
   {
-    -- NOTE: neotest-vstest doesn't play nice with easy-dotnet's debugger; a problem yet to be solved
+    'mfussenegger/nvim-dap',
+    opts = function()
+      local dap = require 'dap'
+
+      -- Enables previewing complex variables like System.Guid
+      require('easy-dotnet.netcoredbg').register_dap_variables_viewer()
+      -- Correct netcoredbg exe path for Windows
+      local win_cmd = vim.fn.stdpath 'data' .. '\\mason\\packages\\netcoredbg\\netcoredbg\\netcoredbg.exe'
+
+      dap.adapters.netcoredbg = {
+        type = 'executable',
+        command = require('utils').is_windows() and win_cmd or 'netcoredbg',
+        args = { '--interpreter=vscode' },
+      }
+    end,
+  },
+  {
     'nvim-neotest/neotest',
     dependencies = { 'nsidorenco/neotest-vstest' },
     opts = function(_, opts)
