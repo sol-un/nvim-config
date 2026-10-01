@@ -7,9 +7,12 @@ return {
     opts = {
       n_lines = 999,
       mappings = {
-        add = prefix .. 'a', -- Add surrounding in Normal and Visual modes
-        delete = prefix .. 'd', -- Delete surrounding
-        replace = prefix .. 'r', -- Replace surrounding
+        add = prefix .. 'a',
+        delete = prefix .. 'd',
+        find = prefix .. 'f',
+        find_left = prefix .. 'F',
+        highlight = prefix .. 'h',
+        replace = prefix .. 'r',
       },
     },
     init = function()
