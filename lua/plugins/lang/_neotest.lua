@@ -21,7 +21,7 @@ return {
       mappings = {
         expand = 'l',
         expand_all = 'E',
-        stop = '<C-c>',
+        stop = 'x',
       },
     },
     quickfix = {
