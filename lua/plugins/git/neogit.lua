@@ -110,6 +110,11 @@ return {
       },
     },
   },
+  ---@param opts NeogitConfig
+  config = function(_, opts)
+    require('neogit').setup(opts)
+    require('session-worktree').wrap_worktree_remove()
+  end,
   keys = {
     { '<Leader>gg', '<cmd>Neogit<cr>', desc = 'Neogit' },
     -- Stashes can be inspected via Neogit, but the Snacks interface is more convenient

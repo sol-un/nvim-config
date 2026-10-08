@@ -1,11 +1,14 @@
---- @type string|nil
-local CURRENT = nil
+--- Derived from mini.sessions' own state, so deletions done elsewhere (e.g. on worktree removal) are reflected
+--- @return string|nil
+local current_session = function()
+  return vim.v.this_session ~= '' and vim.fn.fnamemodify(vim.v.this_session, ':t') or nil
+end
 
 local names_by_modify_time = function(sessions)
   local session_metas = vim
     .iter(vim.tbl_values(sessions))
     :filter(function(session)
-      return session.name ~= CURRENT
+      return session.name ~= current_session()
     end)
     :totable()
 
@@ -25,7 +28,8 @@ end
 local read_or_delete = function(action)
   local ms = require 'mini.sessions'
   local sorted_session_names = names_by_modify_time(ms.detected)
-  local current_session_name = CURRENT ~= nil and ' (current: ' .. CURRENT .. ')' or ''
+  local current = current_session()
+  local current_session_name = current ~= nil and ' (current: ' .. current .. ')' or ''
 
   vim.ui.select(sorted_session_names, {
     prompt = 'Select session to ' .. action .. current_session_name,
@@ -46,9 +50,7 @@ return {
       autowrite = true,
       hooks = {
         post = {
-          read = function(current)
-            CURRENT = current['name']
-
+          read = function()
             vim.api.nvim_exec_autocmds('User', {
               pattern = 'SessionRead',
             })
