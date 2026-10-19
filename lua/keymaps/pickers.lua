@@ -24,13 +24,9 @@ require('which-key').add {
   {
     '<Leader>fw',
     function()
-      require('snacks').picker.grep_word {
+      require('snacks').picker.grep {
         hidden = true,
         ignored = true,
-        search = function()
-          local query = vim.fn.input 'Query'
-          return query or ''
-        end,
       }
     end,
     desc = 'Word',
@@ -120,5 +116,12 @@ require('which-key').add {
       require('snacks').picker.jumps()
     end,
     desc = 'Jumps',
+  },
+  {
+    '<Leader>fc',
+    function()
+      require('snacks').picker.command_history()
+    end,
+    desc = 'Commands',
   },
 }
