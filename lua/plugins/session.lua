@@ -49,6 +49,11 @@ return {
       autoread = true,
       autowrite = true,
       hooks = {
+        pre = {
+          delete = function(session)
+            require('session-worktree').remove(session)
+          end,
+        },
         post = {
           read = function()
             vim.api.nvim_exec_autocmds('User', {
@@ -83,6 +88,13 @@ return {
           require('mini.sessions').read(session_name)
         end,
         desc = 'Create & switch to',
+      },
+      {
+        '<Leader>sw',
+        function()
+          require('session-worktree').create()
+        end,
+        desc = 'Create with a worktree',
       },
       {
         '<Leader>qr',

@@ -1,43 +1,24 @@
--- The code syncing creation/removal of Neogit worktrees with sessions
-
-local wrap_worktree_remove = function()
-  -- Neogit emits `NeogitWorktreeCreate` but nothing on deletion, so wrap the low-level remove
-  -- (used by the worktree popup's delete action, including its `--force` retry) to emit our own.
-  -- Named differently from a hypothetical upstream `NeogitWorktreeDelete` to avoid double-firing.
-  local worktree = require 'neogit.lib.git.worktree'
-  local remove = worktree.remove
-
-  worktree.remove = function(path, args)
-    local ok = remove(path, args)
-
-    if ok then
-      vim.api.nvim_exec_autocmds('User', {
-        pattern = 'NeogitWorktreeRemoved',
-        modeline = false,
-        data = { path = vim.fs.normalize(vim.fn.fnamemodify(path, ':p')) },
-      })
-    end
-
-    return ok
-  end
-end
+-- Sessions backed by git worktrees: creating one adds a worktree, deleting its session removes it
 
 --- @param path string
 local normalize = function(path)
   return vim.fs.normalize(vim.fn.fnamemodify(path, ':p'))
 end
 
---- Working directory recorded in a detected session (the `cd` line written by `curdir`)
---- @param name string
+--- @param args string[]
+--- @param cwd string
+--- @return boolean ok, string output stdout on success, stderr otherwise
+local git = function(args, cwd)
+  local result = vim.system(vim.list_extend({ 'git' }, args), { cwd = cwd, text = true }):wait()
+  local ok = result.code == 0
+  return ok, vim.trim(ok and result.stdout or result.stderr)
+end
+
+--- Working directory recorded in a session file (the `cd` line written by `curdir`)
+--- @param path string
 --- @return string|nil
-local session_cwd = function(name)
-  local session = require('mini.sessions').detected[name]
-
-  if not session then
-    return nil
-  end
-
-  for line in io.lines(session.path) do
+local session_cwd = function(path)
+  for line in io.lines(path) do
     local dir = line:match '^cd (.+)$'
 
     if dir then
@@ -46,65 +27,98 @@ local session_cwd = function(name)
   end
 end
 
-local group = vim.api.nvim_create_augroup('neogit_worktree_sessions', { clear = true })
+--- Write a session for `dir` without making it the current one: `MiniSessions.write` would switch to
+--- it and capture this project's buffers, while a bare `cd` is all a fresh worktree session needs
+--- @param name string
+--- @param dir string
+local write_session = function(name, dir)
+  local ms = require 'mini.sessions'
+  local file = vim.fs.joinpath(normalize(ms.config.directory), name)
+  vim.fn.writefile({ 'cd ' .. vim.fn.fnameescape(vim.fn.fnamemodify(dir, ':~')) }, file)
 
-vim.api.nvim_create_autocmd('User', {
-  desc = 'Create a session for a new Neogit worktree, staying in the current one',
-  group = group,
-  pattern = 'NeogitWorktreeCreate',
-  callback = function(args)
-    -- Resolve now: the path may be relative to the cwd we are about to leave
-    local path = normalize(args.data.new_cwd)
-    local old_cwd = args.data.old_cwd
-    local name = vim.fs.basename(path)
-    local existing = session_cwd(name)
+  -- `read`/`delete`/`select` re-detect sessions, but the pickers read `detected` directly
+  ms.detected[name] = { modify_time = vim.fn.getftime(file), name = name, path = file, type = 'global' }
+end
 
-    if existing and existing ~= path then
-      vim.notify(('Session %q already exists for %s, not creating one for the worktree'):format(name, existing), vim.log.levels.WARN)
-    elseif not existing then
-      -- Written by hand instead of `MiniSessions.write`, which would make it the current session and
-      -- capture this project's buffers. A bare `cd` is all a fresh worktree session needs.
-      local ms = require 'mini.sessions'
-      local file = vim.fs.joinpath(normalize(ms.config.directory), name)
-      vim.fn.writefile({ 'cd ' .. vim.fn.fnameescape(vim.fn.fnamemodify(path, ':~')) }, file)
+local M = {}
 
-      -- `read`/`delete`/`select` re-detect sessions, but the pickers here read `detected` directly
-      ms.detected[name] = { modify_time = vim.fn.getftime(file), name = name, path = file, type = 'global' }
-    end
+--- Prompt for a branch and a location, add a worktree for it next to the current one and write its
+--- session. The branch is checked out if it exists, otherwise created from the current HEAD.
+M.create = function()
+  local ok, toplevel = git({ 'rev-parse', '--show-toplevel' }, vim.fn.getcwd())
 
-    -- Undo Neogit's switch into the worktree (queued after its own scheduled chdir), so the current
-    -- session keeps its cwd and doesn't get autowritten with the worktree's
-    vim.schedule(function()
-      local status = require 'neogit.buffers.status'
+  if not ok then
+    vim.notify('Not in a git repository', vim.log.levels.WARN)
+    return
+  end
 
-      if status.is_open() then
-        status.instance():chdir(old_cwd)
-      else
-        vim.api.nvim_set_current_dir(old_cwd)
-      end
-    end)
-  end,
-})
-
-vim.api.nvim_create_autocmd('User', {
-  desc = 'Delete the session of a removed Neogit worktree',
-  group = group,
-  pattern = 'NeogitWorktreeRemoved',
-  callback = function(args)
-    local name = vim.fs.basename(args.data.path)
-
-    -- Same-named sessions of unrelated projects are left alone
-    if session_cwd(name) ~= args.data.path then
+  vim.ui.input({ prompt = 'Worktree branch: ' }, function(branch)
+    if not branch or vim.trim(branch) == '' then
       return
     end
 
-    -- Also clears `vim.v.this_session` if it was the current one
-    require('mini.sessions').delete(name, { force = true, verbose = false })
-  end,
-})
+    branch = vim.trim(branch)
+    local default = vim.fs.joinpath(vim.fs.dirname(toplevel), (branch:gsub('/', '-')))
 
-local M = {
-  wrap_worktree_remove = wrap_worktree_remove,
-}
+    vim.ui.input({ prompt = 'Worktree path: ', default = default, completion = 'dir' }, function(input)
+      if not input or vim.trim(input) == '' then
+        return
+      end
+
+      local dir = normalize(vim.trim(input))
+      local name = vim.fs.basename(dir)
+
+      if require('mini.sessions').detected[name] then
+        vim.notify(('Session %q already exists'):format(name), vim.log.levels.WARN)
+        return
+      end
+
+      local exists = git({ 'show-ref', '--verify', '--quiet', 'refs/heads/' .. branch }, toplevel)
+      local add = exists and { 'worktree', 'add', dir, branch } or { 'worktree', 'add', '-b', branch, dir }
+      local added, err = git(add, toplevel)
+
+      if not added then
+        vim.notify(err, vim.log.levels.ERROR)
+        return
+      end
+
+      write_session(name, dir)
+      vim.notify(('Created worktree and session %q'):format(name))
+    end)
+  end)
+end
+
+--- `pre` delete hook: remove the session's worktree if it is a linked one (never the main checkout).
+--- Errors abort the deletion, so the session survives a worktree that couldn't be removed.
+--- @param session { path: string }
+M.remove = function(session)
+  local dir = session_cwd(session.path)
+
+  if not dir or vim.fn.isdirectory(dir) == 0 then
+    return
+  end
+
+  local ok, dirs = git({ 'rev-parse', '--path-format=absolute', '--git-dir', '--git-common-dir' }, dir)
+  local git_dir, common_dir = unpack(vim.split(dirs, '\n'))
+
+  if not ok or git_dir == common_dir then
+    return
+  end
+
+  -- Run from the shared git dir: the worktree itself is about to disappear
+  local removed, err = git({ 'worktree', 'remove', dir }, common_dir)
+
+  if not removed then
+    if vim.fn.confirm(err .. '\nRemove anyway?', '&Yes\n&No', 2) ~= 1 then
+      error('Kept worktree and session for ' .. dir, 0)
+    end
+
+    removed, err = git({ 'worktree', 'remove', '--force', dir }, common_dir)
+
+    if not removed then
+      error(err, 0)
+    end
+  end
+end
 
 return M
