@@ -30,9 +30,13 @@ local read_or_delete = function(action)
   local sorted_session_names = names_by_modify_time(ms.detected)
   local current = current_session()
   local current_session_name = current ~= nil and ' (current: ' .. current .. ')' or ''
+  local is_worktree = require('session-worktree').is_worktree
 
   vim.ui.select(sorted_session_names, {
     prompt = 'Select session to ' .. action .. current_session_name,
+    format_item = function(name)
+      return is_worktree(ms.detected[name]) and name .. ' ' or name
+    end,
   }, function(session)
     if session then
       ms[action](session)

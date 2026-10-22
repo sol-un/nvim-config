@@ -42,6 +42,23 @@ end
 
 local M = {}
 
+--- Whether the session's directory is a linked worktree. Cheap enough for listing every session: a
+--- linked worktree has a `.git` file pointing into `<repo>/.git/worktrees/`, unlike a main checkout
+--- (a `.git` directory) or a submodule (a `.git` file pointing into `modules/`)
+--- @param session { path: string }
+--- @return boolean
+M.is_worktree = function(session)
+  local dir = session_cwd(session.path)
+  local stat = dir and vim.uv.fs_stat(vim.fs.joinpath(dir, '.git'))
+
+  if not stat or stat.type ~= 'file' then
+    return false
+  end
+
+  local gitdir = (vim.fn.readfile(vim.fs.joinpath(dir, '.git'), '', 1)[1] or ''):match '^gitdir: (.+)$'
+  return gitdir ~= nil and vim.fs.normalize(gitdir):match '/worktrees/[^/]+$' ~= nil
+end
+
 --- Prompt for a branch and a location, add a worktree for it next to the current one and write its
 --- session. The branch is checked out if it exists, otherwise created from the current HEAD.
 M.create = function()
