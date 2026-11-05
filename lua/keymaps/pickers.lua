@@ -1,4 +1,12 @@
 require('which-key').add {
+  {
+    '<Leader>e',
+    function()
+      require('snacks').picker.explorer()
+    end,
+    desc = 'File tree',
+    icon = '󰙅',
+  },
   { '<Leader>f', group = 'Find' },
   {
     '<Leader>,',
