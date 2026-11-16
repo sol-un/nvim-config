@@ -191,4 +191,5 @@ return {
       }
     end,
   },
+  { 'windwp/nvim-ts-autotag', ft = filetypes, opts = {} },
 }
