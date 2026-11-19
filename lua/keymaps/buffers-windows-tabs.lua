@@ -134,7 +134,34 @@ require('which-key').add {
     desc = 'Increase Window Width',
   },
 
-  { '<Leader><Tab>', group = 'Tabs' },
+  {
+    '<Leader><Tab>',
+    group = 'Tabs',
+    -- Switch between tabs with <Leader><Tab>*tab #*
+    expand = function()
+      local tabs = vim.api.nvim_list_tabpages()
+      if #tabs < 2 then
+        return {}
+      end
+
+      return vim
+        .iter(tabs)
+        :enumerate()
+        :take(9)
+        :map(function(i, tab)
+          local buf = vim.api.nvim_win_get_buf(vim.api.nvim_tabpage_get_win(tab))
+          local name = vim.api.nvim_buf_get_name(buf)
+          return {
+            tostring(i),
+            function()
+              vim.api.nvim_set_current_tabpage(tab)
+            end,
+            desc = name == '' and '[No Name]' or vim.fn.fnamemodify(name, ':~:.'),
+          }
+        end)
+        :totable()
+    end,
+  },
   { '<Leader><Tab>o', '<cmd>tabonly<cr>', desc = 'Close Other Tabs' },
   { '<Leader><Tab><Tab>', '<cmd>tabnew<cr>', desc = 'New Tab' },
   { '<Leader><Tab>d', '<cmd>tabclose<cr>', desc = 'Close Tab' },
