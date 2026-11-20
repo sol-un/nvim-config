@@ -144,6 +144,7 @@ return {
           explorer = {
             hidden = true,
             ignored = true,
+            auto_close = true,
             layout = {
               fullscreen = false,
               preview = 'main',
